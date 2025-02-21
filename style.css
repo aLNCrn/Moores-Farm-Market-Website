@@ -1,28 +1,142 @@
+/* General Styles */
 body {
-    background-color: #84B172;
+    background-color: #84B172; /* Green background */
     color: white;
     font-family: Arial, Helvetica, sans-serif;
-    text-align: center;
+    margin: 0;
+    padding: 0;
+    text-align: center; /* Centers text by default */
 }
 
+/* Header Styling */
 header {
-    background-color:#406233 ;
+    background-color: #406233;
+    padding: 20px 0;
+}
+
+/* Navigation Bar */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+/* Navigation Links */
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: 'Lucida Sans', Geneva, Verdana, sans-serif;
     padding: 10px;
 }
 
-nav {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+nav a:hover {
+    color: #FFD700; /* Gold hover effect */
 }
 
-nav a {
-    color: #000000;
-    text-decoration: none;
-    font-weight: bold;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
-
+/* Logo Styling */
 .logo {
     height: 50px;
+    margin: 0 20px;
+}
+
+/* ABOUT US Heading */
+.about-heading {
+    font-size: 4rem; /* Bigger text */
+    font-weight: 900; /* Extra bold */
+    text-transform: uppercase;
+    color: white;
+    text-align: center;
+    letter-spacing: 4px; /* Adds spacing for emphasis */
+    margin-top: 30px;
+    padding: 20px;
+    background: linear-gradient(90deg, rgba(5, 252, 1, 0.8) 0%, rgba(252, 201, 0, 0.8) 100%);
+    border-radius: 10px;
+    display: inline-block;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: fadeIn 1s ease-in-out;
+    margin-left: auto;
+    margin-right: auto; /* Centers the block */
+}
+
+/* Decorative Underline */
+.about-heading::after {
+    content: "";
+    display: block;
+    width: 120px;
+    height: 5px;
+    background-color: white;
+    margin: 10px auto;
+    border-radius: 5px;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Main Content Layout */
+.content-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+/* Image Styling */
+.content-image {
+    width: 40%;
+    max-width: 300px;
+    border-radius: 10px; /* Slightly rounded corners */
+}
+
+/* Text Content */
+.text-content {
+    width: 55%;
+    text-align: center; /* Centering the text */
+}
+
+/* Centered Big Bold Text */
+.main-heading {
+    font-size: 2.5rem; /* Bigger for better balance */
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Smaller Text */
+.sub-text {
+    font-size: 1rem;
+    color: #f0f0f0; /* Lighter color for contrast */
+    text-align: center;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .content-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .content-image {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+
+    .text-content {
+        width: 90%;
+        text-align: center;
+    }
 }
