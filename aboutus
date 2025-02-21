@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> about us - Moore's Farmers Market</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="aboutus.html">About Us</a>
+            <img src=images\mfmLogo.jpg alt="Site Logo" class="logo">
+            <a href="seasonal.html">Seasonal</a>
+            <a href="login.html">Log In</a>
+        </nav>
+    </header>
+    <main>
+        <h1>About us</h1>
+        <p>Welcome to Moore's Farmers Market, where we take great pride in growing our produce with love and care. 
+            Unlike conventional options that are often treated with chemicals, our products are freshly grown and naturally cultivated.</p>
+    </main>
+</body>
+</html>
