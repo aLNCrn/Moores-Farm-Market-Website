@@ -1,14 +1,13 @@
-/* General Styles */
+/* Gen Styles */
 body {
-    background-color: #84B172; /* Green background */
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
+    background-image: url("images/treedancing.gif");
+    background-size: cover;
     margin: 0;
     padding: 0;
     text-align: center; /* Centers text by default */
 }
 
-/* Header Styling */
+/* Styles for the header */
 header {
     background-color: #406233;
     padding: 20px 0;
@@ -32,23 +31,23 @@ nav a {
 }
 
 nav a:hover {
-    color: #FFD700; /* Gold hover effect */
+    color: #0026ff; /* Color of the hover over */
 }
 
-/* Logo Styling */
+/* Logo Styling, NOTE NEED TO MAKE BIGGER WHEN LOGO AQUIRED AND FIX THE PADDING */
 .logo {
     height: 50px;
     margin: 0 20px;
 }
 
-/* ABOUT US Heading */
+/* about us heading, need to change so it can blend in the back but ONLY when a background color has been chosen */
 .about-heading {
-    font-size: 4rem; /* Bigger text */
-    font-weight: 900; /* Extra bold */
+    font-size: 4rem; 
+    font-weight: 900; 
     text-transform: uppercase;
     color: white;
     text-align: center;
-    letter-spacing: 4px; /* Adds spacing for emphasis */
+    letter-spacing: 4px; 
     margin-top: 30px;
     padding: 20px;
     background: linear-gradient(90deg, rgba(5, 252, 1, 0.8) 0%, rgba(252, 201, 0, 0.8) 100%);
@@ -58,7 +57,7 @@ nav a:hover {
     position: relative;
     animation: fadeIn 1s ease-in-out;
     margin-left: auto;
-    margin-right: auto; /* Centers the block */
+    margin-right: auto; 
 }
 
 /* Decorative Underline */
@@ -76,7 +75,7 @@ nav a:hover {
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(-15px);
+        transform: translateY(-50px);
     }
     to {
         opacity: 1;
@@ -105,6 +104,7 @@ nav a:hover {
 .text-content {
     width: 55%;
     text-align: center; /* Centering the text */
+    padding: 10px;
 }
 
 /* Centered Big Bold Text */
