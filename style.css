@@ -1,24 +1,41 @@
-/* Gen Styles */
+/* General Styles */
 body {
-    background-image: url("images/treedancing.gif");
+    background-image: url("images/trees4.gif");
     background-size: cover;
     margin: 0;
     padding: 0;
-    text-align: center; /* Centers text by default */
+    text-align: center;
 }
 
 /* Styles for the header */
 header {
     background-color: #406233;
     padding: 20px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
 }
 
 /* Navigation Bar */
 nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Spread the containers apart */
     align-items: center;
-    padding: 0 20px;
+    padding: 10px 15px;
+}
+
+/* Left-side Navigation */
+.nav-left {
+    display: flex;
+    gap: 15px; /* Adds space between the left-side links */
+}
+
+/* Right-side Navigation */
+.nav-right {
+    display: flex;
+    gap: 15px; /* Adds space between the right-side links */
 }
 
 /* Navigation Links */
@@ -27,48 +44,59 @@ nav a {
     text-decoration: none;
     font-weight: bold;
     font-family: 'Lucida Sans', Geneva, Verdana, sans-serif;
-    padding: 10px;
+    padding: 10px 15px;
 }
 
 nav a:hover {
-    color: #0026ff; /* Color of the hover over */
+    color: #0026ff; /* Color of the hover effect */
 }
 
-/* Logo Styling, NOTE NEED TO MAKE BIGGER WHEN LOGO AQUIRED AND FIX THE PADDING */
+/* Logo Styling */
+.logo-container {
+    position: fixed;
+    top: 10px;  /* Initial position */
+    left: 50%;
+    transform: translateX(-50%);
+    transition: top 0.5s ease-in-out; /* Only transition the top property */
+    z-index: 1001; /* Make sure it's above the navbar */
+}
+
 .logo {
-    height: 50px;
-    margin: 0 20px;
+    width: 300px;
+    height: 300px;
+    transition: width 0.5s ease-in-out, height 0.5s ease-in-out; /* Smooth size transition */
 }
 
-/* about us heading, need to change so it can blend in the back but ONLY when a background color has been chosen */
+/* When scrolled, move the logo straight up */
+.scrolled .logo-container {
+    top: 10px; /* Adjust this value as needed */
+    left: 50%;
+    transform: translateX(-50%); /* Keeps it centered */
+}
+
+.scrolled .logo {
+    width: 150px;
+    height: 150px;
+}
+
+/* About Us Heading */
 .about-heading {
-    font-size: 4rem; 
-    font-weight: 900; 
+    padding-top: 200px;
+    font-size: 4rem;
+    font-weight: 900;
     text-transform: uppercase;
     color: white;
     text-align: center;
-    letter-spacing: 4px; 
-    margin-top: 30px;
+    letter-spacing: 4px;
+    margin-top: 120px;
     padding: 20px;
-    background: linear-gradient(90deg, rgba(5, 252, 1, 0.8) 0%, rgba(252, 201, 0, 0.8) 100%);
+    background: linear-gradient(90deg, rgba(3, 150, 10, 1) 0%, rgba(3, 150, 10, 1) 100%);
     border-radius: 10px;
     display: inline-block;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
     position: relative;
     animation: fadeIn 1s ease-in-out;
-    margin-left: auto;
-    margin-right: auto; 
-}
-
-/* Decorative Underline */
-.about-heading::after {
-    content: "";
-    display: block;
-    width: 120px;
-    height: 5px;
-    background-color: white;
-    margin: 10px auto;
-    border-radius: 5px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 /* Fade-in Animation */
@@ -86,7 +114,7 @@ nav a:hover {
 /* Main Content Layout */
 .content-container {
     display: flex;
-    align-items: center;
+    align-items: top;
     justify-content: center;
     max-width: 900px;
     margin: 40px auto;
@@ -97,19 +125,19 @@ nav a:hover {
 .content-image {
     width: 40%;
     max-width: 300px;
-    border-radius: 10px; /* Slightly rounded corners */
+    border-radius: 10px;
 }
 
 /* Text Content */
 .text-content {
     width: 55%;
-    text-align: center; /* Centering the text */
+    text-align: center;
     padding: 10px;
 }
 
 /* Centered Big Bold Text */
 .main-heading {
-    font-size: 2.5rem; /* Bigger for better balance */
+    font-size: 2.5rem;
     font-weight: bold;
     color: white;
     text-align: center;
@@ -119,8 +147,12 @@ nav a:hover {
 /* Smaller Text */
 .sub-text {
     font-size: 1rem;
-    color: #f0f0f0; /* Lighter color for contrast */
+    color: #f0f0f0;
     text-align: center;
+    background-color: black;
+    border-radius: 30px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 10px;
 }
 
 /* Responsive Design */
