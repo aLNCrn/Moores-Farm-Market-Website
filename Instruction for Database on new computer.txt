@@ -1,0 +1,2 @@
+Open terminal and type:
+mysql -u root -p mooresfarmmarket < mooresfarmmarket.sql
