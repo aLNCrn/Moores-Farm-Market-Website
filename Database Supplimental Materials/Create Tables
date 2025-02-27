@@ -11,11 +11,11 @@ PRIMARY KEY (CustomerID)
 
 
 CREATE TABLE FAVORITES(
-    CustomerID INT NOT NULL,
-    ProductID INT NOT NULL,
-    PRIMARY KEY (CustomerID, ProductID), 
-    FOREIGN KEY (CustomerID) REFERENCES CUSTOMERS(CustomerID) ON DELETE CASCADE,
-    FOREIGN KEY (ProductID) REFERENCES PRODUCTS(ProductID) ON DELETE CASCADE
+CustomerID INT NOT NULL,
+ProductID INT NOT NULL,
+PRIMARY KEY (CustomerID, ProductID), 
+FOREIGN KEY (CustomerID) REFERENCES CUSTOMERS(CustomerID) ON DELETE CASCADE,
+FOREIGN KEY (ProductID) REFERENCES PRODUCTS(ProductID) ON DELETE CASCADE
 );
 
 
@@ -35,7 +35,7 @@ CREATE TABLE EMPLOYEES (
     EmployeeID INT AUTO_INCREMENT,      
     FirstName VARCHAR(100) NOT NULL,                
     LastName VARCHAR(100) NOT NULL,                 
-    Email VARCHAR(255) ,             
+    Email VARCHAR(100) ,             
     Phone VARCHAR(15),                              
     HireDate DATE,    
     Wage VARCHAR(6),
@@ -53,30 +53,31 @@ Create Table PRODUCTS(
 ProductID INT AUTO_INCREMENT,
 Name VARCHAR(255) NOT NULL,
 Price VARCHAR(50) ,
-CurrentlyAvailable BOOLEAN NOT NULL DEFAULT TRUE,  
+CurrentlyAvailable BOOLEAN NOT NULL DEFAULT TRUE,
+Imagelink varchar(255),
 PRIMARY KEY (ProductID)
  
-)
+);
 
 Create Table FLOWERS(
 ProductID INT,
 Annual VARCHAR(50) DEFAULT NULL,  
 SunOrShade VARCHAR(20) DEFAULT NULL,  
-PRIMARY KEY (ProductID)
+PRIMARY KEY (ProductID),
 FOREIGN KEY (ProductID) REFERENCES PRODUCTS(ProductID)
 
 
-)
+);
 
 Create Table PRODUCE (
 ProductID INT ,
 StorageInstructions VARCHAR(255) DEFAULT NULL,  
-Type ENUM(‘Fruit’, ’Vegetable’) NOT NULL,
-Location VARCHAR (16), DEFAULT NULL,
+Type ENUM('Fruit', 'Vegetable') NOT NULL,
+Location VARCHAR (16) DEFAULT NULL,
 PRIMARY KEY (ProductID),
 FOREIGN KEY (ProductID) REFERENCES PRODUCTS(ProductID)
 
-)
+);
 
 
 
@@ -87,7 +88,7 @@ Raw BOOLEAN DEFAULT NULL,
 PRIMARY KEY (ProductID),
 FOREIGN KEY (ProductID) REFERENCES PRODUCTS(ProductID)
 
-)
+);
 
 Create Table Seasonal (
 ProductID INT ,
@@ -95,13 +96,13 @@ Season VARCHAR(40) DEFAULT NULL,
 PRIMARY KEY (ProductID),
 FOREIGN KEY (ProductID) REFERENCES PRODUCTS(ProductID)
 
-)
+);
 
 Create Table VegetablePlant (
 ProductID INT,
 Season VARCHAR(40) DEFAULT NULL,
-PlantType ENUM(‘Vine’, ’Stalk’,’Squash’, ‘Lettuce’),
+PlantType ENUM('Vine', 'Stalk','Squash', 'Lettuce'),
 PRIMARY KEY (ProductID),
 FOREIGN KEY (ProductID) REFERENCES PRODUCTS(ProductID)
 
-)
+);
