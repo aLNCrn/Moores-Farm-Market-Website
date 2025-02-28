@@ -1,2 +1,7 @@
+To get the dumpsql file on the virtual machine:
+mysqldump -u root -p mooresfarmmarket > mooresfarmmarket.sql
+
+
+To retrive database on a new computer
 Open terminal and type:
 mysql -u root -p mooresfarmmarket < mooresfarmmarket.sql
