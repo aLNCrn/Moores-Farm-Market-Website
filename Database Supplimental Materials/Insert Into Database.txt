@@ -1,0 +1,6 @@
+INSERT INTO CUSTOMERS (FirstName, LastName, Email, Password) 
+VALUES 
+('Dominic','Holly', 'hollyd1@go.stockton.edu','hollyd1'),
+('Alan', 'Ceron', 'cerona1@go.stockton.edu', 'cerona1'),
+('Jack', 'Stewart', 'stewa149@go.stockton.edu', 'stewa149'),
+('Joshua', 'Williams', 'willi687@go.stockton.edu', 'willi687');
