@@ -3,5 +3,14 @@ mysqldump -u root -p mooresfarmmarket > mooresfarmmarket.sql
 
 
 To retrive database on a new computer
-Open terminal and type:
+# Moores Farm Market Flask App
+
+## Setup Instructions
+
+1. Clone this repository:
+2. Navigate to the project directory:
+3. create an empty database:
+mysql -u root -p -e "CREATE DATABASE mooresfarmmarket;"
+4. Open terminal and type:
 mysql -u root -p mooresfarmmarket < mooresfarmmarket.sql
+5. Run the Flask app:
