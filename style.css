@@ -23,7 +23,7 @@ nav {
     display: flex;
     justify-content: space-between; /* Spread the containers apart */
     align-items: center;
-    padding: 10px 15px;
+    padding: 43px;
 }
 
 /* Left-side Navigation */

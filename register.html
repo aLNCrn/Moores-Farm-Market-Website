@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moore's Farmers Market</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Logo Container -->
+    <div class="logo-container" id="logoContainer">
+        <img src="images/mfmLogo.png" alt="Site Logo" class="logo" id="logo">
+    </div>
+
+    <header>
+        <nav>
+            <div class="nav-left">
+                <a href="home.html">Home</a>
+                <a href="aboutus.html">About Us</a>
+            </div>
+            <div class="nav-right">
+                <a href="seasonal.html">Seasonal</a>
+                <a href="login.html">Log In</a>
+            </div>
+        </nav>
+    </header>
+
+    <main style="padding-top: 200px">
+        <h1 class="about-heading fade-in-heading">log in</h1>
+	<body>
+		<div class="register">
+			<h1>Register</h1>
+			<div class="links">
+				<a href="login.html">Login</a>
+			</div>
+			<form action="register.html" method="post" autocomplete="off">
+				<label for="username">
+					<i class="fas fa-user"></i>
+				</label>
+				<input type="text" name="username" placeholder="Username" id="username" required>
+				<label for="password">
+					<i class="fas fa-lock"></i>
+				</label>
+				<input type="password" name="password" placeholder="Password" id="password" required>
+				<label for="email">
+					<i class="fas fa-envelope"></i>
+				</label>
+				<input type="email" name="email" placeholder="Email" id="email" required>
+				<div class="msg">{{ msg }}</div>
+				<input type="submit" value="Register">
+			</form>
+		</div>
+	</body>
+</html>
