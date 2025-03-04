@@ -8,7 +8,7 @@ To retrive database on a new computer
 ## Setup Instructions
 
 1. Clone this repository:
-2. Navigate to the project directory:
+2. Make sure MySQL is downloaded on the computer
 3. create an empty database:
 mysql -u root -p -e "CREATE DATABASE mooresfarmmarket;"
 4. Open terminal and type:
