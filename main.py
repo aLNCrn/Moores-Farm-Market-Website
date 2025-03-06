@@ -35,7 +35,7 @@ def test_db():
 @app.route('/home')
 def home():
     if 'loggedin' in session:
-        return render_template('home.html', username=session['usrname'], email=session['email'])
+        return render_template('home.html', username=session['email'], email=session['email'])
     return redirect(url_for('login'))
 
 
@@ -43,18 +43,18 @@ def home():
 @app.route('/', methods=['GET', 'POST'])
 def login():
     msg = ''
-    if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
-        username = request.form['username']
+    if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
+        username = request.form['email']
         password = request.form['password']
 
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM MyGuests WHERE usrname = %s AND password = %s', (username, password,))
+        cursor.execute('SELECT * FROM Customer WHERE email = %s AND password = %s', (username, password,))
         account = cursor.fetchone()
 
         if account:
             session['loggedin'] = True
-            session['id'] = account['id']
-            session['usrname'] = account['usrname']
+            session['Customerid'] = account['Customerid']
+            session['FirstName'] = account['FirstName']
             session['email'] = account['email']
 
             return redirect(url_for('home'))
@@ -75,13 +75,14 @@ def logout():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     msg = ''
-    if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form:
-        username = request.form['username']
-        password = request.form['password']
-        email = request.form['email']
+    if request.method == 'POST' and 'FirstName' in request.form and 'LastName' in request.form and 'Password' in request.form and 'email' in request.form:
+        firstname = request.form['FirstName']
+        lastname=request.form['LastName']
+        password = request.form['Password']
+        email = request.form['Email']
 
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM MyGuests WHERE usrname = %s', (username,))
+        cursor.execute('SELECT * FROM CUSTOMERS WHERE Email = %s', (email,))
         account = cursor.fetchone()
 
         if account:
@@ -90,11 +91,11 @@ def register():
             msg = 'Invalid email address!'
         elif not re.match(r'[A-Za-z0-9]+', username):
             msg = 'Username must contain only characters and numbers!'
-        elif not username or not password or not email:
+        elif not firstname or not lastname or not password or not email:
             msg = 'Please fill out the form!'
         else:
-            cursor.execute('INSERT INTO MyGuests (usrname, password, email) VALUES (%s, %s, %s)', 
-                           (username, password, email,))
+            cursor.execute('INSERT INTO CUSTOMERS (FirstName, LastName, Email, Password) VALUES (%s, %s, %s, %s)', 
+                           (firstname, lastname, email, password,))
             mysql.connection.commit()
             msg = 'You have successfully registered!'
 
