@@ -1,4 +1,4 @@
-/* General Styles */
+
 body {
     background-image: url("images/trees4.gif");
     background-size: cover;
@@ -7,7 +7,67 @@ body {
     text-align: center;
 }
 
-/* Styles for the header */
+
+body.about-us-page {
+    padding-top: 150px; 
+}
+
+/* About Us Heading */
+.about-heading {
+    font-size: 4rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: white;
+    text-align: center;
+    letter-spacing: 4px;
+    margin-top: 120px;
+    padding: 20px;
+    background: linear-gradient(90deg, rgba(3, 150, 10, 1) 0%, rgba(3, 150, 10, 1) 100%);
+    border-radius: 10px;
+    display: inline-block;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: fadeIn 1s ease-in-out;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.content-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+}
+
+.content-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    max-height: 500px; 
+}
+
+body.about-us-page .content-image {
+    max-width: 80%;  
+    max-height: 400px; 
+}
+
+.text-content {
+    width: 45%;
+    text-align: center;
+    padding: 40px;
+    background-color: black;opacity: 50%;
+    border-radius: 20px;
+    
+}
+
+.sub-text {
+    font-size: 20px;
+    color: #ffffff;
+    line-height: 1.6;
+    font-style: bold;
+    
+}
+
+/* Navigation Bar */
 header {
     background-color: #406233;
     padding: 20px 0;
@@ -18,24 +78,38 @@ header {
     z-index: 1000;
 }
 
-/* Navigation Bar */
+/* Logo Styling */
+.logo-container {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: top 0.5s ease-in-out;
+    z-index: 1001;
+}
+
+.logo {
+    width: 150px;
+    height: auto;
+    transition: width 0.5s ease-in-out, height 0.5s ease-in-out;
+}
+
+/* Navigation Links */
 nav {
     display: flex;
-    justify-content: space-between; /* Spread the containers apart */
+    justify-content: space-between;
     align-items: center;
     padding: 43px;
 }
 
-/* Left-side Navigation */
 .nav-left {
     display: flex;
-    gap: 15px; /* Adds space between the left-side links */
+    gap: 15px;
 }
 
-/* Right-side Navigation */
 .nav-right {
     display: flex;
-    gap: 15px; /* Adds space between the right-side links */
+    gap: 15px;
 }
 
 /* Navigation Links */
@@ -51,37 +125,7 @@ nav a:hover {
     color: #0026ff; /* Color of the hover effect */
 }
 
-/* Logo Styling */
-.logo-container {
-    position: fixed;
-    top: 10px;  /* Initial position */
-    left: 50%;
-    transform: translateX(-50%);
-    transition: top 0.5s ease-in-out; /* Only transition the top property */
-    z-index: 1001; /* Make sure it's above the navbar */
-}
-
-.logo {
-    width: 300px;
-    height: 300px;
-    transition: width 0.5s ease-in-out, height 0.5s ease-in-out; /* Smooth size transition */
-}
-
-/* When scrolled, move the logo straight up */
-.scrolled .logo-container {
-    top: 10px; /* Adjust this value as needed */
-    left: 50%;
-    transform: translateX(-50%); /* Keeps it centered */
-}
-
-.scrolled .logo {
-    width: 150px;
-    height: 150px;
-}
-
-/* About Us Heading */
 .about-heading {
-    padding-top: 200px;
     font-size: 4rem;
     font-weight: 900;
     text-transform: uppercase;
@@ -111,55 +155,95 @@ nav a:hover {
     }
 }
 
-/* Main Content Layout */
-.content-container {
-    display: flex;
-    align-items: top;
-    justify-content: center;
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 20px;
-}
-
-/* Image Styling */
-.content-image {
-    width: 40%;
-    max-width: 300px;
+.login-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* Text Content */
-.text-content {
-    width: 55%;
+.login-container h1 {
+    font-size: 2rem;
+    color: #406233;
     text-align: center;
-    padding: 10px;
+    margin-bottom: 20px;
 }
 
-/* Centered Big Bold Text */
-.main-heading {
-    font-size: 2.5rem;
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
     font-weight: bold;
-    color: white;
-    text-align: center;
-    margin-bottom: 10px;
 }
 
-/* Smaller Text */
-.sub-text {
-    font-size: 1rem;
-    color: #f0f0f0;
-    text-align: center;
-    background-color: black;
-    border-radius: 30px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+.form-group input {
+    width:100%;
     padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    
+}
+
+.password-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#togglePassword {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.submit-btn {
+    background-color: #406233;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.submit-btn:hover {
+    background-color: #305021;
+}
+
+/* Links */
+.links {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.links a {
+    color: #406233;
+    text-decoration: none;
+}
+
+.links a:hover {
+    text-decoration: underline;
 }
 
 /* Responsive Design */
 @media screen and (max-width: 768px) {
+    body.about-us-page {
+        padding-top: 80px;
+    }
+
     .content-container {
         flex-direction: column;
-        text-align: center;
+        align-items: center;
     }
 
     .content-image {
@@ -168,7 +252,38 @@ nav a:hover {
     }
 
     .text-content {
-        width: 90%;
+        width: 80%;
         text-align: center;
     }
+
+    .about-heading {
+        font-size: 3rem;
+        margin-top: 60px;
+    }
+
+    .login-container {
+        padding: 20px;
+    }
+
+    .logo {
+        width: 120px; 
+    }
+}
+
+/* Login Container Styling */
+.register-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.register-container h1 {
+    font-size: 2rem;
+    color: #406233;
+    text-align: center;
+    margin-bottom: 20px;
 }

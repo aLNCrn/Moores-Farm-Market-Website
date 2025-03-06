@@ -10,13 +10,14 @@
 
     <!-- Logo Container -->
     <div class="logo-container" id="logoContainer">
-        <img src="images/mfmLogo.png" alt="Site Logo" class="logo" id="logo">
+       <img src="images/mfmLogo.png" alt="Site Logo" class="logo" id="logo">
     </div>
 
     <header>
         <nav>
             <div class="nav-left">
                 <a href="home.html">Home</a>
+                <a href="products.html">Products</a>
                 <a href="aboutus.html">About Us</a>
             </div>
             <div class="nav-right">
@@ -27,37 +28,47 @@
     </header>
 
     <main style="padding-top: 200px">
-        <h1 class="about-heading fade-in-heading">log in</h1>
-    <main>
-        <section class="login-container">
-            <h1>Log In</h1>
-            <form action="login_process.php" method="POST">
-                <div class="form-group" style="padding: 5px;color: brown;background-color: white;">
-                    <label for="username">Username or Email:</label>
-                    <input type="text" id="username" name="username" required placeholder="Enter your username or email">
+        <h1 class="about-heading fade-in-heading">Log In</h1>
+        <div class="sub-textLogin">
+            <section class="login-container">
+                <h1>Log In</h1>
+                <form action="login.html" method="POST">
+                    <div class="form-group" style="padding: 5px; color: brown">
+                        <label for="username">Username or Email:</label>
+                        <input type="text" id="username" name="username" required placeholder="Enter your username or email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <div class="password-container">
+                            <input type="password" id="password" name="password" required placeholder="Enter your password">
+                            <button type="button" id="togglePassword">👁️</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="remember_me"> Remember Me
+                        </label>
+                    </div>
+                    <button type="submit" class="submit-btn">Log In</button>
+                </form>
+                <div class="links">
+                    <a href="register.html">Don't have an account? Sign Up</a>
                 </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required placeholder="Enter your password">
-                </div>
-                <div class="form-group">
-                    <label>
-                        <input type="checkbox" name="remember_me"> Remember Me
-                    </label>
-                </div>
-                <button type="submit" class="submit-btn">Log In</button>
-            </form>
-            <div class="links">
-                <a href="register.html">Don't have an account? Sign Up</a>
-            </div>
-        </section>
+            </section>
+        </div>
     </main>
 
     <footer>
         <p>&copy; 2025 Moore's Farmers Market. All Rights Reserved.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // Password toggle functionality
+        document.getElementById("togglePassword").addEventListener("click", function() {
+            let passwordField = document.getElementById("password");
+            passwordField.type = passwordField.type === "password" ? "text" : "password";
+        });
+    </script>
 
 </body>
 </html>

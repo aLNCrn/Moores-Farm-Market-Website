@@ -8,7 +8,6 @@
 </head>
 <body>
 
-    <!-- Logo Container -->
     <div class="logo-container" id="logoContainer">
         <img src="images/mfmLogo.png" alt="Site Logo" class="logo" id="logo">
     </div>
@@ -18,6 +17,7 @@
             <div class="nav-left">
                 <a href="home.html">Home</a>
                 <a href="aboutus.html">About Us</a>
+                <a href="products.html">Products</a>
             </div>
             <div class="nav-right">
                 <a href="seasonal.html">Seasonal</a>
@@ -27,29 +27,35 @@
     </header>
 
     <main style="padding-top: 200px">
-        <h1 class="about-heading fade-in-heading">log in</h1>
-	<body>
-		<div class="register">
-			<h1>Register</h1>
-			<div class="links">
-				<a href="login.html">Login</a>
-			</div>
-			<form action="register.html" method="post" autocomplete="off">
-				<label for="username">
-					<i class="fas fa-user"></i>
-				</label>
-				<input type="text" name="username" placeholder="Username" id="username" required>
-				<label for="password">
-					<i class="fas fa-lock"></i>
-				</label>
-				<input type="password" name="password" placeholder="Password" id="password" required>
-				<label for="email">
-					<i class="fas fa-envelope"></i>
-				</label>
-				<input type="email" name="email" placeholder="Email" id="email" required>
-				<div class="msg">{{ msg }}</div>
-				<input type="submit" value="Register">
-			</form>
-		</div>
-	</body>
+        <h1 class="about-heading fade-in-heading">Register</h1>
+        <div class="sub-textRegister">
+            <section class="register-container">
+                <h1>Register</h1>
+                <form action="register.html" method="post" autocomplete="off">
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" name="username" placeholder="Username" id="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" name="password" placeholder="Password" id="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" name="email" placeholder="Email" id="email" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Register</button>
+                </form>
+                <div class="links">
+                    <a href="login.html">Already have an account? Log In</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Moore's Farmers Market. All Rights Reserved.</p>
+    </footer>
+
+</body>
 </html>
