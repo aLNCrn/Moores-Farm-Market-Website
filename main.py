@@ -75,11 +75,11 @@ def logout():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     msg = ''
-    if request.method == 'POST' and 'FirstName' in request.form and 'LastName' in request.form and 'Password' in request.form and 'email' in request.form:
-        firstname = request.form['FirstName']
-        lastname=request.form['LastName']
-        password = request.form['Password']
-        email = request.form['Email']
+    if request.method == 'POST' and 'firstname' in request.form and 'lastname' in request.form and 'password' in request.form and 'email' in request.form:
+        firstname = request.form['firstname']
+        lastname=request.form['lastname']
+        password = request.form['password']
+        email = request.form['email']
 
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM CUSTOMERS WHERE Email = %s', (email,))
