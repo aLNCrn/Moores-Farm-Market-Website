@@ -10,7 +10,8 @@ To retrive database on a new computer
 1. Clone this repository:
 2. Make sure MySQL is downloaded on the computer
 3. Open terminal and create an empty database:
-mysql -u root -p -e "CREATE DATABASE mooresfarmmarket;"
+mysql -u root -p -* "CREATE DATABASE mooresfarmmarket;"
 4. Then type:
 mysql -u root -p mooresfarmmarket < mooresfarmmarket.sql
 5. Run the Flask app:
+cd "C:\Program Files\MySQL\MySQL Server 8.0\bin"
