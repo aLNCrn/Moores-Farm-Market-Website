@@ -12,6 +12,6 @@ To retrive database on a new computer
 3. Open terminal and create an empty database:
 mysql -u root -p -* "CREATE DATABASE mooresfarmmarket;"
 4. Then type:
-mysql -u root -p mooresfarmmarket < mooresfarmmarket.sql
+mysql -u root -p --binary-mode --force mooresfarmmarket < "path to moorefarmmarket_clean.sql"
 5. Run the Flask app:
 cd "C:\Program Files\MySQL\MySQL Server 8.0\bin"
