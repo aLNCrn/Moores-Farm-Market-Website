@@ -94,7 +94,6 @@ def register():
             cursor.execute('INSERT INTO CUSTOMERS (firstname,lastname, email, password) VALUES (%s, %s, %s, %s)', 
                            (firstname, lastname, email, password,))
             mysql.connection.commit()
-            mysql.connection.commit()
             cursor.close()
             msg = 'You have successfully registered!'
 
