@@ -11,7 +11,7 @@ app.secret_key = 'mfmpass'
 # MySQL Configuration
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'yourpassword'  # Ensure this is correct
+app.config['MYSQL_PASSWORD'] = 'yourpassword'  # The MySQL password for the person doing the demonstration
 app.config['MYSQL_DB'] = 'mooresfarmmarket'
 
 # Initialize MySQL
