@@ -34,7 +34,7 @@ def test_db():
 @app.route('/home')
 def home():
     if 'loggedin' in session:
-        return render_template('home.html', username=session['username'], email=session['email'])
+        return render_template('home.html', firstname=session['firstname'], email=session['email'])
     return redirect(url_for('login'))
 
 # Login Route
@@ -98,6 +98,9 @@ def register():
 
     elif request.method == 'POST':
         msg = 'Please fill out the form!'
+
+    mysql.connection.commit()
+    cursor.close()
 
     return render_template('register.html', msg=msg)
 
