@@ -29,6 +29,15 @@
 
     <main style="padding-top: 200px">
         <h1 class="about-heading fade-in-heading">Products !</h1>
+        <ul>
+    {% for product in products %}
+        <li>
+            {{ product[1] }} - ${{ product[2] }} 
+            {% if product[3] %} ✅ Available {% else %} ❌ Not Available {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+
         <button onclick="document.getElementById('addProductForm').style.display='block'">
         Add New Product
     </button>
