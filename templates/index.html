@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moore's Farmers Market</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
     <div class="logo-container" id="logoContainer">
-        <img src="images/mfmLogo.png" alt="Site Logo" class="logo" id="logo">
+        <img src="{{ url_for('static', filename='images/mfmLogo.png') }}" alt="Site Logo" style="display:block; width:10px; height: 10px;">
     </div>
 
     <header>
         <nav>
             <div class="nav-left">
-                <a href="home.html">Home</a>
+                <a href="index.html">Home</a>
                 <a href="aboutus.html">About Us</a>
                 <a href="products.html">Products</a>
 
