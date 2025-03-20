@@ -40,14 +40,17 @@
         <h1 class="about-heading fade-in-heading">Products !</h1>
 
 
-        <ul>
+        <div class="product-container">
             {% for product in products %}
-            <li>
-                {{ product['Name'] }} - ${{ product['Price'] if product['Price'] else 'N/A' }} -
-                {% if product['CurrentlyAvailable'] %} ✅ Available {% else %} ❌ Not Available {% endif %}
-            </li>
+            <div class="product-box">
+                <h3>{{ product['Name'] }}</h3>
+                <p>Price: ${{ product['Price'] if product['Price'] else 'N/A' }}</p>
+                <p>
+                    {% if product['CurrentlyAvailable'] %} ✅ Available {% else %} ❌ Not Available {% endif %}
+                </p>
+            </div>
             {% endfor %}
-        </ul>
+        </div>
 
         <button onclick="document.getElementById('addProductForm').style.display='block'">
             Add New Product

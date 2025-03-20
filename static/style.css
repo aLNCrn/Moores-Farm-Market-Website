@@ -273,4 +273,31 @@ nav a:hover {
     color: #406233;
     text-align: center;
     margin-bottom: 20px;
+
 }
+
+/* Container to align product boxes */
+.product-container {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 20px; 
+    justify-content: center; 
+    padding: 20px;
+}
+
+/* White box for each product */
+.product-box {
+    background-color: white;
+    color: black;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 200px; 
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+    
+    .product-box:hover {
+        transform: scale(1.05);
+    }

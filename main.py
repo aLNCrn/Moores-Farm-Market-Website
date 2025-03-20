@@ -132,9 +132,6 @@ def get_products():
     # Fetch all products from the products table (select all columns)
     cursor.execute("SELECT * FROM products")
     products = cursor.fetchall()  # Fetch all products as a list of tuples
-    # Fetch all product types to display in the dropdown (for the form)
-    #cursor.execute("SELECT * FROM product_types")
-    #product_types = cursor.fetchall()  # Fetch product types as a list of tuples
     print(products)
     return render_template('products.html', products=products)
 
@@ -142,11 +139,14 @@ def get_products():
 def add_product():
     cursor = mysql.connection.cursor()
     name = request.form['name']
-    price = float(request.form['price'])
-    currently_available = request.form.get('currently_available') == 'on'  
-    cursor.execute("INSERT INTO products (name, price, currently_available) VALUES (%s, %s, %s)",
-                   (name, price, currently_available))
-    db.commit()
+    price = request.form['price']
+    if request.form.get('currently_available') == 'on':
+        currently_available = 1
+    else:
+        currently_available = 0
+    cursor.execute("INSERT INTO products (name, price, CurrentlyAvailable, ImageLink) VALUES (%s, %s, %s, %s)",
+                   (name, price, currently_available, None))
+    mysql.connection.commit()
     return redirect(url_for('products'))
 
 if __name__ == '__main__':
