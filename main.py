@@ -91,16 +91,17 @@ def register():
         elif not firstname or not lastname or not password or not email:
             msg = 'Please fill out the form!'
         else:
-            cursor.execute('INSERT INTO CUSTOMERS (firstname,lastname, password, email) VALUES (%s, %s, %s, %s)', 
+            cursor.execute('INSERT INTO CUSTOMERS (firstname,lastname, emaail, password) VALUES (%s, %s, %s, %s)', 
                            (firstname, lastname, email, password,))
             mysql.connection.commit()
+            mysql.connection.commit()
+            cursor.close()
             msg = 'You have successfully registered!'
 
     elif request.method == 'POST':
         msg = 'Please fill out the form!'
 
-    mysql.connection.commit()
-    cursor.close()
+  
 
     return render_template('register.html', msg=msg)
 
