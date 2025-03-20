@@ -37,7 +37,7 @@
         <h1 class="about-heading fade-in-heading">ABOUT US</h1>
         
         <div class="content-container">
-            <img src="images/flowersAboutUs.jpg" alt="Farmers Market" class="content-image fade-in-image">
+            <img src= {{url_for ('static', filename='images/flowersAboutUs.jpg' )}} alt="Farmers Market" class="content-image fade-in-image">
             <div class="text-content">
                 <h2 class="main-heading fade-in-heading">About Us</h2>
                 <p class="sub-text fade-in-paragraph"> Moore's Farm Market was started in 1952 by George and Mildred Moore. We have been a family run business ever since providing fresh produce and flowers to the community. We have a wide variety of produce, flowers, honey, seasonal decorations, as well as fall and winter seasonal products.</p>
@@ -50,12 +50,12 @@
                 <h2 class="main-heading fade-in-heading">Local</h2>
                 <p class="sub-text fade-in-paragraph"> We grow the vast majority of our flowers in our greenhouses ensuring they are as healthy as they can be. When local produce is in season we source the very best and always keep local honey in stock.</p>
             </div>
-            <img src="images/truckAboutUs.jpg" alt="Farmers Market" class="content-image fade-in-image">
+            <img src= {{url_for('static', filename='images/truckAboutUs.jpg')}} alt="Farmers Market" class="content-image fade-in-image">
         </div>
     
         <!-- Third Section: Fresh -->
         <div class="content-container">
-            <img src="images/honeyAboutUs.jpg" alt="Farmers Market" class="content-image fade-in-image">
+            <img src= {{url_for('static', filename= 'images/honeyAboutUs.jpg')}} alt="Farmers Market" class="content-image fade-in-image">
             <div class="text-content">
                 <h2 class="main-heading fade-in-heading">Fresh</h2>
                 <p class="sub-text fade-in-paragraph"> Moore's Farm Market won 2024 Asbury Park Press best of the best produce!!! </p>
