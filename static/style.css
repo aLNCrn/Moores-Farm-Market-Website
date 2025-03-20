@@ -291,8 +291,9 @@ nav a:hover {
     color: black;
     padding: 15px;
     border-radius: 10px;
+    border: 2px solid green;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 200px; 
+    width: 200px;
     text-align: center;
     transition: transform 0.3s ease-in-out;
 }
@@ -301,3 +302,20 @@ nav a:hover {
     .product-box:hover {
         transform: scale(1.05);
     }
+
+.refresh-link {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: blue;
+    padding: 5px 10px;
+    border: 2px solid green;
+    border-radius: 5px;
+    background-color: white;
+}

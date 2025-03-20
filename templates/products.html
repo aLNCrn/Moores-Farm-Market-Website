@@ -17,7 +17,6 @@
             <div class="nav-left">
                 <a href="/index">Home</a>
                 <a href="/aboutus">About Us</a>
-                <a href="/products">Products</a>
 
             </div>
             <div class="nav-right">
@@ -36,9 +35,12 @@
     </header>
 
     <main style="padding-top: 200px">
-        <a href="{{ url_for('get_products') }}">Refresh Products</a>
+
         <h1 class="about-heading fade-in-heading">Products !</h1>
 
+        <div class= "refresh-link">
+            <a href="{{ url_for('get_products') }}">Refresh Products</a>
+        </div> 
 
         <div class="product-container">
             {% for product in products %}

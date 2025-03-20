@@ -144,10 +144,30 @@ def add_product():
         currently_available = 1
     else:
         currently_available = 0
+
+
     cursor.execute("INSERT INTO products (name, price, CurrentlyAvailable, ImageLink) VALUES (%s, %s, %s, %s)",
                    (name, price, currently_available, None))
+
     mysql.connection.commit()
     return redirect(url_for('products'))
+
+    #if request.form.get[product_type_id] == 1:
+    #   product_type= 'Flowers'
+
+    #elif request.form.get[product_type_id] == 2:
+    #  product_type= 'Honey'
+
+    #elif request.form.get[product_type_id] == 3:
+    #   product_type= 'Produce'
+
+    #elif request.form.get[product_type_id] == 4:
+    #   product_type= 'Seasonal'
+
+    #elif request.form.get[product_type_id] == 5:
+    #   product_type= 'Vegetable Plants'
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
