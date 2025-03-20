@@ -22,6 +22,8 @@ mysql = MySQL(app)
 def load_logged_in_user():
     g.firstname = session.get('FirstName', None)
     g.id = session.get('CustomerID', None)
+    g.isOwner = session.get('isOwner', False)
+    g.isEmp = session.get('isEmp', False)
 
 @app.route('/aboutus')
 def aboutus():
@@ -63,9 +65,29 @@ def test_db():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     msg = ''
+    
     if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
         email = request.form['email']
         password = request.form['password']
+
+        if request.form.get('employee_button') == 'on':
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM EMPLOYEES WHERE email = %s AND password = %s', (email, password))
+            account = cursor.fetchone()
+
+            if account:
+                session['loggedin'] = True
+                session['FirstName'] = account.get('FirstName') 
+                if account.get('title') == 'Owner':
+                    session['isOwner'] = True
+                else:
+                    session['isEmp'] = True
+                session['email'] = account.get('email')
+                return redirect(url_for('index'))
+            else:
+                msg = 'Incorrect username/password or you are not an employee!'
+                return render_template('login.html', msg=msg)  
+            
 
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM CUSTOMERS WHERE email = %s AND password = %s', (email, password,))
@@ -80,7 +102,12 @@ def login():
         else:
             msg = 'Incorrect username/password!'
 
-    return render_template('login.html', msg=msg)  # Ensured correct template is used
+    return render_template('login.html', msg=msg)  
+
+
+
+
+
 
 # Logout Route
 @app.route('/logout')
