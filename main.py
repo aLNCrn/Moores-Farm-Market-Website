@@ -107,7 +107,7 @@ def index():
 def add_product():
     name = request.form['name']
     price = float(request.form['price'])
-    currently_available = request.form.get('currently_available') == 'on'  # Checkbox Handling
+    currently_available = request.form.get('currently_available') == 'on'  
     cursor.execute("INSERT INTO products (name, price, currently_available) VALUES (%s, %s, %s)",
                    (name, price, currently_available))
     db.commit()
