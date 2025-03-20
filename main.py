@@ -103,10 +103,13 @@ def register():
 
 @app.route('/')
 def index():
-    cursor = mysql.connection.cursor()
+    # Fetch all products from the products table (select all columns)
     cursor.execute("SELECT * FROM products")
-    products = cursor.fetchall()  # Fetch all products from the database
-    return render_template('index.html', products=products)
+    products = cursor.fetchall()  # Fetch all products as a list of tuples
+    # Fetch all product types to display in the dropdown (for the form)
+    cursor.execute("SELECT * FROM product_types")
+    product_types = cursor.fetchall()  # Fetch product types as a list of tuples
+    return render_template('index.html', products=products, product_types=product_types)
 
 @app.route('/add_product', methods=['POST'])
 def add_product():
