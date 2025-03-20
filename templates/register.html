@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moore's Farmers Market</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
     <div class="logo-container" id="logoContainer">
-        <img src="{{ url_for('static', filename='images/mfmLogo.png') }}" alt="Site Logo" style="display:block; width:10px; height: 10px;">
+        <img src="{{ url_for('static', filename='images/mfmLogo.png') }}" alt="Site Logo" style="display:block; width:100px; height: 100px;">
     </div>
 
     <header>
@@ -21,9 +21,18 @@
             </div>
             <div class="nav-right">
                 <a href="/seasonal">Seasonal</a>
-                <a href="/login1">Log In</a>
+                <a href="/login">Log In</a>
             </div>
+
+            {% if session['FirstName'] %}
+            <span style="color: white; font-weight: bold; margin-left: 15px;">
+                Welcome, {{ session['FirstName'] }}
+            </span>
+            <a href="{{ url_for('logout') }}" style="color: red; font-weight: bold; margin-left: 10px;">Logout</a>
+            {% endif %}
         </nav>
+
+
     </header>
 
     <main style="padding-top: 200px">
@@ -51,7 +60,7 @@
                     <button type="submit" class="submit-btn">Register</button>
                 </form>
                 <div class="links">
-                    <a href="/login1">Already have an account? Log In</a>
+                    <a href="/login">Already have an account? Log In</a>
                 </div>
             </section>
         </div>

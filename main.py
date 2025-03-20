@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, g
 from flask_mysqldb import MySQL
 import mysql.connector
 import MySQLdb.cursors
@@ -18,10 +18,19 @@ app.config['MYSQL_DB'] = 'mooresfarmmarket'
 # Initialize MySQL
 mysql = MySQL(app)
 
+@app.before_request
+def load_logged_in_user():
+    g.firstname = session.get('FirstName', None)
+    g.id = session.get('CustomerID', None)
+
 @app.route('/aboutus')
 def aboutus():
     return render_template('aboutus.html')
 
+
+@app.route('/index')
+def index():
+    return render_template('index.html')
 
 @app.route('/products')
 def products():
@@ -31,9 +40,6 @@ def products():
 def register1():
     return render_template('register.html')
 
-@app.route('/login1')
-def login1():
-    return render_template('login.html')
 
 @app.route('/seasonal')
 def seasonal():
@@ -52,15 +58,9 @@ def test_db():
     except Exception as e:
         return str(e)
 
-# Home Route
-@app.route('/home')
-def home():
-    if 'loggedin' in session:
-        return render_template('home.html', firstname=session['firstname'], email=session['email'])
-    return redirect(url_for('login'))
 
 # Login Route
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     msg = ''
     if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
@@ -73,10 +73,10 @@ def login():
 
         if account:
             session['loggedin'] = True
-            session['id'] = account['id']
-            session['FirstName'] = account['FirstName']
-            session['email'] = account['email']
-            return redirect(url_for('home'))
+            session['FirstName'] = account.get('FirstName') 
+            session['CustomerID'] = account.get('CustomerID') 
+            session['email'] = account.get('email')
+            return redirect(url_for('index'))
         else:
             msg = 'Incorrect username/password!'
 
@@ -133,10 +133,10 @@ def get_products():
     cursor.execute("SELECT * FROM products")
     products = cursor.fetchall()  # Fetch all products as a list of tuples
     # Fetch all product types to display in the dropdown (for the form)
-    cursor.execute("SELECT * FROM product_types")
-    product_types = cursor.fetchall()  # Fetch product types as a list of tuples
+    #cursor.execute("SELECT * FROM product_types")
+    #product_types = cursor.fetchall()  # Fetch product types as a list of tuples
     print(products)
-    return render_template('/products', products=products, product_types=product_types)
+    return render_template('products.html', products=products)
 
 @app.route('/add_product', methods=['POST'])
 def add_product():
@@ -147,7 +147,7 @@ def add_product():
     cursor.execute("INSERT INTO products (name, price, currently_available) VALUES (%s, %s, %s)",
                    (name, price, currently_available))
     db.commit()
-    return redirect(url_for('index'))
+    return redirect(url_for('products'))
 
 if __name__ == '__main__':
     app.run(debug=True)
