@@ -11,7 +11,7 @@ app.secret_key = 'mfmpass'
 # MySQL Configuration
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'yourpassword'  # The MySQL password for the person doing the demonstration
+app.config['MYSQL_PASSWORD'] = 'root'  # The MySQL password for the person doing the demonstration
 app.config['MYSQL_DB'] = 'mooresfarmmarket'
 
 # Initialize MySQL
@@ -97,6 +97,11 @@ def register():
 
     return render_template('register.html', msg=msg)
 
+@app.route('/')
+def index():
+    cursor.execute("SELECT * FROM products")
+    products = cursor.fetchall()  # Fetch all products from the database
+    return render_template('index.html', products=products)
 
 
 if __name__ == '__main__':
