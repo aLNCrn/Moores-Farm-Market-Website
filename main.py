@@ -103,6 +103,15 @@ def index():
     products = cursor.fetchall()  # Fetch all products from the database
     return render_template('index.html', products=products)
 
+@app.route('/add_product', methods=['POST'])
+def add_product():
+    name = request.form['name']
+    price = float(request.form['price'])
+    currently_available = request.form.get('currently_available') == 'on'  # Checkbox Handling
+    cursor.execute("INSERT INTO products (name, price, currently_available) VALUES (%s, %s, %s)",
+                   (name, price, currently_available))
+    db.commit()
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True)
