@@ -18,6 +18,28 @@ app.config['MYSQL_DB'] = 'mooresfarmmarket'
 # Initialize MySQL
 mysql = MySQL(app)
 
+@app.route('/aboutus')
+def aboutus():
+    return render_template('aboutus.html')
+
+
+@app.route('/products')
+def products():
+    return render_template('products.html')
+
+@app.route('/register1')
+def register1():
+    return render_template('register.html')
+
+@app.route('/login1')
+def login1():
+    return render_template('login.html')
+
+@app.route('/seasonal')
+def seasonal():
+
+    return render_template('seasonal.html')
+
 # Test Database Connection
 @app.route('/test_db')
 def test_db():
@@ -104,8 +126,9 @@ def register():
 
     return render_template('register.html', msg=msg)
 
-@app.route('/')
-def index():
+@app.route('/getproducts')
+def get_products():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     # Fetch all products from the products table (select all columns)
     cursor.execute("SELECT * FROM products")
     products = cursor.fetchall()  # Fetch all products as a list of tuples
@@ -113,7 +136,7 @@ def index():
     cursor.execute("SELECT * FROM product_types")
     product_types = cursor.fetchall()  # Fetch product types as a list of tuples
     print(products)
-    return render_template('index.html', products=products, product_types=product_types)
+    return render_template('/products', products=products, product_types=product_types)
 
 @app.route('/add_product', methods=['POST'])
 def add_product():
