@@ -97,14 +97,6 @@ def register():
 
     return render_template('register.html', msg=msg)
 
-#Display products page
-@app.route('/products')
-def show_products():
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute("SELECT * FROM products")
-    products = cursor.fetchall()
-    cursor.close()
-    return render_template('products.html', products=products)
 
 
 if __name__ == '__main__':
