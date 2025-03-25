@@ -42,6 +42,9 @@ CREATE TABLE EMPLOYEES (
     PRIMARY KEY (EmployeeID)                                        
 );
 
+ALTER TABLE employees
+ADD COLUMN password VARCHAR(255) NOT NULL,
+ADD COLUMN position ENUM('admin', 'employee') NOT NULL;
 
 
 
