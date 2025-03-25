@@ -4,3 +4,6 @@ VALUES
 ('Alan', 'Ceron', 'cerona1@go.stockton.edu', 'cerona1'),
 ('Jack', 'Stewart', 'stewa149@go.stockton.edu', 'stewa149'),
 ('Joshua', 'Williams', 'willi687@go.stockton.edu', 'willi687');
+
+INSERT INTO EMPLOYEES (FirstName, LastName, Email, Phone, password, position)
+VALUES ('Scott', 'Moore', 'smoore388@yahoo.com', '7325817545', '1234', 'admin');
