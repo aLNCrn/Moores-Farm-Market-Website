@@ -7,3 +7,6 @@ VALUES
 
 INSERT INTO EMPLOYEES (FirstName, LastName, Email, Phone, password, position)
 VALUES ('Scott', 'Moore', 'smoore388@yahoo.com', '7325817545', '1234', 'admin');
+
+INSERT INTO EMPLOYEES (FirstName, LastName, Email, Phone, password, position)
+VALUES ('Tyler','DelPrete','tydel579@gmail.com','7325691655','1234','employee');
