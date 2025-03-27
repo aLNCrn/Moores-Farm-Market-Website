@@ -200,6 +200,8 @@ def add_product_2():
 
 @app.route('/toggle_favorite', methods=['POST'])
 def toggle_favorite():
+        cursor = mysql.connection.cursor()
+
 
 if __name__ == '__main__':
     app.run(debug=True)
