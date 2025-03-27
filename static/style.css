@@ -303,6 +303,13 @@ nav a:hover {
         transform: scale(1.05);
     }
 
+.favorite-btn {
+        background-color: transparent;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
 .refresh-link {
     display: block;
     margin-top: 5px;
