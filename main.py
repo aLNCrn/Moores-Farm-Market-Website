@@ -155,7 +155,7 @@ def register():
 
 @app.route('/getproducts')
 def get_products():
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor = mysql.connection.cursor()
     # Fetch all products from the products table (select all columns)
     cursor.execute("SELECT * FROM products")
     products = cursor.fetchall()  # Fetch all products as a list of tuples
@@ -197,6 +197,11 @@ def add_product():
 app.route('/addProduct_2', methods =['POST'])
 def add_product_2():
      selectedOption = request.form.get['product_type_id'];
+
+@app.route('/toggle_favorite', methods=['POST'])
+def toggle_favorite():
+        cursor = mysql.connection.cursor()
+
 
 if __name__ == '__main__':
     app.run(debug=True)
