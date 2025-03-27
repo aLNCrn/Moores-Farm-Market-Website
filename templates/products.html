@@ -51,15 +51,6 @@
                 <p>
                     {% if product['CurrentlyAvailable'] %} ✅ Available {% else %} ❌ Not Available {% endif %}
                 </p>
-                <form action="{{ url_for('toggle_favorite', product_id=product['ProductID']) }}" method="POST">
-            <button type="submit">
-                {% if product['favorited'] %}
-                    ⭐ Favorited
-                {% else %}
-                    ☆ Favorite
-                {% endif %}
-            </button>
-        </form>
             </div>
             {% endfor %}
         </div>
