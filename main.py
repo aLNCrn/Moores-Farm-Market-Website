@@ -158,7 +158,7 @@ def get_products():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     # Fetch all products from the products table (select all columns)
     cursor.execute("SELECT * FROM products")
-    products = cursor.fetchall()  # Fetch all products as a list of tuples
+    products = cursor.fetchall()  
     print(products)
     return render_template('products.html', products=products)
 
