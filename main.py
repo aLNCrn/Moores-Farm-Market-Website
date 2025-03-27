@@ -198,5 +198,8 @@ app.route('/addProduct_2', methods =['POST'])
 def add_product_2():
      selectedOption = request.form.get['product_type_id'];
 
+@app.route('/toggle_favorite', methods=['POST'])
+def toggle_favorite():
+
 if __name__ == '__main__':
     app.run(debug=True)
