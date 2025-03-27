@@ -78,7 +78,7 @@ def login():
             if account:
                 session['loggedin'] = True
                 session['FirstName'] = account.get('FirstName') 
-                if account.get('title') == 'Owner':
+                if account.get('position') == 'admin':
                     session['isOwner'] = True
                 else:
                     session['isEmp'] = True
@@ -194,7 +194,9 @@ def add_product():
     #elif request.form.get[product_type_id] == 5:
     #   product_type= 'Vegetable Plants'
 
-
+app.route('/addProduct_2', methods =['POST'])
+def add_product_2():
+     selectedOption = request.form.get['product_type_id'];
 
 if __name__ == '__main__':
     app.run(debug=True)

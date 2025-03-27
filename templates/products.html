@@ -24,6 +24,7 @@
                 <a href="/login">Log In</a>
             </div>
 
+
             {% if session['FirstName'] %}
             <span style="color: white; font-weight: bold; margin-left: 15px;">
                 Welcome, {{ session['FirstName'] }}
@@ -38,9 +39,9 @@
 
         <h1 class="about-heading fade-in-heading">Products !</h1>
 
-        <div class= "refresh-link">
+        <div class="refresh-link">
             <a href="{{ url_for('get_products') }}">Refresh Products</a>
-        </div> 
+        </div>
 
         <div class="product-container">
             {% for product in products %}
@@ -53,6 +54,8 @@
             </div>
             {% endfor %}
         </div>
+
+        {% if session['isOwner'] %}
 
         <button onclick="document.getElementById('addProductForm').style.display='block'">
             Add New Product
@@ -69,7 +72,7 @@
                     Cancel
                 </button>
                 <label for="product_type">Product Type:</label>
-                <select name="product_type_id" id="product_type" required>
+                <select name="product_type_id" id="product_type" onchange="addProduct_2()" required>
                     <option value="" disabled selected>Select Product Type</option>
                     <option value="1">Flowers</option>
                     <option value="2">Honey</option>
@@ -77,8 +80,11 @@
                     <option value="4">Seasonal</option>
                     <option value="5">Vegetable Plants</option>
                 </select><br><br>
+
             </form>
         </div>
+
+        {% endif %}
 
     </main>
 </body>
