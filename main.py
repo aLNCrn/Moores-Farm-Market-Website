@@ -156,10 +156,22 @@ def register():
 @app.route('/getproducts')
 def get_products():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    # Fetch all products from the products table (select all columns)
-    cursor.execute("SELECT * FROM products")
+    customer_id = session.get('CustomerID')
+    if customer_id:  
+        cursor.execute("""
+            SELECT p.*, 
+                   CASE WHEN f.CustomerID IS NOT NULL THEN 1 ELSE 0 END as is_favorited
+            FROM PRODUCTS p
+            LEFT JOIN FAVORITES f 
+            ON p.ProductID = f.ProductID AND f.CustomerID = %s
+        """, (customer_id,))
+    else:  
+        cursor.execute("SELECT * FROM products")
+        products = cursor.fetchall()  # Fetch all products without is_favorited
+        return render_template('products.html', products=products)
+
     products = cursor.fetchall()  
-    print(products)
+    cursor.close()
     return render_template('products.html', products=products)
 
 @app.route('/add_product', methods=['POST'])
