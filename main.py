@@ -233,7 +233,7 @@ def favorite_product():
     
     cursor_favorites.close()  # Close the cursor to free up the database resource
     
-    return render_template('products.html', products=products)
+    return redirect(url_for('get_products'))  
 
 
 if __name__ == '__main__':
