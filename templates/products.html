@@ -51,6 +51,18 @@
                 <p>
                     {% if product['CurrentlyAvailable'] %} ✅ Available {% else %} ❌ Not Available {% endif %}
                 </p>
+                {% if session.get('CustomerID') %}
+            <form action="{{ url_for('favorite_product') }}" method="POST">
+                <input type="hidden" name="product_id" value="{{ product['ProductID'] }}">
+                <button type="submit">
+                    {% if product['is_favorited'] %}
+                        ⭐ Unfavorite
+                    {% else %}
+                        ☆ Favorite
+                    {% endif %}
+                </button>
+            </form>
+            {% endif %}
             </div>
             {% endfor %}
         </div>
