@@ -198,6 +198,31 @@ app.route('/addProduct_2', methods =['POST'])
 def add_product_2():
      selectedOption = request.form.get['product_type_id'];
 
+@app.route('/favorite', methods=['POST'])
+def favorite_product():
+    cursor_favorites = mysql.connection.cursor()  # Creating a cursor for interacting with the database
+    customer_id = session.get('CustomerID')  # Ensure CustomerID is set in the session
+    
+    product_id = request.form.get('product_id')  # Get the product_id from the form data
+    
+    if customer_id and product_id:
+        # Check if the product is already in favorites
+        cursor_favorites.execute("SELECT * FROM FAVORITES WHERE CustomerID = %s AND ProductID = %s", (customer_id, product_id))
+        favorite = cursor_favorites.fetchone()  # If the product is already in favorites, it will return a row
+        
+        if favorite:
+            # If it's favorited, unfavorite the product (remove from FAVORITES table)
+            cursor_favorites.execute("DELETE FROM FAVORITES WHERE CustomerID = %s AND ProductID = %s", (customer_id, product_id))
+        else:
+            # If it's not favorited, favorite the product (add to FAVORITES table)
+            cursor_favorites.execute("INSERT INTO FAVORITES (CustomerID, ProductID) VALUES (%s, %s)", (customer_id, product_id))
+        
+        mysql.connection.commit()  # Commit the transaction to the database
+    
+    cursor_favorites.close()  # Close the cursor to free up the database resource
+    
+    return render_template('products.html', products=products)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
