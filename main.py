@@ -30,9 +30,26 @@ def aboutus():
     return render_template('aboutus.html')
 
 
-@app.route('/index')
+@app.route('/index', methods=['GET', 'POST'])
 def index():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT Rating, ReviewDate, ReviewText  FROM reviews')
+    reviews = cursor.fetchall()  
+    #print(reviews)
     return render_template('index.html')
+
+@app.route('/add_review', methods=['POST'])
+def add_review():
+    cursor = mysql.connection.cursor()
+    rating = request.form['name']
+    reviewText = request.form['price']
+    #TODO get customer id from whatever the user is currently logged in as
+    #customerID = 1
+    cursor.execute("INSERT INTO reviews (Rating, ReviewText, CustomerID) VALUES (%s, %s, %s)",
+                   (rating, reviewText, customerID))
+
+    mysql.connection.commit()
+    return redirect(url_for('products'))
 
 @app.route('/products')
 def products():
