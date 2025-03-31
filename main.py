@@ -231,25 +231,16 @@ def add_product_2():
 def favorite_product():
     cursor_favorites = mysql.connection.cursor()  
     customer_id = session.get('CustomerID')  
-    
     product_id = request.form.get('product_id')  
-    
     if customer_id and product_id:
-        # Check if the product is already in favorites
         cursor_favorites.execute("SELECT * FROM FAVORITES WHERE CustomerID = %s AND ProductID = %s", (customer_id, product_id))
         favorite = cursor_favorites.fetchone()  
-        
         if favorite:
-            # If it's favorited, unfavorite the product (remove from FAVORITES table)
             cursor_favorites.execute("DELETE FROM FAVORITES WHERE CustomerID = %s AND ProductID = %s", (customer_id, product_id))
         else:
-            # If it's not favorited, favorite the product (add to FAVORITES table)
             cursor_favorites.execute("INSERT INTO FAVORITES (CustomerID, ProductID) VALUES (%s, %s)", (customer_id, product_id))
-        
         mysql.connection.commit()  
-    
     cursor_favorites.close() 
-    
     return redirect(url_for('get_products'))  
 
 
