@@ -220,7 +220,7 @@ def add_product():
 
     elif product_type_id == 'Produce':
         storage_instructions = request.form.get('storage_instructions')
-        produce_type = request.form.get('Fruit/Vegetable')  
+        produce_type = request.form.get('Fruit/Vegetable')
         location = request.form.get('location')
         cursor.execute(
             "INSERT INTO PRODUCE (ProductID, StorageInstructions, Type, Location) VALUES (%s, %s, %s, %s)",
