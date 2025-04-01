@@ -101,5 +101,57 @@
         {% endif %}
 
     </main>
+
+    <script>
+        function loadForm() {
+            const productType = document.getElementById("product_type").value;
+            const formContainer = document.getElementById("dynamicForm");
+
+            let formFields = '';
+
+            switch (productType) {
+                case 'Flowers':
+                    formFields = `
+                        <input type="text" name="annual" placeholder="Annual"><br>
+                        <input type="text" name="sun_or_shade" placeholder="Sun or Shade"><br>
+                    `;
+                    break;
+                case 'Produce':
+                    formFields = `
+                        <input type="text" name="storage_instructions" placeholder="Storage Instructions"><br>
+                        <select name="Fruit/Vegetable" required>
+                            <option value="Fruit">Fruit</option>
+                            <option value="Vegetable">Vegetable</option>
+                        </select><br>
+                        <input type="text" name="location" placeholder="Location"><br>
+                    `;
+                    break;
+                case 'Honey':
+                    formFields = `
+                        <input type="text" name="source" placeholder="Source"><br>
+                        <label><input type="checkbox" name="raw"> Raw</label><br>
+                    `;
+                    break;
+                case 'Seasonal':
+                    formFields = `
+                        <input type="text" name="season" placeholder="Season"><br>
+                    `;
+                    break;
+                case 'Vegetable Plants':
+                    formFields = `
+                        <input type="text" name="season" placeholder="Season"><br>
+                        <select name="plant_type" required>
+                            <option value="Vine">Vine</option>
+                            <option value="Stalk">Stalk</option>
+                            <option value="Squash">Squash</option>
+                            <option value="Lettuce">Lettuce</option>
+                        </select><br>
+                    `;
+                    break;
+            }
+
+            formContainer.innerHTML = formFields;  // Update the dynamic form with the correct fields
+        }
+    </script>
 </body>
 </html>
