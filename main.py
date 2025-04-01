@@ -273,8 +273,25 @@ def favorite_product():
             cursor_favorites.execute("INSERT INTO FAVORITES (CustomerID, ProductID) VALUES (%s, %s)", (customer_id, product_id))
         mysql.connection.commit()  
     cursor_favorites.close() 
-    return redirect(url_for('get_products'))  
+    return redirect(url_for('get_products'))
 
+
+@app.route('/delete_product', methods=['POST'])
+def delete_product():
+    product_id = request.form['id']  # Getting the product ID from the form data
+    if product_id:
+        cursor = mysql.connection.cursor()
+        cursor.execute("DELETE FROM FLOWERS WHERE ProductID = %s", (product_id,))
+        cursor.execute("DELETE FROM PRODUCE WHERE ProductID = %s", (product_id,))
+        cursor.execute("DELETE FROM HONEY WHERE ProductID = %s", (product_id,))
+        cursor.execute("DELETE FROM Seasonal WHERE ProductID = %s", (product_id,))
+        cursor.execute("DELETE FROM VegetablePlant WHERE ProductID = %s", (product_id,))
+        cursor.execute("DELETE FROM PRODUCTS WHERE ProductID = %s", (product_id,))
+
+        mysql.connection.commit()
+        cursor.close()
+
+    return redirect(url_for('get_products'))
 
 if __name__ == '__main__':
     app.run(debug=True)
