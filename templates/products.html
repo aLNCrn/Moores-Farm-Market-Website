@@ -79,19 +79,21 @@
                 <label>
                     <input type="checkbox" name="currently_available"> Available
                 </label><br>
+
+                <label for="product_type">Product Type:</label>
+                <select name="product_type" id="product_type" onchange="loadForm()" required>
+                    <option value="" disabled selected>Select Product Type</option>
+                    <option value="Flowers">Flowers</option>
+                    <option value="Honey">Honey</option>
+                    <option value="Produce">Produce</option>
+                    <option value="Seasonal">Seasonal</option>
+                    <option value="Vegetable Plants">Vegetable Plants</option>
+                </select><br><br>
+                <div id="dynamicForm"></div>
                 <button type="submit">Submit</button>
                 <button type="button" onclick="document.getElementById('addProductForm').style.display='none'">
                     Cancel
                 </button>
-                <label for="product_type">Product Type:</label>
-                <select name="product_type_id" id="product_type" onchange="addProduct_2()" required>
-                    <option value="" disabled selected>Select Product Type</option>
-                    <option value="1">Flowers</option>
-                    <option value="2">Honey</option>
-                    <option value="3">Produce</option>
-                    <option value="4">Seasonal</option>
-                    <option value="5">Vegetable Plants</option>
-                </select><br><br>
 
             </form>
         </div>
