@@ -220,7 +220,7 @@ def add_product():
 
     elif product_type_id == 'Produce':
         storage_instructions = request.form.get('storage_instructions')
-        produce_type = request.form.get('Fruit/Vegetable')  # 'Fruit/Vegetable' as selected in the form
+        produce_type = request.form.get('Fruit/Vegetable')  
         location = request.form.get('location')
         cursor.execute(
             "INSERT INTO PRODUCE (ProductID, StorageInstructions, Type, Location) VALUES (%s, %s, %s, %s)",
@@ -229,7 +229,7 @@ def add_product():
 
     elif product_type_id == 'Honey':
         source = request.form.get('source')
-        raw = 'raw' in request.form  # Checkbox for raw honey
+        raw = 'raw' in request.form
         cursor.execute(
             "INSERT INTO HONEY (ProductID, Source, Raw) VALUES (%s, %s, %s)",
             (product_id, source, raw)
@@ -256,20 +256,6 @@ def add_product():
 
     return redirect(url_for('products'))
 
-    #if request.form.get[product_type_id] == 1:
-    #   product_type= 'Flowers'
-
-    #elif request.form.get[product_type_id] == 2:
-    #  product_type= 'Honey'
-
-    #elif request.form.get[product_type_id] == 3:
-    #   product_type= 'Produce'
-
-    #elif request.form.get[product_type_id] == 4:
-    #   product_type= 'Seasonal'
-
-    #elif request.form.get[product_type_id] == 5:
-    #   product_type= 'Vegetable Plants'
 
 
 
