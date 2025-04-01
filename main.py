@@ -206,6 +206,54 @@ def add_product():
                    (name, price, currently_available, None))
 
     mysql.connection.commit()
+
+    cursor.execute("SELECT LAST_INSERT_ID()")
+    product_id = cursor.fetchone()[0]
+
+    if product_type == 'Flowers':
+        annual = request.form.get('annual')
+        sun_or_shade = request.form.get('sun_or_shade')
+        cursor.execute(
+            "INSERT INTO FLOWERS (ProductID, Annual, SunOrShade) VALUES (%s, %s, %s)",
+            (product_id, annual, sun_or_shade)
+        )
+
+    elif product_type == 'Produce':
+        storage_instructions = request.form.get('storage_instructions')
+        produce_type = request.form.get('Fruit/Vegetable')  # 'Fruit/Vegetable' as selected in the form
+        location = request.form.get('location')
+        cursor.execute(
+            "INSERT INTO PRODUCE (ProductID, StorageInstructions, Type, Location) VALUES (%s, %s, %s, %s)",
+            (product_id, storage_instructions, produce_type, location)
+        )
+
+    elif product_type == 'Honey':
+        source = request.form.get('source')
+        raw = 'raw' in request.form  # Checkbox for raw honey
+        cursor.execute(
+            "INSERT INTO HONEY (ProductID, Source, Raw) VALUES (%s, %s, %s)",
+            (product_id, source, raw)
+        )
+
+    elif product_type == 'Seasonal':
+        season = request.form.get('season')
+        cursor.execute(
+            "INSERT INTO Seasonal (ProductID, Season) VALUES (%s, %s)",
+            (product_id, season)
+        )
+
+    elif product_type == 'Vegetable Plants':
+        season = request.form.get('season')
+        plant_type = request.form.get('plant_type')
+        cursor.execute(
+            "INSERT INTO VegetablePlant (ProductID, Season, PlantType) VALUES (%s, %s, %s)",
+            (product_id, season, plant_type)
+        )
+
+    mysql.connection.commit()
+    cursor.close()
+
+
     return redirect(url_for('products'))
 
     #if request.form.get[product_type_id] == 1:
