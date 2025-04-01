@@ -201,7 +201,7 @@ def add_product():
     else:
         currently_available = 0
 
-
+    product_type_id = request.form['product_type_id']
     cursor.execute("INSERT INTO products (name, price, CurrentlyAvailable, ImageLink) VALUES (%s, %s, %s, %s)",
                    (name, price, currently_available, None))
 
@@ -210,7 +210,7 @@ def add_product():
     cursor.execute("SELECT LAST_INSERT_ID()")
     product_id = cursor.fetchone()[0]
 
-    if product_type == 'Flowers':
+    if product_type_id == 'Flowers':
         annual = request.form.get('annual')
         sun_or_shade = request.form.get('sun_or_shade')
         cursor.execute(
@@ -218,7 +218,7 @@ def add_product():
             (product_id, annual, sun_or_shade)
         )
 
-    elif product_type == 'Produce':
+    elif product_type_id == 'Produce':
         storage_instructions = request.form.get('storage_instructions')
         produce_type = request.form.get('Fruit/Vegetable')  # 'Fruit/Vegetable' as selected in the form
         location = request.form.get('location')
@@ -227,7 +227,7 @@ def add_product():
             (product_id, storage_instructions, produce_type, location)
         )
 
-    elif product_type == 'Honey':
+    elif product_type_id == 'Honey':
         source = request.form.get('source')
         raw = 'raw' in request.form  # Checkbox for raw honey
         cursor.execute(
@@ -235,14 +235,14 @@ def add_product():
             (product_id, source, raw)
         )
 
-    elif product_type == 'Seasonal':
+    elif product_type_id == 'Seasonal':
         season = request.form.get('season')
         cursor.execute(
             "INSERT INTO Seasonal (ProductID, Season) VALUES (%s, %s)",
             (product_id, season)
         )
 
-    elif product_type == 'Vegetable Plants':
+    elif product_type_id == 'Vegetable Plants':
         season = request.form.get('season')
         plant_type = request.form.get('plant_type')
         cursor.execute(
@@ -271,9 +271,7 @@ def add_product():
     #elif request.form.get[product_type_id] == 5:
     #   product_type= 'Vegetable Plants'
 
-app.route('/addProduct_2', methods =['POST'])
-def add_product_2():
-     selectedOption = request.form.get['product_type_id'];
+
 
 @app.route('/favorite', methods=['POST'])
 def favorite_product():
