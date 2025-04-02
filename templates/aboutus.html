@@ -18,11 +18,17 @@
                 <a href="/index">Home</a>
                 <a href="/products">Products</a>
             </div>
+
+           
             <div class="nav-right">
                 <a href="/seasonal">Seasonal</a>
+                {% if not session['FirstName'] %}
                 <a href="/login">Log In</a>
+                {% endif %}
             </div>
 
+
+           
             {% if session['FirstName'] %}
             <span style="color: white; font-weight: bold; margin-left: 15px;">
                 Welcome, {{ session['FirstName'] }}

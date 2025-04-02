@@ -21,7 +21,9 @@
             </div>
             <div class="nav-right">
                 <a href="/seasonal">Seasonal</a>
+                {% if not session['FirstName'] %}
                 <a href="/login">Log In</a>
+                {% endif %}
             </div>
 
 
@@ -56,19 +58,27 @@
                     <input type="hidden" name="id" value="{{ product['ProductID'] }}">
                     <button type="submit">Delete</button>
                 </form>
-        {% endif %}
-                {% if session.get('CustomerID') %}
-            <form action="{{ url_for('favorite_product') }}" method="POST">
-                <input type="hidden" name="product_id" value="{{ product['ProductID'] }}">
-                <button type="submit">
-                    {% if product['is_favorited'] %}
-                        ⭐ Unfavorite
-                    {% else %}
-                        ☆ Favorite
-                    {% endif %}
+
+                <!--
+                <button onclick="document.getElementById('editProductForm').style.display='block'">
+                    Edit
                 </button>
-            </form>
-            {% endif %}
+                -->
+
+                {% endif %}
+
+                {% if session.get('CustomerID') %}
+                <form action="{{ url_for('favorite_product') }}" method="POST">
+                    <input type="hidden" name="product_id" value="{{ product['ProductID'] }}">
+                    <button type="submit">
+                        {% if product['is_favorited'] %}
+                        ⭐ Unfavorite
+                        {% else %}
+                        ☆ Favorite
+                        {% endif %}
+                    </button>
+                </form>
+                {% endif %}
             </div>
             {% endfor %}
         </div>
@@ -106,11 +116,93 @@
 
         {% endif %}
 
+        <!--
+        <div id="editProductForm" style="display: none;">
+            <form action="" method="POST">
+                product, product_type = getEditProductFormData() 
+                <input type="text" name="name" placeholder= required><br>
+                <input type="number" step="0.01" name="price" placeholder=required><br>
+
+                <label>
+                    <input type="checkbox" name="currently_available"> Available
+                </label><br>
+
+                <label for="product_type">Product Type:</label>
+                <select name="product_type_id" id="product_type" onchange="loadForm2()" required>
+                    <option value="" disabled selected>Select Product Type</option>
+                    <option value="Flowers">Flowers</option>
+                    <option value="Honey">Honey</option>
+                    <option value="Produce">Produce</option>
+                    <option value="Seasonal">Seasonal</option>
+                    <option value="Vegetable Plants">Vegetable Plants</option>
+                </select><br><br>
+                <div id="dynamicForm"></div>
+                <button type="submit">Submit</button>
+                <button type="button" onclick="document.getElementById('editProductForm').style.display='none'">
+                    Cancel
+                </button>
+
+            </form>
+        </div>
+        -->
+
+
     </main>
 
     <script>
         function loadForm() {
             const productType = document.getElementById("product_type").value;
+            const formContainer = document.getElementById("dynamicForm");
+            let formFields = '';
+
+            switch (productType) {
+                case 'Flowers':
+                    formFields = `
+                            <input type="text" name="annual" placeholder="Annual"><br>
+                            <input type="text" name="sun_or_shade" placeholder="Sun or Shade"><br>
+                        `;
+                    break;
+                case 'Produce':
+                    formFields = `
+                            <input type="text" name="storage_instructions" placeholder="Storage Instructions"><br>
+                            <select name="Fruit/Vegetable" required>
+                                <option value="Fruit">Fruit</option>
+                                <option value="Vegetable">Vegetable</option>
+                            </select><br>
+                            <input type="text" name="location" placeholder="Location"><br>
+                        `;
+                    break;
+                case 'Honey':
+                    formFields = `
+                            <input type="text" name="source" placeholder="Source"><br>
+                            <label><input type="checkbox" name="raw"> Raw</label><br>
+                        `;
+                    break;
+                case 'Seasonal':
+                    formFields = `
+                            <input type="text" name="season" placeholder="Season"><br>
+                        `;
+                    break;
+                case 'Vegetable Plants':
+                    formFields = `
+                            <input type="text" name="season" placeholder="Season"><br>
+                            <select name="plant_type" required>
+                                <option value="Vine">Vine</option>
+                                <option value="Stalk">Stalk</option>
+                                <option value="Squash">Squash</option>
+                                <option value="Lettuce">Lettuce</option>
+                            </select><br>
+                        `;
+                    break;
+            }
+
+            formContainer.innerHTML = formFields;  // Update the form with the correct fields
+        }
+    </script>
+
+    <script>
+        function loadForm2() {
+            const product_type1 = document.getElementById("product_type").value;
             const formContainer = document.getElementById("dynamicForm");
 
             let formFields = '';
@@ -118,34 +210,34 @@
             switch (productType) {
                 case 'Flowers':
                     formFields = `
-                        <input type="text" name="annual" placeholder="Annual"><br>
-                        <input type="text" name="sun_or_shade" placeholder="Sun or Shade"><br>
+                        <input type="text" name="annual" placeholder= product_type1{{'annual'}} ><br>
+                        <input type="text" name="sun_or_shade" placeholder=product_type1{{'sunorshade'}}><br>
                     `;
                     break;
                 case 'Produce':
                     formFields = `
-                        <input type="text" name="storage_instructions" placeholder="Storage Instructions"><br>
+                        <input type="text" name="storage_instructions" placeholder=product_type1{{StorageInstructions}}><br>
                         <select name="Fruit/Vegetable" required>
                             <option value="Fruit">Fruit</option>
                             <option value="Vegetable">Vegetable</option>
                         </select><br>
-                        <input type="text" name="location" placeholder="Location"><br>
+                        <input type="text" name="location" placeholder=product_type1{{Location}}><br>
                     `;
                     break;
                 case 'Honey':
                     formFields = `
-                        <input type="text" name="source" placeholder="Source"><br>
+                        <input type="text" name="source" placeholder=product_type1{{Source}}><br>
                         <label><input type="checkbox" name="raw"> Raw</label><br>
                     `;
                     break;
                 case 'Seasonal':
                     formFields = `
-                        <input type="text" name="season" placeholder="Season"><br>
+                        <input type="text" name="season" placeholder=product_type1{{Season}}><br>
                     `;
                     break;
                 case 'Vegetable Plants':
                     formFields = `
-                        <input type="text" name="season" placeholder="Season"><br>
+                        <input type="text" name="season" placeholder=product_type1{{Season}}><br>
                         <select name="plant_type" required>
                             <option value="Vine">Vine</option>
                             <option value="Stalk">Stalk</option>
@@ -156,8 +248,10 @@
                     break;
             }
 
-            formContainer.innerHTML = formFields;  // Update the dynamic form with the correct fields
+            formContainer.innerHTML = formFields;  // Update the form with the correct fields
         }
     </script>
+
+
 </body>
 </html>

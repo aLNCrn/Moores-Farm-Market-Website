@@ -20,7 +20,9 @@
                 <a href="/products">Products</a>
             </div>
             <div class="nav-right">
+                {% if not session['FirstName'] %}
                 <a href="/login">Log In</a>
+                {% endif %}
             </div>
 
             {% if session['FirstName'] %}
