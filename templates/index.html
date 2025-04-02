@@ -38,6 +38,68 @@
     <main style="padding-top: 200px">
 
         <h1 class="about-heading fade-in-heading">Welcome !</h1>
+        
+        {% if reviews %}
+        <h3>Current Reviews</h3>
+        <table border="1" style="margin: 0 auto; text-align: center;">
+            <thead>
+                <tr>
+                    <th>Rating</th>
+                    <th>Review Date</th>
+                    <th>Review Text</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for review in reviews %}
+                    <tr>
+                        <td>{{ review['Rating'] }}</td>
+                        <td>{{ review['ReviewDate'].strftime('%m-%d-%Y') }}</td>
+                        <td>{{ review['ReviewText'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p>No reviews yet. Be the first to leave one!</p>
+        {% endif %}
+
+        {% if session['loggedin'] and not reviewMade %}  
+            <!-- Review Form (Only visible if logged in) -->
+            <h3>Submit Your Review</h3>
+            <form action="{{ url_for('index') }}" method="POST">
+                <!-- Rating Input (1-5) -->
+                <label for="rating">Rating (1 to 5):</label>
+                <select id="rating" name="rating" required>
+                    <option value="5">5</option>
+                    <option value="4">4</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                    <option value="1">1</option>
+                </select>
+                <br><br>
+            
+                <!-- Review Text Input -->
+                <label for="review">Your Review:</label><br>
+                <textarea id="review" name="review" rows="4" cols="50" placeholder="Write your review here..." required></textarea>
+                <br><br>
+            
+                <!-- Submit Button -->
+                <button type="submit">Submit Review</button>
+            </form>
+
+            {% if review_submitted %}
+            <p>Thank you for your review!</p>
+            {% endif %}
+
+        {% else %}
+            {% if not session['loggedin'] %}
+                <!-- Not logged in, prompt login -->
+                <p>You are not logged in. <a href="{{ url_for('login') }}">You Must Login to Leave a Review.</a></p>
+            {% else %}
+                <p>You have already left a review today.</p>
+            {% endif %}
+        {% endif %}
+
     </main>
 </body>
 </html>

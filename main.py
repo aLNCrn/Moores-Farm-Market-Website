@@ -3,6 +3,7 @@ from flask_mysqldb import MySQL
 import mysql.connector
 import MySQLdb.cursors
 import re
+from datetime import datetime
 
 app = Flask(__name__, template_folder='templates')  # Explicitly set templates folder
 
@@ -25,6 +26,10 @@ def load_logged_in_user():
     g.isOwner = session.get('isOwner', False)
     g.isEmp = session.get('isEmp', False)
 
+@app.route('/')
+def home():
+    return redirect(url_for('index'))
+
 @app.route('/aboutus')
 def aboutus():
     return render_template('aboutus.html')
@@ -32,24 +37,39 @@ def aboutus():
 
 @app.route('/index', methods=['GET', 'POST'])
 def index():
+    #if the user is logged in and not made a review today, allow them to make a review
+    reviewMade = False
+    if 'loggedin' in session and session['loggedin']:
+        today = datetime.today().strftime('%Y-%m-%d')
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT ReviewDate, CustomerID  FROM reviews')
+        dateCheckReviews = cursor.fetchall() 
+        for review in dateCheckReviews:
+            review_date = review['ReviewDate'].strftime('%Y-%m-%d')  # Extract the date part
+            if review['CustomerID'] == session['CustomerID'] and review_date == today:
+                # If the user has already submitted a review today
+                reviewMade = True
+                break
+
+        if not reviewMade:     
+            if request.method == 'POST':
+                rating = request.form['rating']
+                reviewText = request.form['review']
+                customerID = session['CustomerID']
+                writeCursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+                writeCursor.execute("INSERT INTO reviews (Rating, ReviewText, CustomerID) VALUES (%s, %s, %s)",
+                            (rating, reviewText, customerID))
+                mysql.connection.commit()
+                session['reviewMade'] = True    
+                return redirect(url_for('index'))
+    
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('SELECT Rating, ReviewDate, ReviewText  FROM reviews')
-    reviews = cursor.fetchall()  
+    reviews = cursor.fetchall() 
+    reviews = reviews[::-1]
     #print(reviews)
-    return render_template('index.html')
-
-@app.route('/add_review', methods=['POST'])
-def add_review():
-    cursor = mysql.connection.cursor()
-    rating = request.form['name']
-    reviewText = request.form['price']
-    #TODO get customer id from whatever the user is currently logged in as
-    #customerID = 1
-    cursor.execute("INSERT INTO reviews (Rating, ReviewText, CustomerID) VALUES (%s, %s, %s)",
-                   (rating, reviewText, customerID))
-
-    mysql.connection.commit()
-    return redirect(url_for('products'))
+    # Render the review form if the user is logged in
+    return render_template('index.html', reviews=reviews, reviewMade=reviewMade)
 
 @app.route('/products')
 def products():
