@@ -38,7 +38,7 @@
         
         <div class="content-container">
             <div class="text-content">
-                <h2 class="main-heading fade-in-heading">EMPLYEE SCHEDULE</h2>
+                <h2 class="main-heading fade-in-heading">EMPLOYEE SCHEDULE</h2>
                 <p class="sub-text fade-in-paragraph"> Moore's Farm Market was started in 1952 by George and Mildred Moore. We have been a family run business ever since providing fresh produce and flowers to the community. We have a wide variety of produce, flowers, honey, seasonal decorations, as well as fall and winter seasonal products.</p>
             </div>
         </div>
@@ -54,7 +54,7 @@
                 <input type="time" name="start" placeholder="start shift" required><br>
                 <input type="time" name="end" placeholder="end shift" required><br>
                 <label>
-                    <input type="checkbox" name="currently_available"> Available
+                    <input type="checkbox" name="day_available"> Available
                 </label><br>
                 <button type="submit">Submit</button>
                 <button type="button" onclick="document.getElementById('addEmployeeForm').style.display='none'">
@@ -63,31 +63,26 @@
             </form>
         </div>
         <!-- second button for employees to request time off -->
-        <!--<button onclick="document.getElementById('addEmployeeForm').style.display='block'">
-            Add New Employee
+        <button onclick="document.getElementById('requestTimeOffForm').style.display='block'">
+            Request time off
         </button>
-        <div id="addEmployeeForm" style="display: none;">
-            <form action="{{ url_for('add_employee') }}" method="POST">
+        <div id="requestTimeOffForm" style="display: none;">
+            <form action="{{ url_for('request_time_off') }}" method="POST">
                 <input type="text" name="name" placeholder="employee Name" required><br>
                 <input type="text" name="day" placeholder="Day" required><br>
                 <input type="number" step="1" name="week" placeholder="Week" required><br>
-                <input type="time" name="start" placeholder="start shift" required><br>
-                <input type="time" name="end" placeholder="end shift" required><br>
+                <input type="time" name="start_time_off" placeholder="start of time off" required><br>
+                <input type="time" name="end_time_off" placeholder="end of time off" required><br>
                 <label>
-                    <input type="checkbox" name="currently_available"> Available
+                    <input type="checkbox" name="is_available"> Available
                 </label><br>
                 <button type="submit">Submit</button>
-                <button type="button" onclick="document.getElementById('addEmployeeForm').style.display='none'">
+                <button type="button" onclick="document.getElementById('requestTimeOffForm').style.display='none'">
                     Cancel
                 </button>      
             </form>
-        </div>-->
-
-    
-        <!-- Second Section: Local -->
+        </div>
         
-    
-        <!-- Third Section: Fresh -->
         
     </main>
 
