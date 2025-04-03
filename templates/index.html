@@ -22,8 +22,14 @@
             </div>
             <div class="nav-right">
                 <a href="/seasonal">Seasonal</a>
+                {% if not session['FirstName'] %}
                 <a href="/login">Log In</a>
+                {% endif %}
+                {% if session['isOwner'] or session['isEmp'] %}
+                <a href="/employee_schedule">Employee Schedule</a>
+                {% endif %}
             </div>
+
 
             {% if session['FirstName'] %}
             <span style="color: white; font-weight: bold; margin-left: 15px;">
@@ -31,7 +37,6 @@
             </span>
             <a href="{{ url_for('logout') }}" style="color: red; font-weight: bold; margin-left: 10px;">Logout</a>
             {% endif %}
-
         </nav>
     </header>
 

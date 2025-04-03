@@ -1,0 +1,132 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\flaxe\\OneDrive\\Documents\\GitHub\\Moores-Farm-Market-Website\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\flaxe\\source\\repos\\Moores-Farm-Market-Website\\main.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\flaxe\\source\\repos\\Moores-Farm-Market-Website\\templates\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\flaxe\\source\\repos\\Moores-Farm-Market-Website\\templates\\aboutus.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\flaxe\\source\\repos\\Moores-Farm-Market-Website\\templates\\login.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\flaxe\\source\\repos\\Moores-Farm-Market-Website\\templates\\products.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\flaxe\\source\\repos\\Moores-Farm-Market-Website\\templates\\register.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\flaxe\\source\\repos\\Moores-Farm-Market-Website\\templates\\seasonal.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "seasonal.html",
+              "DocumentMoniker": "C:\\Users\\flaxe\\source\\repos\\Moores-Farm-Market-Website\\templates\\seasonal.html",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\source\\repos\\Moores-Farm-Market-Website\\templates\\seasonal.html",
+              "ToolTip": "C:\\Users\\flaxe\\source\\repos\\Moores-Farm-Market-Website\\templates\\seasonal.html",
+              "RelativeToolTip": "..\\..\\..\\..\\source\\repos\\Moores-Farm-Market-Website\\templates\\seasonal.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-04-03T17:14:44.826Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "register.html",
+              "DocumentMoniker": "C:\\Users\\flaxe\\source\\repos\\Moores-Farm-Market-Website\\templates\\register.html",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\source\\repos\\Moores-Farm-Market-Website\\templates\\register.html",
+              "ToolTip": "C:\\Users\\flaxe\\source\\repos\\Moores-Farm-Market-Website\\templates\\register.html",
+              "RelativeToolTip": "..\\..\\..\\..\\source\\repos\\Moores-Farm-Market-Website\\templates\\register.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-04-03T17:14:44.558Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "products.html",
+              "DocumentMoniker": "C:\\Users\\flaxe\\source\\repos\\Moores-Farm-Market-Website\\templates\\products.html",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\source\\repos\\Moores-Farm-Market-Website\\templates\\products.html",
+              "ToolTip": "C:\\Users\\flaxe\\source\\repos\\Moores-Farm-Market-Website\\templates\\products.html",
+              "RelativeToolTip": "..\\..\\..\\..\\source\\repos\\Moores-Farm-Market-Website\\templates\\products.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-04-03T17:14:44.241Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "login.html",
+              "DocumentMoniker": "C:\\Users\\flaxe\\source\\repos\\Moores-Farm-Market-Website\\templates\\login.html",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\source\\repos\\Moores-Farm-Market-Website\\templates\\login.html",
+              "ToolTip": "C:\\Users\\flaxe\\source\\repos\\Moores-Farm-Market-Website\\templates\\login.html",
+              "RelativeToolTip": "..\\..\\..\\..\\source\\repos\\Moores-Farm-Market-Website\\templates\\login.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-04-03T17:14:43.741Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "aboutus.html",
+              "DocumentMoniker": "C:\\Users\\flaxe\\source\\repos\\Moores-Farm-Market-Website\\templates\\aboutus.html",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\source\\repos\\Moores-Farm-Market-Website\\templates\\aboutus.html",
+              "ToolTip": "C:\\Users\\flaxe\\source\\repos\\Moores-Farm-Market-Website\\templates\\aboutus.html",
+              "RelativeToolTip": "..\\..\\..\\..\\source\\repos\\Moores-Farm-Market-Website\\templates\\aboutus.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-04-03T17:14:43.453Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "index.html",
+              "DocumentMoniker": "C:\\Users\\flaxe\\source\\repos\\Moores-Farm-Market-Website\\templates\\index.html",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\source\\repos\\Moores-Farm-Market-Website\\templates\\index.html",
+              "ToolTip": "C:\\Users\\flaxe\\source\\repos\\Moores-Farm-Market-Website\\templates\\index.html",
+              "RelativeToolTip": "..\\..\\..\\..\\source\\repos\\Moores-Farm-Market-Website\\templates\\index.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-04-03T17:14:33.722Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "main.py",
+              "DocumentMoniker": "C:\\Users\\flaxe\\source\\repos\\Moores-Farm-Market-Website\\main.py",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\source\\repos\\Moores-Farm-Market-Website\\main.py",
+              "ToolTip": "C:\\Users\\flaxe\\source\\repos\\Moores-Farm-Market-Website\\main.py",
+              "RelativeToolTip": "..\\..\\..\\..\\source\\repos\\Moores-Farm-Market-Website\\main.py",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2025-04-03T17:14:17.864Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
