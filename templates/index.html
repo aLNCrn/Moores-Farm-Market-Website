@@ -54,10 +54,16 @@
             </div>
         </div>
     </header>
-    <main style="padding-top: 600px">
+    <main style="padding-top: 400px">
 
 
+ <div class="content-container">
+            <img src= {{url_for ('static', filename='images/frontofmarket.jpg' )}} alt="Farmers Market" class="content-image fade-in-image">
 
+        </div>
+        <div class="content-container reverse">
+            <img src= {{url_for('static', filename='images/Christmastreegrouppicture.jpg')}} alt="Farmers Market" class="content-image fade-in-image">
+        </div>
         {% if reviews %}
         <h3>Recent Reviews</h3>
         <table class="review-table">
