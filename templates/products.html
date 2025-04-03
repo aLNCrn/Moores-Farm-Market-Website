@@ -70,11 +70,26 @@
         <div class="product-container">
             {% for product in products %}
             <div class="product-box">
-                <h3>{{ product['Name'] }}</h3>
+                <h3>{{ product['Name']}}</h3>
                 <p>Price: ${{ product['Price'] if product['Price'] else 'N/A' }}</p>
                 <p>
                     {% if product['CurrentlyAvailable'] %} ✅ Available {% else %} ❌ Not Available {% endif %}
                 </p>
+                  {% if selected_table == 'FLOWERS' %}
+                <p>Annual: {{ product['Annual'] }}</p>
+                <p>Sun or Shade: {{ product['SunOrShade'] }}</p>
+            {% elif selected_table == 'PRODUCE' %}
+                <p>Storage Instructions: {{ product['StorageInstructions'] }}</p>
+                <p>Location: {{ product['Location'] }}</p>
+            {% elif selected_table == 'HONEY' %}
+                <p>Source: {{ product['Source'] }}</p>
+                <p>Raw: {% if product['Raw'] %} ✅ Yes {% else %} ❌ No {% endif %}</p>
+            {% elif selected_table == 'Seasonal' %}
+                <p>Season: {{ product['Season'] }}</p>
+            {% elif selected_table == 'VegetablePlant' %}
+                <p>Season: {{ product['Season'] }}</p>
+                <p>Plant Type: {{ product['PlantType'] }}</p>
+            {% endif %}
                 {% if session.get('isOwner') %}
                 <form action="{{ url_for('delete_product') }}" method="POST" style="display:inline;">
                     <input type="hidden" name="id" value="{{ product['ProductID'] }}">
