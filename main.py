@@ -34,6 +34,10 @@ def home():
 def aboutus():
     return render_template('aboutus.html')
 
+@app.route('/employee_schedule')
+def employee_schedule():
+    return render_template('employee_schedule.html')
+
 
 @app.route('/index', methods=['GET', 'POST'])
 def index():
