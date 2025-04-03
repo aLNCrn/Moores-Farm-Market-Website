@@ -67,7 +67,6 @@ def index():
     cursor.execute('SELECT Rating, ReviewDate, ReviewText  FROM reviews')
     reviews = cursor.fetchall() 
     reviews = reviews[::-1]
-    cursor.close()
     #print(reviews)
     # Render the review form if the user is logged in
     return render_template('index.html', reviews=reviews, reviewMade=reviewMade)
