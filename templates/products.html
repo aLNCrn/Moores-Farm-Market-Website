@@ -134,7 +134,7 @@
                 </label><br>
 
                 <label for="product_type">Product Type:</label>
-                <select name="product_type_id" id="product_type" onchange="loadForm()" required>
+                <select name="product_type_id" id="product_type_selector" onchange="loadForm()" required>
                     <option value="" disabled selected>Select Product Type</option>
                     <option value="Flowers">Flowers</option>
                     <option value="Honey">Honey</option>
@@ -188,7 +188,7 @@
 
     <script>
         function loadForm() {
-            const productType = document.getElementById("product_type").value;
+            const productType = document.getElementById("product_type_selector").value;
             const formContainer = document.getElementById("dynamicForm");
             let formFields = '';
 
