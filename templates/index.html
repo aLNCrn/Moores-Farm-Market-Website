@@ -38,15 +38,29 @@
             <a href="{{ url_for('logout') }}" style="color: red; font-weight: bold; margin-left: 10px;">Logout</a>
             {% endif %}
         </nav>
+        <div class="page-subheading">
+            <!-- Left Part: Contact Information -->
+            <div class="left-info">
+                <h2>Contact Information</h2>
+                <p><strong>Address:</strong> 66 Atlantic City Boulevard, Bayville, NJ</p>
+                <p><strong>Phone:</strong> 732-349-2876</p>
+                <p><strong>Facebook:</strong> <a href="https://facebook.com/yourpage" target="_blank">Moore's Farm Market</a></p>
+            </div>
+
+            <!-- Right Part: Subheading Text -->
+            <div class="right-subheading">
+                <h1>Welcome to Moore's Farmers Market!</h1>
+                <p>Explore our fresh products and seasonal specials!</p>
+            </div>
+        </div>
     </header>
+    <main style="padding-top: 600px">
 
-    <main style="padding-top: 200px">
 
-        <h1 class="about-heading fade-in-heading">Welcome !</h1>
-        
+
         {% if reviews %}
-        <h3>Current Reviews</h3>
-        <table border="1" style="margin: 0 auto; text-align: center;">
+        <h3>Recent Reviews</h3>
+        <table class="review-table">
             <thead>
                 <tr>
                     <th>Rating</th>

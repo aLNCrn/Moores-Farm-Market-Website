@@ -326,3 +326,106 @@ nav a:hover {
     border-radius: 5px;
     background-color: white;
 }
+
+/* Page Subheading Section */
+.page-subheading {
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+    align-items: flex-start; /* Align items to the top */
+    margin: 20px;
+    padding: 20px;
+    background-color: #e0f7e4; /* Light green background */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* Left Part: Contact Information */
+.left-info {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    width: 25%; /* Adjust the width for the contact section */
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.left-info h2 {
+    font-size: 1.5rem;
+    color: #4CAF50; /* Light green heading */
+}
+
+.left-info p {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.left-info a {
+    color: #4CAF50; /* Light green link */
+    text-decoration: none;
+}
+
+.left-info a:hover {
+    text-decoration: underline;
+}
+
+/* Right Part: Subheading Text */
+.right-subheading {
+    width: 70%; /* Takes up the remaining space */
+    padding: 10px;
+    text-align: center; /* Center the text */
+}
+
+.right-subheading h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #4CAF50; /* Light green text for the heading */
+}
+
+.right-subheading p {
+    font-size: 1.1rem;
+    color: #333;
+}
+
+
+/* Styling for the Review Table */
+.review-table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    text-align: center;
+    background-color: #d3d3d3; /* Set light gray background for the entire table */
+    border: 1px solid #ddd;
+}
+
+.review-table th,
+.review-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.review-table th {
+    background-color: #c0c0c0; /* Slightly darker gray for the header */
+    color: #333;
+    font-weight: bold;
+}
+
+.review-table td {
+    background-color: #d3d3d3; /* Light gray background for the data cells */
+    color: #333;
+}
+
+.review-table tr:nth-child(even) {
+    background-color: #e0e0e0; /* Lighter gray for alternating rows */
+}
+
+.review-table tr:hover {
+    background-color: #b0b0b0; /* Slightly darker gray when hovering over rows */
+}
+
+
+
+
