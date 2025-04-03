@@ -39,7 +39,7 @@ def aboutus():
 def index():
     #if the user is logged in and not made a review today, allow them to make a review
     reviewMade = False
-    if 'loggedin' in session and session['loggedin']:
+    if 'loggedin' in session and session['loggedin'] and 'CustomerID' in session:
         today = datetime.today().strftime('%Y-%m-%d')
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT ReviewDate, CustomerID  FROM reviews')
