@@ -190,26 +190,28 @@ def register():
 
     return render_template('register.html', msg=msg)
 
-@app.route('/getproducts')
+@app.route('/getproducts',methods=['GET', 'POST'])
 def get_products():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    selected_table = request.form.get('table_name', 'PRODUCTS')
     customer_id = session.get('CustomerID')
     if customer_id:  
-        cursor.execute("""
+        cursor.execute(f"""
             SELECT p.*, 
                    CASE WHEN f.CustomerID IS NOT NULL THEN 1 ELSE 0 END as is_favorited
-            FROM PRODUCTS p
+            FROM {selected_table} p
             LEFT JOIN FAVORITES f 
             ON p.ProductID = f.ProductID AND f.CustomerID = %s
         """, (customer_id,))
-    else:  
-        cursor.execute("SELECT * FROM products")
-        products = cursor.fetchall()  # Fetch all products without is_favorited
-        return render_template('products.html', products=products)
+    else:
+        # If not logged in, just fetch all products from the selected table
+        cursor.execute(f"SELECT * FROM {selected_table}")
+        #products = cursor.fetchall()  # Fetch all products without is_favorited
+        #return render_template('products.html', products=products,selected_table=selected_table)
 
-    products = cursor.fetchall()  
+    products = cursor.fetchall()
     cursor.close()
-    return render_template('products.html', products=products)
+    return render_template('products.html', products=products,selected_table=selected_table)
 
 @app.route('/add_product', methods=['POST'])
 def add_product():
