@@ -36,11 +36,23 @@ def aboutus():
 
 @app.route('/employee_schedule')
 def employee_schedule():
-    return render_template('employee_schedule.html')
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT EmployeeID, Year, Month, Day, TimeIn, TimeOut  FROM employeeschedule')
+    timeBlocks = cursor.fetchall() 
+    for block in timeBlocks:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute(f'SELECT FirstName, LastName FROM EMPLOYEES WHERE EmployeeID  = {block["EmployeeID"]}')
+        nameTuple = cursor.fetchall()
+        #print(nameTuple)
+        name = nameTuple[0]["FirstName"] + " " + nameTuple[0]['LastName']
+        block['Name'] = name
+        #print(block)
+    return render_template('employee_schedule.html', timeBlocks=timeBlocks)
 
 
 @app.route('/index', methods=['GET', 'POST'])
 def index():
+    
     #if the user is logged in and not made a review today, allow them to make a review
     reviewMade = False
     if 'loggedin' in session and session['loggedin'] and 'CustomerID' in session:
