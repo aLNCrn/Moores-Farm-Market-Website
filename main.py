@@ -211,23 +211,53 @@ def get_products():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     selected_table = request.form.get('table_name', 'PRODUCTS')
     customer_id = session.get('CustomerID')
-    if customer_id:  
-        cursor.execute(f"""
-            SELECT p.*, 
-                   CASE WHEN f.CustomerID IS NOT NULL THEN 1 ELSE 0 END as is_favorited
-            FROM {selected_table} p
-            LEFT JOIN FAVORITES f 
-            ON p.ProductID = f.ProductID AND f.CustomerID = %s
-        """, (customer_id,))
+    if selected_table == 'PRODUCTS':
+        if customer_id:
+            cursor.execute("""
+                   SELECT p.*, 
+                          CASE WHEN f.CustomerID IS NOT NULL THEN 1 ELSE 0 END as is_favorited
+                   FROM PRODUCTS p
+                   LEFT JOIN FAVORITES f 
+                   ON p.ProductID = f.ProductID AND f.CustomerID = %s
+               """, (customer_id,))
+        else:
+            cursor.execute("SELECT * FROM PRODUCTS")
     else:
-        # If not logged in, just fetch all products from the selected table
-        cursor.execute(f"SELECT * FROM {selected_table}")
-        #products = cursor.fetchall()  # Fetch all products without is_favorited
-        #return render_template('products.html', products=products,selected_table=selected_table)
+        if customer_id:
+            cursor.execute(f"""
+                   SELECT p.ProductID, prod.Name, prod.Price, prod.CurrentlyAvailable,
+                          p.*, 
+                          CASE WHEN f.CustomerID IS NOT NULL THEN 1 ELSE 0 END as is_favorited
+                   FROM {selected_table} p
+                   JOIN PRODUCTS prod ON p.ProductID = prod.ProductID
+                   LEFT JOIN FAVORITES f 
+                   ON p.ProductID = f.ProductID AND f.CustomerID = %s
+               """, (customer_id,))
+        else:
+            cursor.execute(f"""
+                   SELECT p.ProductID, prod.Name, prod.Price, prod.CurrentlyAvailable, p.*
+                   FROM {selected_table} p
+                   JOIN PRODUCTS prod ON p.ProductID = prod.ProductID
+               """)
+        if selected_table == 'FAVORITES':
+            if not customer_id:
+                flash("You need to be logged in to see favorites.")
+                return redirect(url_for('login'))  # or show an empty list
+            else:
+                # This fetches all favorited products from all sub-tables
+                cursor.execute("""
+                        SELECT prod.ProductID, prod.Name, prod.Price, prod.CurrentlyAvailable, 1 as is_favorited
+                        FROM FAVORITES f
+                        JOIN PRODUCTS prod ON f.ProductID = prod.ProductID
+                        WHERE f.CustomerID = %s
+                    """, (customer_id,))
+                products = cursor.fetchall()
+                cursor.close()
+                return render_template('products.html', products=products, selected_table=selected_table)
 
     products = cursor.fetchall()
     cursor.close()
-    return render_template('products.html', products=products,selected_table=selected_table)
+    return render_template('products.html', products=products, selected_table=selected_table)
 
 @app.route('/add_product', methods=['POST'])
 def add_product():
