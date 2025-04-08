@@ -326,11 +326,9 @@ def delete_product():
 def add_schedule():
     cursor = mysql.connection.cursor()
 
-    # Fetch employees for the dropdown
     cursor.execute("SELECT EmployeeID, FirstName, LastName FROM employees")
     employees = cursor.fetchall()
 
-    # Current date info for default selection
     today = datetime.today()
     current_year = today.year
     current_month = today.month
@@ -345,7 +343,6 @@ def add_schedule():
             time_in = request.form.get(f'timein-{day}')
             time_out = request.form.get(f'timeout-{day}')
 
-            # Only insert if both fields are filled (i.e., checkbox selected)
             if time_in and time_out:
                 cursor.execute("""
                     INSERT INTO employeeschedule (EmployeeID, Year, Month, Day, TimeIn, TimeOut)
@@ -353,9 +350,8 @@ def add_schedule():
                 """, (employee_id, year, month, day, time_in, time_out))
 
         mysql.connection.commit()
-        return redirect('/eschedule')
+        return redirect('/add_schedule')
 
-    # For GET request: optionally filter by employee, year, and month
     employee_id = request.args.get('employee_id')
     year = request.args.get('year')
     month = request.args.get('month')
@@ -387,27 +383,12 @@ def add_schedule():
 
 
 
-
-
-
-
-
-
-
-
 @app.route('/eschedule', methods=['GET'])
 def eschedule():
-    # Open a cursor to interact with the database
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-
-    # Fetch all schedules from the employeeschedule table
     cursor.execute("SELECT * FROM employeeschedule")
     schedule = cursor.fetchall()
-
-    # Close the cursor after fetching the data
     cursor.close()
-
-    # Render the 'eschedule.html' template, passing the fetched schedule data
     return render_template('eschedule.html', schedule=schedule)
 
 
@@ -447,3 +428,5 @@ def edit_product2():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
