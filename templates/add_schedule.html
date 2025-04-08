@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Employee Schedule</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="nav-left">
+                <a href="/index">Home</a>
+                <a href="/products">Products</a>
+            </div>
+            <div class="nav-right">
+                <a href="/seasonal">Seasonal</a>
+                <a href="/login">Log In</a>
+            </div>
+        </nav>
+    </header>
+
+    <main style="padding-top: 100px; text-align: center;">
+        <h1>Add Schedule for Employee</h1>
+        
+        <form action="/add_schedule" method="POST">
+            <label for="employee_id">Select Employee:</label>
+            <select name="employee_id" required>
+                {% for employee in employees %}
+                    <option value="{{ employee[0] }}">{{ employee[1] }} {{ employee[2] }}</option>
+                {% endfor %}
+            </select>            
+            <br><br>
+
+            <label for="year">Select Year:</label>
+            <select name="year" required>
+                <option value="{{ current_year }}" selected>{{ current_year }}</option>
+            </select>
+            <br><br>
+
+            <label for="month">Select Month:</label>
+            <select name="month" required>
+                <option value="{{ current_month }}" selected>{{ current_month }}</option>
+                {% for i in range(1, 13) %}
+                    {% if i != current_month %}
+                        <option value="{{ i }}">{{ i }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <br><br>
+
+            <div class="days-container">
+                {% for day in days_in_advance %}
+                    <div class="day-checkbox">
+                        <label for="day-{{ day }}">{{ day }}:</label>
+                        <input type="checkbox" name="day-{{ day }}" value="{{ day }}" id="day-{{ day }}" class="day-toggle">
+                        <div class="time-inputs" style="display:none;" id="time-inputs-{{ day }}">
+                            <label for="timein-{{ day }}">Time In:</label>
+                            <input type="time" name="timein-{{ day }}" id="timein-{{ day }}">
+                            <label for="timeout-{{ day }}">Time Out:</label>
+                            <input type="time" name="timeout-{{ day }}" id="timeout-{{ day }}">
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <br>
+            <button type="submit">Submit Schedule</button>
+        </form>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const checkboxes = document.querySelectorAll('.day-toggle');
+
+            checkboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('change', function () {
+                    const day = checkbox.value;
+                    const timeInputs = document.getElementById('time-inputs-' + day);
+
+                    if (checkbox.checked) {
+                        timeInputs.style.display = 'block';
+                    } else {
+                        timeInputs.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

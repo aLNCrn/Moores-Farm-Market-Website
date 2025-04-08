@@ -426,6 +426,24 @@ nav a:hover {
     background-color: #b0b0b0; /* Slightly darker gray when hovering over rows */
 }
 
+.days-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px; /* optional spacing between days */
+    margin-top: 20px;
+}
+
+.day-checkbox {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    min-width: 150px;
+    text-align: left;
+    background-color: #e5b8ff;
+
+}
+
 
 
 
