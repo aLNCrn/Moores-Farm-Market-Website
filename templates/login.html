@@ -18,9 +18,15 @@
                 <a href="/index">Home</a>
                 <a href="/products">Products</a>
                 <a href="/aboutus">About Us</a>
+                {% if session['isOwner'] or session['isEmp'] %}
+                <a href="/eschedule">Employee Schedule</a>
+                {% endif %}
             </div>
             <div class="nav-right">
                 <a href="/seasonal">Seasonal</a>
+                {% if session['isOwner'] or session['isEmp'] %}
+                <a href="/add_schedule">Add Schedule</a>
+                {% endif %}
             </div>
 
             {% if session['FirstName'] %}

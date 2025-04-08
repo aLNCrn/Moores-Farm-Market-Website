@@ -430,7 +430,7 @@ nav a:hover {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 20px; /* optional spacing between days */
+    gap: 25px; 
     margin-top: 20px;
 }
 
