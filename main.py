@@ -229,7 +229,7 @@ def get_products():
                """)
         if selected_table == 'FAVORITES':
             if not customer_id:
-                flash("You need to be logged in to see favorites.")
+                Flask("You need to be logged in to see favorites.")
                 return redirect(url_for('login'))  # or show an empty list
             else:
                 # This fetches all favorited products from all sub-tables
