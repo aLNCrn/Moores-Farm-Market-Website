@@ -1,3 +1,4 @@
+{% if session['isOwner']%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -126,3 +127,8 @@
 
 </body>
 </html>
+{% else %}
+    <script>
+        window.location.href = "/index";
+    </script>
+{% endif %}
