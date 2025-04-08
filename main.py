@@ -3,7 +3,8 @@ from flask_mysqldb import MySQL
 import mysql.connector
 import MySQLdb.cursors
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
+
 
 app = Flask(__name__, template_folder='templates')  # Explicitly set templates folder
 
@@ -34,20 +35,7 @@ def home():
 def aboutus():
     return render_template('aboutus.html')
 
-@app.route('/employee_schedule')
-def employee_schedule():
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute('SELECT EmployeeID, Year, Month, Day, TimeIn, TimeOut  FROM employeeschedule')
-    timeBlocks = cursor.fetchall() 
-    for block in timeBlocks:
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute(f'SELECT FirstName, LastName FROM EMPLOYEES WHERE EmployeeID  = {block["EmployeeID"]}')
-        nameTuple = cursor.fetchall()
-        #print(nameTuple)
-        name = nameTuple[0]["FirstName"] + " " + nameTuple[0]['LastName']
-        block['Name'] = name
-        #print(block)
-    return render_template('employee_schedule.html', timeBlocks=timeBlocks)
+
 
 
 @app.route('/index', methods=['GET', 'POST'])
@@ -360,6 +348,103 @@ def delete_product():
         cursor.close()
 
     return redirect(url_for('get_products'))
+
+
+
+
+@app.route('/add_schedule', methods=['GET', 'POST'])
+def add_schedule():
+    cursor = mysql.connection.cursor()
+
+    # Fetch employees for the dropdown
+    cursor.execute("SELECT EmployeeID, FirstName, LastName FROM employees")
+    employees = cursor.fetchall()
+
+    # Current date info for default selection
+    today = datetime.today()
+    current_year = today.year
+    current_month = today.month
+    days_in_advance = [(today + timedelta(days=i)).day for i in range(0, 14)]
+
+    if request.method == 'POST':
+        employee_id = request.form['employee_id']
+        year = request.form['year']
+        month = request.form['month']
+
+        for day in days_in_advance:
+            time_in = request.form.get(f'timein-{day}')
+            time_out = request.form.get(f'timeout-{day}')
+
+            # Only insert if both fields are filled (i.e., checkbox selected)
+            if time_in and time_out:
+                cursor.execute("""
+                    INSERT INTO employeeschedule (EmployeeID, Year, Month, Day, TimeIn, TimeOut)
+                    VALUES (%s, %s, %s, %s, %s, %s)
+                """, (employee_id, year, month, day, time_in, time_out))
+
+        mysql.connection.commit()
+        return redirect('/eschedule')
+
+    # For GET request: optionally filter by employee, year, and month
+    employee_id = request.args.get('employee_id')
+    year = request.args.get('year')
+    month = request.args.get('month')
+
+    if employee_id and year and month:
+        cursor.execute("""
+            SELECT * FROM employeeschedule 
+            WHERE EmployeeID = %s AND Year = %s AND Month = %s
+        """, (employee_id, year, month))
+    elif employee_id:
+        cursor.execute("SELECT * FROM employeeschedule WHERE EmployeeID = %s", (employee_id,))
+    else:
+        schedules = []
+        return render_template('add_schedule.html',
+                               employees=employees,
+                               current_year=current_year,
+                               current_month=current_month,
+                               days_in_advance=days_in_advance,
+                               schedules=[])
+
+    schedules = cursor.fetchall()
+
+    return render_template('add_schedule.html',
+                           employees=employees,
+                           current_year=current_year,
+                           current_month=current_month,
+                           days_in_advance=days_in_advance,
+                           schedules=schedules)
+
+
+
+
+
+
+
+
+
+
+
+@app.route('/eschedule', methods=['GET'])
+def eschedule():
+    # Open a cursor to interact with the database
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+    # Fetch all schedules from the employeeschedule table
+    cursor.execute("SELECT * FROM employeeschedule")
+    schedule = cursor.fetchall()
+
+    # Close the cursor after fetching the data
+    cursor.close()
+
+    # Render the 'eschedule.html' template, passing the fetched schedule data
+    return render_template('eschedule.html', schedule=schedule)
+
+
+
+
+
+
 
 '''
 @app.route('/edit_product', methods=['GET','POST'])

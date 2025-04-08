@@ -20,7 +20,6 @@
             </div>
             <div class="nav-right">
                 <a href="/seasonal">Seasonal</a>
-                <a href="/login">Log In</a>
             </div>
 
             {% if session['FirstName'] %}
@@ -32,35 +31,36 @@
         </nav>
     </header>
 
-    <main style="padding-top: 200px">
-        <!-- ??? -->
+    <main style="padding-top: 200px;">
         <h1 class="about-heading fade-in-heading">EMPLOYEE SCHEDULE</h1>
-        
-        <div class="content-container">
-            <div class="text-content">
-                <h2 class="main-heading fade-in-heading">EMPLYEE SCHEDULE</h2>
-                <p class="sub-text fade-in-paragraph"> Moore's Farm Market was started in 1952 by George and Mildred Moore. We have been a family run business ever since providing fresh produce and flowers to the community. We have a wide variety of produce, flowers, honey, seasonal decorations, as well as fall and winter seasonal products.</p>
-            </div>
-        </div>
-        <button onclick="document.getElementById('addEmpoyeeForm').style.display='block'">
-            Add New Employee
-        </button>
-        <div id="addEmployeeForm" style="display: none;">
-            <form action="{{ url_for('add_employee') }}" method="POST">
-                <input type="text" name="name" placeholder="employee Name" required><br>
-                <input type="number" step="0.01" name="price" placeholder="Price" required><br>
-                <label>
-                    <input type="checkbox" name="currently_available"> Available
-                </label><br>
-    
-        <!-- Second Section: Local -->
-        
-    
-        <!-- Third Section: Fresh -->
-        
-    </main>
 
-    <script src="script.js"></script>
+        <table style="margin: auto; border-collapse: collapse; width: 80%; background-color: rgb(230, 206, 255); color: black;font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;" border="1">
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Day</th>
+                    <th>Time In</th>
+                    <th>Time Out</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if schedule %}
+                    {% for entry in schedule %}
+                        <tr>
+                            <td>{{ entry['EmployeeID'] }}</td>
+                            <td>{{ entry['Day'] }}</td>
+                            <td>{{ entry['TimeIn'] }}</td>
+                            <td>{{ entry['TimeOut'] }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4" style="text-align: center;">No schedule available for any employee.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </main>
 
 </body>
 </html>
