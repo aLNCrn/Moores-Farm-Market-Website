@@ -17,9 +17,7 @@
             <div class="nav-left">
                 <a href="/aboutus">About Us</a>
                 <a href="/products">Products</a>
-                {% if session['isOwner'] or session['isEmp'] %}
-                <a href="/eschedule">Employee Schedule</a>
-                {% endif %}
+                
             </div>
             <div class="nav-right">
                 <a href="/seasonal">Seasonal</a>
@@ -28,6 +26,7 @@
                 {% endif %}
                 {% if session['isOwner'] or session['isEmp'] %}
                 <a href="/add_schedule">Add Schedule</a>
+                <a href="/eschedule"> Employee Schedule</a>
                 {% endif %}
                
             </div>
@@ -87,7 +86,7 @@
                         <td>{{ review['ReviewDate'].strftime('%m-%d-%Y') }}</td>
                         <td>{{ review['ReviewText'] }}</td>
                         <td>
-                            {% if session.get('isOwner') or review[CustomerID] == session.get('CustomerID')  %}
+                            {% if session['isOwner'] or review['CustomerID'] == session['CustomerID']  %}
                             <form action="{{ url_for('delete_review') }}" method="POST" style="display:inline;">
                                 <input type="hidden" name="reviewid" value="{{ review['ReviewID'] }}">
                                 <button type="submit">Delete</button>
