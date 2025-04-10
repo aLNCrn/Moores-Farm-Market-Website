@@ -1,3 +1,4 @@
+{% if session['isEmp'] or session['isOwner'] %}
 <!DOCTYPE html>
 <html lang="en" class="employee schedule">
 <head>
@@ -68,3 +69,9 @@
 
 </body>
 </html>
+
+{% else %}
+<script>
+    window.location.href = "/index";
+</script>
+{% endif %}
