@@ -5,6 +5,9 @@ import mysql.connector
 import MySQLdb.cursors
 import re
 from datetime import datetime, timedelta
+import os
+from werkzeug.utils import secure_filename
+
 
 
 app = Flask(__name__, template_folder='templates')  # Explicitly set templates folder
@@ -32,6 +35,11 @@ mail = Mail(app)
 
 # Initialize MySQL
 mysql = MySQL(app)
+
+UPLOAD_FOLDER = os.path.join('static', 'product_images')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
 
 @app.before_request
 def load_logged_in_user():
@@ -207,6 +215,9 @@ def register():
 
     return render_template('register.html', msg=msg)
 
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 @app.route('/getproducts',methods=['GET', 'POST'])
 def get_products():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -286,10 +297,18 @@ def add_product():
         currently_available = 1
     else:
         currently_available = 0
+    image_file = request.files.get('image')
+
+    if image_file and allowed_file(image_file.filename):
+        filename = secure_filename(image_file.filename)
+        image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        image_file.save(image_path)
+    else:
+        filename = None
 
     product_type_id = request.form['product_type_id']
     cursor.execute("INSERT INTO products (name, price, CurrentlyAvailable, ImageLink) VALUES (%s, %s, %s, %s)",
-                   (name, price, currently_available, None))
+                   (name, price, currently_available, f'product_images/{filename}'))
 
     mysql.connection.commit()
 
