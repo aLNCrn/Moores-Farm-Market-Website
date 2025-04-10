@@ -18,10 +18,7 @@
                 {% if session['isOwner'] or session['isEmp'] %}
                 <a href="/eschedule">Employee Schedule</a>
                 {% endif %}
-            </div>
-            <div class="nav-right">
                 <a href="/seasonal">Seasonal</a>
-                <a href="/login">Log In</a>
                 {% if session['isOwner'] or session['isEmp'] %}
                 <a href="/add_schedule">Add Schedule</a>
                 {% endif %}
@@ -78,7 +75,7 @@
         </form>
 
         <h2 style="margin-top: 50px;">Current Schedule</h2>
-        <table style="margin: auto; border-collapse: collapse; width: 80%; background-color: rgb(230, 206, 255); color: black; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;" border="1">
+        <table style="margin: auto; border-collapse: collapse; width: 80%; background-color: rgb(200, 144, 255); color: black; font-family: Impact, Haettenschweiler, sans-serif;" border="2">
             <thead>
                 <tr>
                     <th>Employee ID</th>
@@ -87,6 +84,7 @@
                     <th>Day</th>
                     <th>Time In</th>
                     <th>Time Out</th>
+                    <th>Delete Shift</th>
                 </tr>
             </thead>
             <tbody>
@@ -99,6 +97,13 @@
                             <td>{{ entry[3] }}</td>
                             <td>{{ entry[4] }}</td>
                             <td>{{ entry[5] }}</td>
+                            <td>
+                                <form action="{{ url_for('delete_shift') }}" method="POST" style="display:inline;">
+                                    <input type="hidden" name="shiftId" value="{{ entry[6] }}">
+                                    <button type="submit">Delete</button>
+                                </form>
+                            </td>
+
                         </tr>
                     {% endfor %}
                 {% else %}

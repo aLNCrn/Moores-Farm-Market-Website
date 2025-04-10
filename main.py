@@ -417,17 +417,17 @@ def add_schedule():
 
     if employee_id and year and month:
         cursor.execute("""
-            SELECT EmployeeID, Year, Month, Day, TimeIn, TimeOut FROM employeeschedule 
+            SELECT EmployeeID, Year, Month, Day, TimeIn, TimeOut, Shiftid FROM employeeschedule 
             WHERE EmployeeID = %s AND Year = %s AND Month = %s
         """, (employee_id, year, month))
     elif employee_id:
         cursor.execute("""
-            SELECT EmployeeID, Year, Month, Day, TimeIn, TimeOut FROM employeeschedule 
+            SELECT EmployeeID, Year, Month, Day, TimeIn, TimeOut, Shiftid FROM employeeschedule 
             WHERE EmployeeID = %s
         """, (employee_id,))
     else:
         # Fetch ALL if no filter is provided
-        cursor.execute("SELECT EmployeeID, Year, Month, Day, TimeIn, TimeOut FROM employeeschedule")
+        cursor.execute("SELECT EmployeeID, Year, Month, Day, TimeIn, TimeOut, Shiftid FROM employeeschedule")
 
     schedules = cursor.fetchall()
     cursor.close()
@@ -517,6 +517,21 @@ def edit_product1():
 
 
     return redirect(url_for('products'))
+
+
+    
+@app.route('/delete_shift', methods=['POST'])
+def delete_shift():
+    shiftId = request.form['shiftId']  # Getting the product ID from the form data
+    print("Review ID received:", shiftId)
+    if shiftId:
+        cursor = mysql.connection.cursor()
+        cursor.execute("DELETE FROM employeeschedule WHERE shiftId = %s", (shiftId,))
+
+        mysql.connection.commit()
+        cursor.close()
+
+    return redirect(url_for('add_schedule'))
 
 
 
