@@ -18,7 +18,7 @@
                 <a href="/index">Home</a>
                 <a href="/products">Products</a>
                 <a href="/aboutus">About Us</a>
-                {% if session['isOwner'] or session['isEmp'] %}
+                {% if session['isOwner']  %}
                 <a href="/add_schedule">Add Schedule</a>
                 {% endif %}
             </div>
