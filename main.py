@@ -320,8 +320,6 @@ def delete_product():
     return redirect(url_for('get_products'))
 
 
-
-
 @app.route('/add_schedule', methods=['GET', 'POST'])
 def add_schedule():
     cursor = mysql.connection.cursor()
@@ -352,27 +350,27 @@ def add_schedule():
         mysql.connection.commit()
         return redirect('/add_schedule')
 
+    # Always fetch all schedules if no filter is applied
     employee_id = request.args.get('employee_id')
     year = request.args.get('year')
     month = request.args.get('month')
 
     if employee_id and year and month:
         cursor.execute("""
-            SELECT * FROM employeeschedule 
+            SELECT EmployeeID, Year, Month, Day, TimeIn, TimeOut FROM employeeschedule 
             WHERE EmployeeID = %s AND Year = %s AND Month = %s
         """, (employee_id, year, month))
     elif employee_id:
-        cursor.execute("SELECT * FROM employeeschedule WHERE EmployeeID = %s", (employee_id,))
+        cursor.execute("""
+            SELECT EmployeeID, Year, Month, Day, TimeIn, TimeOut FROM employeeschedule 
+            WHERE EmployeeID = %s
+        """, (employee_id,))
     else:
-        schedules = []
-        return render_template('add_schedule.html',
-                               employees=employees,
-                               current_year=current_year,
-                               current_month=current_month,
-                               days_in_advance=days_in_advance,
-                               schedules=[])
+        # Fetch ALL if no filter is provided
+        cursor.execute("SELECT EmployeeID, Year, Month, Day, TimeIn, TimeOut FROM employeeschedule")
 
     schedules = cursor.fetchall()
+    cursor.close()
 
     return render_template('add_schedule.html',
                            employees=employees,
@@ -380,6 +378,9 @@ def add_schedule():
                            current_month=current_month,
                            days_in_advance=days_in_advance,
                            schedules=schedules)
+
+    
+
 
 
 
@@ -390,6 +391,7 @@ def eschedule():
     schedule = cursor.fetchall()
     cursor.close()
     return render_template('eschedule.html', schedule=schedule)
+
 
 
 
