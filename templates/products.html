@@ -84,6 +84,11 @@
                 <p>
                     {% if product['CurrentlyAvailable'] %} ✅ Available {% else %} ❌ Not Available {% endif %}
                 </p>
+                <p>
+                {% if product['ImagePath'] %}
+                    <img src="{{ url_for('static', filename=product['ImagePath']) }}" alt="{{ product['Name'] }}" style="width:150px; height:auto;">
+                {% endif %}
+                </p>
                 {% if selected_table == 'FLOWERS' %}
                 <p>Annual: {{ product['Annual'] }}</p>
                 <p>Sun or Shade: {{ product['SunOrShade'] }}</p>
@@ -140,6 +145,8 @@
                 <label>
                     <input type="checkbox" name="currently_available"> Available
                 </label><br>
+                <label for="image">Product Image:</label>
+    <input type="file" name="image" accept="image/*"><br><br>
 
                 <label for="product_type">Product Type:</label>
                 <select name="product_type_id" id="product_type_selector" onchange="loadForm()" required>
