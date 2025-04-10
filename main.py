@@ -68,7 +68,7 @@ def index():
                 return redirect(url_for('index'))
     
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute('SELECT Rating, ReviewDate, ReviewText, ReviewID  FROM reviews')
+    cursor.execute('SELECT Rating, ReviewDate, ReviewText, ReviewID, CustomerID  FROM reviews')
     reviews = cursor.fetchall() 
     reviews = reviews[::-1]
     #print(reviews)
