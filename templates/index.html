@@ -78,6 +78,9 @@
                     <th>Rating</th>
                     <th>Review Date</th>
                     <th>Review Text</th>
+                    {% if session.get('isOwner') %}
+                    <th>Action</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
@@ -86,6 +89,15 @@
                         <td>{{ review['Rating'] }}</td>
                         <td>{{ review['ReviewDate'].strftime('%m-%d-%Y') }}</td>
                         <td>{{ review['ReviewText'] }}</td>
+                        <td>
+                            {% if session.get('isOwner') %}
+                            <form action="{{ url_for('delete_review') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="reviewid" value="{{ review['ReviewID'] }}">
+                                <button type="submit">Delete</button>
+                            </form>
+                            {% endif %}
+                        </td>
+
                     </tr>
                 {% endfor %}
             </tbody>
@@ -94,7 +106,7 @@
             <p>No reviews yet. Be the first to leave one!</p>
         {% endif %}
 
-        {% if session['loggedin'] and not reviewMade %}  
+        {% if session['loggedin'] and not reviewMade and not session['isOwner'] and not session['isEmp']%}  
             <!-- Review Form (Only visible if logged in) -->
             <h3>Submit Your Review</h3>
             <form action="{{ url_for('index') }}" method="POST">

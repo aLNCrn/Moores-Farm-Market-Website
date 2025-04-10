@@ -68,7 +68,7 @@ def index():
                 return redirect(url_for('index'))
     
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute('SELECT Rating, ReviewDate, ReviewText  FROM reviews')
+    cursor.execute('SELECT Rating, ReviewDate, ReviewText, ReviewID  FROM reviews')
     reviews = cursor.fetchall() 
     reviews = reviews[::-1]
     #print(reviews)
@@ -365,6 +365,19 @@ def delete_product():
         cursor.close()
 
     return redirect(url_for('get_products'))
+
+@app.route('/delete_review', methods=['POST'])
+def delete_review():
+    review_id = request.form['reviewid']  # Getting the product ID from the form data
+    print("Review ID received:", review_id)
+    if review_id:
+        cursor = mysql.connection.cursor()
+        cursor.execute("DELETE FROM REVIEWS WHERE ReviewID = %s", (review_id,))
+
+        mysql.connection.commit()
+        cursor.close()
+
+    return redirect(url_for('index'))
 
 
 @app.route('/add_schedule', methods=['GET', 'POST'])
