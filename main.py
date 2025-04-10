@@ -422,8 +422,70 @@ def eschedule():
     return render_template('eschedule.html', schedule=schedule)
 
 
+@app.route('/edit_product1', methods=['POST'])
+def edit_product1():
+    cursor = mysql.connection.cursor()
+    product_id = request.form['ProductID']
+    name = request.form['name']
+    price = request.form['price']
+
+    if request.form.get('currently_available') == 'on':
+        currently_available = 1
+    else:
+        currently_available = 0
+
+    product_type_id = request.form['product_type_id']
+
+    cursor.execute("UPDATE products SET name = %s, price = %s, CurrentlyAvailable = %s, ImageLink = %s WHERE ProductID = %s",
+                   ( name, price, currently_available, None, product_id))
+
+    mysql.connection.commit()
+
+    if product_type_id == 'Flowers':
+        annual = request.form.get('annual')
+        sun_or_shade = request.form.get('sun_or_shade')
+        cursor.execute(
+            "UPDATE FLOWERS SET Annual = %s, SunOrShade = %s WHERE ProductID = %s",
+            (annual, sun_or_shade, product_id,)
+        )
+
+    elif product_type_id == 'Produce':
+        storage_instructions = request.form.get('storage_instructions')
+        produce_type = request.form.get('Fruit/Vegetable')
+        location = request.form.get('location')
+        cursor.execute(
+            "UPDATE PRODUCE SET StorageInstructions = %s, Type = %s, Location = %s WHERE ProductID = %s",
+            ( storage_instructions, produce_type, location, product_id,)
+        )
+
+    elif product_type_id == 'Honey':
+        source = request.form.get('source')
+        raw = 'raw' in request.form
+        cursor.execute(
+            "UPDATE HONEY SET Source = %s, Raw= %s WHERE ProductID = %s",
+            (source, raw, product_id,)
+        )
+
+    elif product_type_id == 'Seasonal':
+        season = request.form.get('season')
+        cursor.execute(
+            "UPDATE Seasonal SET Season = %s WHERE ProductID = %s",
+            ( season, product_id,)
+        )
+
+    elif product_type_id == 'Vegetable Plants':
+        season = request.form.get('season')
+        plant_type = request.form.get('plant_type')
+        cursor.execute(
+            "UPDATE VegetablePlant SET Season = %s, PlantType= %s WHERE ProductID = %s",
+            (season, plant_type, product_id,)
+        )
+
+    mysql.connection.commit()
+    cursor.close()
 
 
+    return redirect(url_for('products'))
 
 
 
