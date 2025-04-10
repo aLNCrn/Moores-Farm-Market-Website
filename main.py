@@ -199,6 +199,23 @@ def get_products():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     selected_table = request.form.get('table_name', 'PRODUCTS')
     customer_id = session.get('CustomerID')
+    if selected_table == 'IN_STOCK':
+        if customer_id:
+            cursor.execute("""
+                    SELECT p.*, 
+                           CASE WHEN f.CustomerID IS NOT NULL THEN 1 ELSE 0 END as is_favorited
+                    FROM PRODUCTS p
+                    LEFT JOIN FAVORITES f ON p.ProductID = f.ProductID AND f.CustomerID = %s
+                    WHERE p.CurrentlyAvailable = 1
+                """, (customer_id,))
+        else:
+            cursor.execute("""
+                    SELECT * FROM PRODUCTS
+                    WHERE CurrentlyAvailable = 1
+                """)
+        products = cursor.fetchall()
+        cursor.close()
+        return render_template('products.html', products=products, selected_table=selected_table)
     if selected_table == 'PRODUCTS':
         if customer_id:
             cursor.execute("""
