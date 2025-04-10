@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, g
 from flask_mysqldb import MySQL
+from flask_mail import Mail, Message
 import mysql.connector
 import MySQLdb.cursors
 import re
@@ -16,6 +17,18 @@ app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'root'  # The MySQL password for the person doing the demonstration
 app.config['MYSQL_DB'] = 'mooresfarmmarket'
+
+#Email configuration 
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'  
+app.config['MAIL_PORT'] = 587  
+app.config['MAIL_USE_TLS'] = True  
+app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_USERNAME'] = 'mooresfarmm@gmail.com'  
+app.config['MAIL_PASSWORD'] = 'iloveproduc3'  
+app.config['MAIL_DEFAULT_SENDER'] = 'mooresfarmm@gmail.com'  
+
+mail = Mail(app)
+
 
 # Initialize MySQL
 mysql = MySQL(app)
@@ -533,7 +546,64 @@ def delete_shift():
 
     return redirect(url_for('add_schedule'))
 
+@app.route('/send_email', methods=['GET', 'POST'])
+def send_email():
+    if request.method == 'POST':
+        recipient = request.form['email']
+        subject = 'Your Subject'
+        body = 'This is the body of the automated email.'
+        
+        msg = Message(subject, recipients=[recipient])
+        msg.body = body
+        
+        try:
+            mail.send(msg)
+            return 'Email sent successfully!'
+        except Exception as e:
+            return str(e)
 
+    return render_template('send_email.html')
+
+@app.route('/email', methods=['GET', 'POST'])
+def email():
+    print("Email route loaded!")
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    
+
+    cursor.execute('SELECT Email FROM customers')
+    customers = cursor.fetchall()
+    
+ 
+    cursor.execute('SELECT Email FROM employees')
+    employees = cursor.fetchall()
+    
+    if request.method == 'POST':
+        group = request.form['group']
+        subject = request.form['subject']
+        body = request.form['body']
+        
+ 
+        if group == 'employees':
+            cursor.execute('SELECT Email FROM employees')
+        elif group == 'customers':
+            cursor.execute('SELECT Email FROM customers')
+        elif group == 'everyone':
+            cursor.execute('SELECT Email FROM customers UNION SELECT Email FROM employees')
+
+        emails_to_send = cursor.fetchall()
+        
+
+        for emails in emails_to_send:
+            msg = Message(subject, recipients=[emails['Email']])
+            msg.body = body
+            try:
+                mail.send(msg)
+            except Exception as e:
+                return f"Error sending email: {e}"
+        
+        return "Emails sent successfully!"
+    
+    return render_template('email.html', customers=customers, employees=employees)
 
 
 '''
