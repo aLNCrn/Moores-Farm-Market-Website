@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moore's Farmers Market</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="logo-container" id="logoContainer">
+        <img src="{{ url_for('static', filename='images/mfmLogo.png') }}" alt="Site Logo" style="display:block; width:100px; height: 100px;">
+    </div>
+
+    <header>
+        <nav>
+            <div class="nav-left">
+                <a href="/index">Home</a>
+                <a href="/aboutus">About Us</a>
+                <a href="/products">Products</a>
+            </div>
+            <div class="nav-right">
+                {% if not session['FirstName'] %}
+                <a href="/login">Log In</a>
+                {% endif %}
+                {% if session['isOwner'] or session['isEmp'] %}
+                <a href="/employee_schedule">Employee Schedule</a>
+                {% endif %}
+
+            </div>
+
+            {% if session['FirstName'] %}
+            <span style="color: white; font-weight: bold; margin-left: 15px;">
+                Welcome, {{ session['FirstName'] }}
+            </span>
+            <a href="{{ url_for('logout') }}" style="color: red; font-weight: bold; margin-left: 10px;">Logout</a>
+            {% endif %}
+
+        </nav>
+    </header>
+
+    <main style="padding-top: 200px">
+        <h1>Customer and Employee Emails</h1>
+
+        <h2>Customer Emails</h2>
+        <ul>
+            {% for customer in customers %}
+            <li>{{ customer.Email }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Employee Emails</h2>
+        <ul>
+            {% for employee in employees %}
+            <li>{{ employee.Email }}</li>
+            {% endfor %}
+        </ul>
+
+        <hr>
+        <h2>Send Custom Email</h2>
+        <form method="POST">
+            <label for="group">Select Group to Send Email:</label>
+            <select name="group" id="group" required>
+                <option value="employees">All Employees</option>
+                <option value="customers">All Customers</option>
+                <option value="everyone">Everyone</option>
+            </select><br><br>
+
+            <label for="subject">Subject:</label>
+            <input type="text" name="subject" id="subject" required><br><br>
+
+            <label for="body">Body:</label><br>
+            <textarea name="body" id="body" rows="5" cols="40" required></textarea><br><br>
+
+            <button type="submit">Send Email</button>
+        </form>
+
+
+
+
+
+
+
+
+        <footer>
+            <p>&copy; 2025 Moore's Farm Market. All Rights Reserved.</p>
+        </footer>
+
+    </main>
+</body>
+</html> 
