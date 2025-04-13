@@ -85,10 +85,11 @@
                     {% if product['CurrentlyAvailable'] %} ✅ Available {% else %} ❌ Not Available {% endif %}
                 </p>
                 <p>
-                {% if product['ImagePath'] %}
-                    <img src="{{ url_for('static', filename=product['ImagePath']) }}" alt="{{ product['Name'] }}" style="width:150px; height:auto;">
+                    {% if product['ImageLink'] %}
+                 <img src="{{ url_for('static', filename=product_images/['ImageLink']) }}" alt="{{ product['Name'] }}" style="width:150px; height:auto;">
+                    {% else %}
+                 <p>No image available</p>
                 {% endif %}
-                </p>
                 {% if selected_table == 'FLOWERS' %}
                 <p>Annual: {{ product['Annual'] }}</p>
                 <p>Sun or Shade: {{ product['SunOrShade'] }}</p>

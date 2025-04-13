@@ -24,7 +24,7 @@ app.config['MYSQL_DB'] = 'mooresfarmmarket'
 mysql = MySQL(app)
 
 UPLOAD_FOLDER = os.path.join('static', 'product_images')
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['UPLOAD_FOLDER'] = 'static/product_images'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 
@@ -285,17 +285,17 @@ def add_product():
     else:
         currently_available = 0
     image_file = request.files.get('image')
+    image_path = None
 
-    if image_file and allowed_file(image_file.filename):
+    if image_file and image_file.filename != '' and allowed_file(image_file.filename):
         filename = secure_filename(image_file.filename)
         image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         image_file.save(image_path)
-    else:
-        filename = None
+        image_path = f'product_images/{filename}'
 
     product_type_id = request.form['product_type_id']
     cursor.execute("INSERT INTO products (name, price, CurrentlyAvailable, ImageLink) VALUES (%s, %s, %s, %s)",
-                   (name, price, currently_available, f'product_images/{filename}'))
+                   (name, price, currently_available, image_path))
 
     mysql.connection.commit()
 
