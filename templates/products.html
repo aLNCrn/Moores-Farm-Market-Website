@@ -85,7 +85,7 @@
                     {% if product['CurrentlyAvailable'] %} ✅ Available {% else %} ❌ Not Available {% endif %}
                 </p>
 
-                    {% if product['ImageLink'] %}
+                    {% if product['Imagelink'] %}
                 <p> <img src="{{ url_for('static', filename='product_images/' ~ product['Imagelink']) }}" alt="{{ product['Name'] }}" style="width:150px; height:auto;"></p>
                     {% else %}
                 <p> <img src="{{ url_for('static', filename='product_images/corn.jpg') }}" alt="{{ product['Name'] }}" style="width:150px; height:auto;"></p>
