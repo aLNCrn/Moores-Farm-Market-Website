@@ -88,7 +88,7 @@
                     {% if product['Imagelink'] %}
                 <p> <img src="{{ url_for('static', filename='product_images/' ~ product['Imagelink']) }}" alt="{{ product['Name'] }}" style="width:150px; height:auto;"></p>
                     {% else %}
-                <p> <img src="{{ url_for('static', filename='product_images/corn.jpg') }}" alt="{{ product['Name'] }}" style="width:150px; height:auto;"></p>
+                <p> No Image Available </p>
                 {% endif %}
                 {% if selected_table == 'FLOWERS' %}
                 <p>Annual: {{ product['Annual'] }}</p>
