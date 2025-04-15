@@ -297,14 +297,8 @@ def add_product():
         currently_available = 1
     else:
         currently_available = 0
-    image_file = request.files.get('image')
-    image_path = None
+    image_path = request.form['image']
 
-    if image_file and image_file.filename != '' and allowed_file(image_file.filename):
-        filename = secure_filename(image_file.filename)
-        image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        image_file.save(image_path)
-        image_path = f'product_images/{filename}'
 
     product_type_id = request.form['product_type_id']
     cursor.execute("INSERT INTO products (name, price, CurrentlyAvailable, ImageLink) VALUES (%s, %s, %s, %s)",
