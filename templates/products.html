@@ -49,12 +49,14 @@
         </nav>
     </header>
 
-    <main style="padding-top: 200px">
+    <main style="padding-top: 90px">
 
         <h1 class="about-heading fade-in-heading">Products !</h1>
 
         <form method="POST" action="{{ url_for('get_products') }}">
-            <label for="product_type">Select Product Type:</label>
+<label for="product_type" class="label-box-blue">
+  <strong>Select Product Type:</strong>
+</label>
             <select name="table_name" id="product_type">
                 <option value="FAVORITES">Favorites</option>
                 <option value="FLOWERS">Flowers</option>

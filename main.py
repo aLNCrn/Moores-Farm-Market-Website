@@ -254,7 +254,7 @@ def get_products():
     else:
         if customer_id:
             cursor.execute(f"""
-                   SELECT p.ProductID, prod.Name, prod.Price, prod.CurrentlyAvailable,
+                   SELECT p.ProductID, prod.Name, prod.Price, prod.CurrentlyAvailable, prod.Imagelink,
                           p.*, 
                           CASE WHEN f.CustomerID IS NOT NULL THEN 1 ELSE 0 END as is_favorited
                    FROM {selected_table} p
@@ -264,7 +264,7 @@ def get_products():
                """, (customer_id,))
         else:
             cursor.execute(f"""
-                   SELECT p.ProductID, prod.Name, prod.Price, prod.CurrentlyAvailable, p.*
+                   SELECT p.ProductID, prod.Name, prod.Price, prod.CurrentlyAvailable, prod.Imagelink, p.*
                    FROM {selected_table} p
                    JOIN PRODUCTS prod ON p.ProductID = prod.ProductID
                """)
@@ -275,7 +275,7 @@ def get_products():
             else:
                 # This fetches all favorited products from all sub-tables
                 cursor.execute("""
-                        SELECT prod.ProductID, prod.Name, prod.Price, prod.CurrentlyAvailable, 1 as is_favorited
+                        SELECT prod.ProductID, prod.Name, prod.Price, prod.CurrentlyAvailable,prod.Imagelink, 1 as is_favorited
                         FROM FAVORITES f
                         JOIN PRODUCTS prod ON f.ProductID = prod.ProductID
                         WHERE f.CustomerID = %s
