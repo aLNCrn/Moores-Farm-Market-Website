@@ -483,3 +483,13 @@ nav a:hover {
   border: 2px solid #007BFF;
   cursor: pointer;
 }
+
+.new-product-input {
+  height: 40px;
+  width: 200px;
+  padding: 8px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
