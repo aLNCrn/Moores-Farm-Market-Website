@@ -51,13 +51,15 @@
 
     <main style="padding-top: 90px">
 
-        <h1 class="about-heading fade-in-heading">Products !</h1>
+<div class="brown-box">
+  Check out our wide variety of flowers, produce, honey, and more!
+</div>
 
         <form method="POST" action="{{ url_for('get_products') }}">
 <label for="product_type" class="label-box-blue">
   <strong>Select Product Type:</strong>
 </label>
-            <select name="table_name" id="product_type">
+            <select name="table_name" id="product_type" class="large-dropdown">
                 <option value="FAVORITES">Favorites</option>
                 <option value="FLOWERS">Flowers</option>
                 <option value="PRODUCE">Produce</option>
@@ -66,7 +68,7 @@
                 <option value="VegetablePlant">Vegetable Plants</option>
                 <option value="IN_STOCK">In Stock</option>
             </select>
-            <button type="submit">Submit</button>
+            <button type="submit" class="large-submit-btn">Submit</button>
         </form>
 
         <div class="refresh-link">

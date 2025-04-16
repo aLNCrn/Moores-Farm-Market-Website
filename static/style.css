@@ -316,9 +316,9 @@ nav a:hover {
     margin-bottom: 5px;
     margin-left: auto;
     margin-right: auto;
-    width: 100px;
+    width: 150px;
     text-align: center;
-    font-size: 16px;
+    font-size: 36px;
     font-weight: bold;
     color: blue;
     padding: 5px 10px;
@@ -454,4 +454,32 @@ nav a:hover {
   font-size: 38px;
 }
 
+.brown-box {
+  background-color: #A0522D; /* SaddleBrown */
+  color: white;
+  padding: 42px 20px;
+  border-radius: 8px;
+  font-size: 68px;
+  font-weight: bold;
+  text-align: center;
+  margin: 40px 0;
+}
 
+.large-dropdown {
+  font-size: 18px;
+  padding: 10px;
+  width: 220px;
+  border-radius: 6px;
+}
+
+.large-submit-btn {
+  font-size: 18px;
+  padding: 12px 20px;
+  width: 200px;
+  height: 50px;
+  border-radius: 6px;
+  background-color: white;
+  color: black;
+  border: 2px solid #007BFF;
+  cursor: pointer;
+}
