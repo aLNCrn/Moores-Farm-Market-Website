@@ -536,10 +536,12 @@ def edit_product1():
     else:
         currently_available = 0
 
+    image_path = request.form['image']
+
     product_type_id = request.form['product_type_id']
 
     cursor.execute("UPDATE products SET name = %s, price = %s, CurrentlyAvailable = %s, ImageLink = %s WHERE ProductID = %s",
-                   ( name, price, currently_available, None, product_id))
+                   ( name, price, currently_available, image_path, product_id))
 
     mysql.connection.commit()
 
