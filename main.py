@@ -39,7 +39,7 @@ mysql = MySQL(app)
 UPLOAD_FOLDER = os.path.join('static', 'product_images')
 app.config['UPLOAD_FOLDER'] = 'static/product_images'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-TEXT_BUBBLE_FILE_PATH = "static/textBubbles.txt"
+TEXT_BUBBLE_FILE_PATH = os.path.join(app.root_path, 'static', 'textBubbles.txt')
 
 def getTextBubbles():
     textBubbles = {}
