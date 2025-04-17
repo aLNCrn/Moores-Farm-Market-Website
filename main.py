@@ -36,9 +36,7 @@ mail = Mail(app)
 # Initialize MySQL
 mysql = MySQL(app)
 
-UPLOAD_FOLDER = os.path.join('static', 'product_images')
-app.config['UPLOAD_FOLDER'] = 'static/product_images'
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
 TEXT_BUBBLE_FILE_PATH = "static/textBubbles.txt"
 
 def getTextBubbles():
