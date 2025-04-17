@@ -10,6 +10,30 @@ body.about-us-page {
     padding-top: 150px; 
 }
 
+
+.editable-textarea {
+    width: 100%;
+    min-height: 120px; /* Adjusted to match the original p's visual height */
+    font-size: 20px; /* Match font size from .sub-text */
+    line-height: 1.6;
+    font-family: inherit; /* Inherit font family for consistency */
+    color: #ffffff; /* Match the text color in .sub-text */
+    background-color: black; /* Match the background color of the .text-content */
+    border: none;
+    padding: 20px; /* Match the padding in .sub-text for more space */
+    box-sizing: border-box; /* Ensures padding does not affect overall width/height */
+    resize: vertical;
+    outline: none;
+    border-radius: 10px; /* Match the border-radius of the original text box */
+    font-weight: bold; /* Match the bold font-weight in .sub-text */
+}
+
+/* Optional: if you want the textarea to have a smooth transition when switching */
+.editable-textarea:focus {
+    background-color: black;
+    color: #ffffff;
+}
+
 /* Logo Styling */
 .logo-container {
     position: fixed;
