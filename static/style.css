@@ -470,7 +470,7 @@ nav a:hover {
 
 .label-box-green {
   display: inline-block;
-  background-color: darkgreen;
+  background-color: green;
   color: white;
   border: 2px solid green;
   padding: 8px;
@@ -479,7 +479,7 @@ nav a:hover {
 }
 
 .brown-box {
-  background-color: brown; /* SaddleBrown */
+  background-color: darkgreen;
   color: white;
   padding: 42px 20px;
   border-radius: 15px;
@@ -516,4 +516,111 @@ nav a:hover {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+
+#flash-messages {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #f0f9ff;
+    border: 1px solid #b6e0fe;
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    color: #333;
+    font-weight: bold;
+    max-width: 90%;
+    text-align: center;
+}
+
+.flash {
+    margin: 5px 0;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    padding-top: 80px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: auto;
+    padding: 25px;
+    border: 1px solid #888;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.close {
+    position: absolute;
+    top: 12px;
+    right: 20px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+    .close:hover {
+        color: #000;
+    }
+
+.submit-btn, .cancel-btn {
+    padding: 10px 20px;
+    margin: 10px 5px 0 0;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.submit-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.cancel-btn {
+    background-color: #ccc;
+    color: #333;
+}
+
+.submit-btn:hover {
+    background-color: #45a049;
+}
+
+.cancel-btn:hover {
+    background-color: #bbb;
+}
+
+.modal-content input, .modal-content select {
+    width: 100%;
+    padding: 8px 12px;
+    margin: 8px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
 

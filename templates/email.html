@@ -42,29 +42,40 @@
     <main style="padding-top: 200px">
         <h1>Customer and Employee Emails</h1>
 
-        <h2>Customer Emails</h2>
-        <ul>
-            {% for customer in customers %}
-            <li>{{ customer.Email }}</li>
-            {% endfor %}
-        </ul>
-
-        <h2>Employee Emails</h2>
-        <ul>
-            {% for employee in employees %}
-            <li>{{ employee.Email }}</li>
-            {% endfor %}
-        </ul>
-
-        <hr>
-        <h2>Send Custom Email</h2>
         <form method="POST">
-            <label for="group">Select Group to Send Email:</label>
-            <select name="group" id="group" required>
-                <option value="employees">All Employees</option>
-                <option value="customers">All Customers</option>
-                <option value="everyone">Everyone</option>
-            </select><br><br>
+            <h2>Customer Emails</h2>
+            <ul>
+                {% for customer in customers %}
+                <li>
+                    <label>
+                        <input type="checkbox" name="recipients" value="{{ customer.Email }}" class="customer-email">
+                        {{ customer.Email }}
+                    </label>
+                </li>
+                {% endfor %}
+            </ul>
+
+            <h2>Employee Emails</h2>
+            <ul>
+                {% for employee in employees %}
+                <li>
+                    <label>
+                        <input type="checkbox" name="recipients" value="{{ employee.Email }}" class="employee-email">
+                        {{ employee.Email }}
+                    </label>
+                </li>
+                {% endfor %}
+            </ul>
+
+            <div>
+                <button type="button" onclick="selectAll('customer-email')">Select All Customers</button>
+                <button type="button" onclick="selectAll('employee-email')">Select All Employees</button>
+                <button type="button" onclick="selectAll('customer-email'); selectAll('employee-email')">Select Everyone</button>
+                <button type="button" onclick="deselectAll()">Deselect All</button>
+            </div>
+
+            <hr>
+            <h2>Send Custom Email</h2>
 
             <label for="subject">Subject:</label>
             <input type="text" name="subject" id="subject" required><br><br>
@@ -75,17 +86,54 @@
             <button type="submit">Send Email</button>
         </form>
 
-
-
-
-
-
-
-
         <footer>
             <p>&copy; 2025 Moore's Farm Market. All Rights Reserved.</p>
         </footer>
 
+
     </main>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div id="flash-messages">
+        {% for message in messages %}
+        <div class="flash">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    
+
+
+    <script>
+        function selectAll(className) {
+            const checkboxes = document.querySelectorAll('.' + className);
+            checkboxes.forEach(cb => cb.checked = true);
+        }
+
+        function deselectAll() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"][name="recipients"]');
+            checkboxes.forEach(cb => cb.checked = false);
+        }
+    </script>
+
+    <script>
+        
+        const flashDiv = document.getElementById("flash-messages");
+
+        if (flashDiv) {
+           
+            setTimeout(() => {
+                flashDiv.style.display = "none";
+            }, 4000);
+
+           
+            document.addEventListener("click", () => {
+                flashDiv.style.display = "none";
+            }, { once: true });
+        }
+    </script>
+
 </body>
 </html> 

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, g
+from flask import Flask, render_template, request, redirect, url_for, session, g, flash
 from flask_mysqldb import MySQL
 from flask_mail import Mail, Message
 import mysql.connector
@@ -583,10 +583,12 @@ def edit_product1():
     else:
         currently_available = 0
 
+    image_path = request.form['image']
+
     product_type_id = request.form['product_type_id']
 
     cursor.execute("UPDATE products SET name = %s, price = %s, CurrentlyAvailable = %s, ImageLink = %s WHERE ProductID = %s",
-                   ( name, price, currently_available, None, product_id))
+                   ( name, price, currently_available, image_path, product_id))
 
     mysql.connection.commit()
 
@@ -681,34 +683,33 @@ def email():
  
     cursor.execute('SELECT Email FROM employees')
     employees = cursor.fetchall()
-    
     if request.method == 'POST':
-        group = request.form['group']
         subject = request.form['subject']
         body = request.form['body']
-        
- 
-        if group == 'employees':
-            cursor.execute('SELECT Email FROM employees')
-        elif group == 'customers':
-            cursor.execute('SELECT Email FROM customers')
-        elif group == 'everyone':
-            cursor.execute('SELECT Email FROM customers UNION SELECT Email FROM employees')
+        selected_recipients = request.form.getlist('recipients')
 
-        emails_to_send = cursor.fetchall()
-        
+        if not selected_recipients:
+            flash("⚠️ No recipients selected.")
+            return redirect(url_for('email'))
 
-        for emails in emails_to_send:
-            msg = Message(subject, recipients=[emails['Email']])
+        for email in selected_recipients:
+            msg = Message(subject, recipients=[email])
             msg.body = body
             try:
                 mail.send(msg)
             except Exception as e:
-                return f"Error sending email: {e}"
-        
-        return "Emails sent successfully!"
-    
+                flash(f"❌ Error sending to {email}: {e}")
+                return redirect(url_for('email'))
+
+        flash("✅ Emails sent successfully!")
+        return redirect(url_for('email'))
+
+
+
+    cursor.close()
     return render_template('email.html', customers=customers, employees=employees)
+    
+
 
 
 
