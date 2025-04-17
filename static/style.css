@@ -470,7 +470,7 @@ nav a:hover {
 
 .label-box-green {
   display: inline-block;
-  background-color: darkgreen;
+  background-color: green;
   color: white;
   border: 2px solid green;
   padding: 8px;
@@ -479,7 +479,7 @@ nav a:hover {
 }
 
 .brown-box {
-  background-color: brown; /* SaddleBrown */
+  background-color: darkgreen;
   color: white;
   padding: 42px 20px;
   border-radius: 15px;
