@@ -39,7 +39,35 @@ mysql = MySQL(app)
 UPLOAD_FOLDER = os.path.join('static', 'product_images')
 app.config['UPLOAD_FOLDER'] = 'static/product_images'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+TEXT_BUBBLE_FILE_PATH = "static/textBubbles.txt"
 
+def getTextBubbles():
+    textBubbles = {}
+    fileReader = open(TEXT_BUBBLE_FILE_PATH, "r")
+    for line in fileReader:
+        lineArray = line.strip("\n").split("|*|")
+        if len(lineArray) == 2:
+            textBubbles[lineArray[0]] =  lineArray[1]
+        else:
+            print(f"There was an error loading line '{line}' from {TEXT_BUBBLE_FILE_PATH}: "
+                  f"Expected Size 2 Received {len(lineArray)}")
+    return textBubbles
+
+def editTextBubble(header: str, body: str):
+    textBubbles = {}
+    fileReader = open(TEXT_BUBBLE_FILE_PATH, "r")
+    for line in fileReader:
+        lineArray = line.strip("\n").split("|*|")
+        if len(lineArray) == 2:
+            if not lineArray[0] == header:
+                textBubbles[lineArray[0]] = lineArray[1]
+            #print(textBubbles)
+        else:
+            print(f"There was an error loading line '{line}' from {TEXT_BUBBLE_FILE_PATH}: "
+                  f"Expected Size 2 Received {len(lineArray)}")
+    textBubbles[header] = body
+    fileWriter = open(TEXT_BUBBLE_FILE_PATH, "w")
+    fileWriter.writelines(f"{key}|*|{textBubbles[key]}\n" for key in textBubbles)
 
 @app.before_request
 def load_logged_in_user():
@@ -54,10 +82,24 @@ def home():
 
 @app.route('/aboutus')
 def aboutus():
-    return render_template('aboutus.html')
+    return render_template('aboutus.html', textBubbles=getTextBubbles())
 
 
+@app.route('/edit_text', methods=['POST'])
+def edit_text():
+    if not session.get('isOwner'):
+        return "Unauthorized", 403
 
+    text_id = request.form.get('text_id')
+    text_body = request.form.get('textBody')
+    redirect_to = request.form.get('redirect_to') or '/'
+
+    if text_id and text_body:
+        editTextBubble(text_id, text_body)  # <- Your custom function
+    else:
+        print("Missing input!")
+
+    return redirect(redirect_to)
 
 @app.route('/index', methods=['GET', 'POST'])
 def index():
@@ -94,7 +136,7 @@ def index():
     reviews = reviews[::-1]
     #print(reviews)
     # Render the review form if the user is logged in
-    return render_template('index.html', reviews=reviews, reviewMade=reviewMade)
+    return render_template('index.html', reviews=reviews, reviewMade=reviewMade, textBubbles=getTextBubbles())
 
 @app.route('/products')
 def products():
