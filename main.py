@@ -51,6 +51,7 @@ def getTextBubbles():
         else:
             print(f"There was an error loading line '{line}' from {TEXT_BUBBLE_FILE_PATH}: "
                   f"Expected Size 2 Received {len(lineArray)}")
+    fileReader.close()
     return textBubbles
 
 def editTextBubble(header: str, body: str):
@@ -65,9 +66,11 @@ def editTextBubble(header: str, body: str):
         else:
             print(f"There was an error loading line '{line}' from {TEXT_BUBBLE_FILE_PATH}: "
                   f"Expected Size 2 Received {len(lineArray)}")
+    fileReader.close()
     textBubbles[header] = body
     fileWriter = open(TEXT_BUBBLE_FILE_PATH, "w")
     fileWriter.writelines(f"{key}|*|{textBubbles[key]}\n" for key in textBubbles)
+    fileWriter.close()
 
 @app.before_request
 def load_logged_in_user():
