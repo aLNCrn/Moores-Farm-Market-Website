@@ -548,7 +548,7 @@ def edit_product1():
 
     elif product_type_id == 'Produce':
         storage_instructions = request.form.get('storage_instructions')
-        produce_type = request.form.get('Fruit/Vegetable')
+        produce_type = request.form.get('produce_type')
         location = request.form.get('location')
         cursor.execute(
             "UPDATE PRODUCE SET StorageInstructions = %s, Type = %s, Location = %s WHERE ProductID = %s",
