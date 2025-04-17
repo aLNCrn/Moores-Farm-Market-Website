@@ -7,7 +7,7 @@
     <title>Add Employee Schedule</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
+<body style="margin: 0; padding: 0;">
 
     <header>
         <nav>
@@ -24,11 +24,10 @@
                 {% if session['isOwner'] or session['isEmp'] %}
                 <a href="/add_schedule">Add Schedule</a>
                 {% endif %}
-            </div>
         </nav>
     </header>
 
-    <main style="padding-top: 100px; text-align: center;">
+    <main style="padding-top: 170px; padding-bottom: 150px; text-align: center;">
         <h1>Add Schedule for Employee</h1>
 
         <form action="/add_schedule" method="POST">
@@ -105,16 +104,73 @@
                                     <button type="submit">Delete</button>
                                 </form>
                             </td>
-
                         </tr>
                     {% endfor %}
                 {% else %}
                     <tr>
-                        <td colspan="6" style="text-align: center;">No schedule available for any employee.</td>
+                        <td colspan="7" style="text-align: center;">No schedule available for any employee.</td>
                     </tr>
                 {% endif %}
             </tbody>
         </table>
+
+        <div style="height: 40px;"></div>
+        <h2>Manage Employees</h2>
+
+        <!-- Add New Employee Form -->
+        <form action="{{ url_for('add_employee') }}" method="POST" style="margin-bottom: 30px;" autocomplete="off">
+            <h3>Add New Employee</h3>
+            <input type="text" name="firstname" placeholder="First Name" required autocomplete="off">
+            <input type="text" name="lastname" placeholder="Last Name" required autocomplete="off">
+            <input type="email" name="email" placeholder="Email" required autocomplete="off">
+            <input type="password" name="password" placeholder="Password" required autocomplete="new-password">
+            <input type="text" name="phone" placeholder="Phone (Numbers only)" required pattern="\d+">
+            <input type="number" name="wage" placeholder="Wage (hourly rate)" required min="0">
+            <label for="hiredate">Hire Date:</label>
+            <input type="date" name="hiredate" required>
+            <select name="position" required>
+                <option value="employee">Employee</option>
+                <option value="admin">Admin</option>
+            </select>
+            <button type="submit">Add Employee</button>
+        </form>
+
+        <!-- Existing Employees Table -->
+        <h3>Existing Employees</h3>
+        <table style="margin: auto; border-collapse: collapse; width: 90%; background-color: rgb(200, 144, 255); color: black; font-family: Impact, Haettenschweiler, sans-serif;" border="2">
+            <tr>
+                <th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Wage</th><th>Hire Date</th><th>Position</th><th>Action</th>
+            </tr>
+            {% for emp in employees %}
+            <tr>
+                <td>{{ emp[0] }}</td>
+                <td>{{ emp[1] }} {{ emp[2] }}</td>
+                <td>{{ emp[3] }}</td>
+                <td>
+                    {% if emp[5] and emp[5]|length == 10 %}
+                        ({{ emp[5][:3] }}) {{ emp[5][3:6] }}-{{ emp[5][6:] }}
+                    {% else %}
+                        {{ emp[5] }}
+                    {% endif %}
+                </td>
+                <td>${{ emp[6] }}</td>
+                <td>{{ emp[7] }}</td>
+                <td>{{ emp[4] }}</td>
+                <td>
+                    {% if emp[0] != 1 %}
+                    <form action="{{ url_for('delete_employee') }}" method="POST">
+                        <input type="hidden" name="employee_id" value="{{ emp[0] }}">
+                        <button type="submit">Delete</button>
+                    </form>
+                    {% else %}
+                    <em>Owner</em>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+
     </main>
 
     <script>

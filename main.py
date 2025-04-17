@@ -455,7 +455,7 @@ def delete_review():
 def add_schedule():
     cursor = mysql.connection.cursor()
 
-    cursor.execute("SELECT EmployeeID, FirstName, LastName FROM employees")
+    cursor.execute("SELECT EmployeeID, FirstName, LastName, Email, Position, Phone, Wage, HireDate FROM employees")
     employees = cursor.fetchall()
 
     today = datetime.today()
@@ -511,6 +511,53 @@ def add_schedule():
                            schedules=schedules)
 
     
+@app.route('/add_employee', methods=['POST'])
+def add_employee():
+    if not session.get('isOwner'):
+        return "Unauthorized", 403
+
+    firstname = request.form['firstname']
+    lastname = request.form['lastname']
+    email = request.form['email']
+    password = request.form['password']
+    phone = int(request.form['phone']) if request.form['phone'].isdigit() else None
+    wage = int(request.form['wage']) if request.form['wage'].isdigit() else None
+    hiredate_raw = request.form['hiredate']
+
+    try:
+        hiredate = datetime.strptime(hiredate_raw, "%Y-%m-%d").date()
+    except ValueError:
+        hiredate = None
+
+    position = request.form['position']
+
+    cursor = mysql.connection.cursor()
+    cursor.execute("""
+        INSERT INTO employees (FirstName, LastName, Email, Password, Phone, Wage, HireDate, Position)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+    """, (firstname, lastname, email, password, phone, wage, hiredate, position))
+    mysql.connection.commit()
+    cursor.close()
+
+    return redirect(url_for('add_schedule'))
+
+
+
+
+@app.route('/delete_employee', methods=['POST'])
+def delete_employee():
+    if not session.get('isOwner'):
+        return "Unauthorized", 403
+
+    employee_id = request.form['employee_id']
+
+    cursor = mysql.connection.cursor()
+    cursor.execute("DELETE FROM employeeschedule WHERE EmployeeID = %s", (employee_id,))
+    cursor.execute("DELETE FROM employees WHERE EmployeeID = %s", (employee_id,))
+    mysql.connection.commit()
+    cursor.close()
+
+    return redirect(url_for('add_schedule'))
 
 
 
