@@ -619,30 +619,7 @@ def email():
     return render_template('email.html', customers=customers, employees=employees)
 
 
-'''
-@app.route('/edit_product', methods=['GET','POST'])
-def edit_product():
-    product_id = request.form['id'] 
-    if product_id: 
-        cursor = mysql.connection.cursor()
-        cursor.execute("SELECT * FROM PRODUCTS WHERE ProductID = %s", (product_id,))
-        product = cursor.fetchone()
-          
 
-        tables = ["flowers", "produce", "honey", "seasonal", "vegetable_plants"]
-
-        for x in tables: 
-           cursor.execute(f"SELECT * FROM {x} WHERE ProductID = %s", (product_id,))
-           product_type = cursor.fetchone()
-           if product_type:
-               product_type_name = x
-               break
-        return render_template('edit_product.html', product=product, product_type=product_type, product_type_name = product_type_name )
-    
-@app.route('/edit_product2', methods=['POST'])
-def edit_product2():
-    return
-'''
 
 
 
