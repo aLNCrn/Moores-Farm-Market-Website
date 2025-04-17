@@ -340,9 +340,9 @@ nav a:hover {
     margin-bottom: 5px;
     margin-left: auto;
     margin-right: auto;
-    width: 100px;
+    width: 150px;
     text-align: center;
-    font-size: 16px;
+    font-size: 36px;
     font-weight: bold;
     color: blue;
     padding: 5px 10px;
@@ -468,6 +468,52 @@ nav a:hover {
 
 }
 
+.label-box-green {
+  display: inline-block;
+  background-color: darkgreen;
+  color: white;
+  border: 2px solid green;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 38px;
+}
 
+.brown-box {
+  background-color: brown; /* SaddleBrown */
+  color: white;
+  padding: 42px 20px;
+  border-radius: 15px;
+  font-size: 60px;
+  font-weight: bold;
+  text-align: center;
+  margin: 40px 40px;
+}
 
+.large-dropdown {
+  font-size: 18px;
+  padding: 10px;
+  width: 220px;
+  border-radius: 6px;
+}
+
+.large-submit-btn {
+  font-size: 18px;
+  padding: 12px 20px;
+  width: 200px;
+  height: 50px;
+  border-radius: 6px;
+  background-color: white;
+  color: black;
+  border: 2px solid #007BFF;
+  cursor: pointer;
+}
+
+.new-product-input {
+  height: 40px;
+  width: 200px;
+  padding: 8px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
 

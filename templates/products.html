@@ -49,13 +49,17 @@
         </nav>
     </header>
 
-    <main style="padding-top: 200px">
+    <main style="padding-top: 90px">
 
-        <h1 class="about-heading fade-in-heading">Products !</h1>
+        <div class="brown-box">
+            Check out our wide variety of flowers, produce, honey, and more!
+        </div>
 
         <form method="POST" action="{{ url_for('get_products') }}">
-            <label for="product_type">Select Product Type:</label>
-            <select name="table_name" id="product_type">
+            <label for="product_type" class="label-box-green">
+                <strong>Filter Products:</strong>
+            </label>
+            <select name="table_name" id="product_type" class="large-dropdown">
                 <option value="FAVORITES">Favorites</option>
                 <option value="FLOWERS">Flowers</option>
                 <option value="PRODUCE">Produce</option>
@@ -64,7 +68,7 @@
                 <option value="VegetablePlant">Vegetable Plants</option>
                 <option value="IN_STOCK">In Stock</option>
             </select>
-            <button type="submit">Submit</button>
+            <button type="submit" class="large-submit-btn">Submit</button>
         </form>
 
         <div class="refresh-link">
@@ -85,9 +89,9 @@
                     {% if product['CurrentlyAvailable'] %} ✅ Available {% else %} ❌ Not Available {% endif %}
                 </p>
 
-                    {% if product['Imagelink'] %}
+                {% if product['Imagelink'] %}
                 <p> <img src="{{ url_for('static', filename='product_images/' ~ product['Imagelink']) }}" alt="{{ product['Name'] }}" style="width:150px; height:auto;"></p>
-                    {% else %}
+                {% else %}
                 <p> No Image Available </p>
                 {% endif %}
                 {% if selected_table == 'FLOWERS' %}
@@ -111,11 +115,9 @@
                     <button type="submit">Delete</button>
                 </form>
 
-                <!--
-            <button onclick="document.getElementById('editProductForm').style.display='block'">
-                Edit
-            </button>
-            -->
+                <button type="button" onclick='populateEditForm({{ product | tojson | safe }}, "{{ selected_table }}")'>
+                    Edit
+                </button>
                 {% endif %}
 
                 {% if session.get('CustomerID') %}
@@ -136,18 +138,18 @@
 
         {% if session['isOwner'] %}
 
-        <button onclick="document.getElementById('addProductForm').style.display='block'">
+        <button onclick="document.getElementById('addProductForm').style.display='block'" class="large-submit-btn">
             Add New Product
         </button>
         <div id="addProductForm" style="display: none;">
             <form action="{{ url_for('add_product') }}" method="POST">
-                <input type="text" name="name" placeholder="Product Name" required><br>
-                <input type="number" step="0.01" name="price" placeholder="Price" required><br>
+                <input type="text" name="name" placeholder="Product Name" required class="new-product-input"><br>
+                <input type="number" step="0.01" name="price" placeholder="Price" class="new-product-input"><br>
                 <label>
                     <input type="checkbox" name="currently_available"> Available
                 </label><br>
                 <label for="image">Product Image:</label>
-   <input type="text" name="image" placeholder="apples.jpg">
+                <input type="text" name="image" placeholder="apples.jpg" class="new-product-input">
 
 
                 <label for="product_type">Product Type:</label>
@@ -168,9 +170,7 @@
             </form>
         </div>
 
-        <button onclick="document.getElementById('editProductForm').style.display='block'">
-            Edit Product
-        </button>
+
         <div id="editProductForm" style="display: none;">
             <form action="{{ url_for('edit_product1') }}" method="POST">
                 <input type="text" name="ProductID" placeholder="Product ID" required><br>
@@ -200,7 +200,7 @@
 
         {% endif %}
 
- 
+
 
     </main>
 
@@ -213,41 +213,41 @@
             switch (productType) {
                 case 'Flowers':
                     formFields = `
-                            <input type="text" name="annual" placeholder="Annual"><br>
-                            <input type="text" name="sun_or_shade" placeholder="Sun or Shade"><br>
-                        `;
+                                <input type="text" name="annual" placeholder="Annual"><br>
+                                <input type="text" name="sun_or_shade" placeholder="Sun or Shade"><br>
+                            `;
                     break;
                 case 'Produce':
                     formFields = `
-                            <input type="text" name="storage_instructions" placeholder="Storage Instructions"><br>
-                            <select name="Fruit/Vegetable" required>
-                                <option value="Fruit">Fruit</option>
-                                <option value="Vegetable">Vegetable</option>
-                            </select><br>
-                            <input type="text" name="location" placeholder="Location"><br>
-                        `;
+                                <input type="text" name="storage_instructions" placeholder="Storage Instructions"><br>
+                                <select name="Fruit/Vegetable" required>
+                                    <option value="Fruit">Fruit</option>
+                                    <option value="Vegetable">Vegetable</option>
+                                </select><br>
+                                <input type="text" name="location" placeholder="Location"><br>
+                            `;
                     break;
                 case 'Honey':
                     formFields = `
-                            <input type="text" name="source" placeholder="Source"><br>
-                            <label><input type="checkbox" name="raw"> Raw</label><br>
-                        `;
+                                <input type="text" name="source" placeholder="Source"><br>
+                                <label><input type="checkbox" name="raw"> Raw</label><br>
+                            `;
                     break;
                 case 'Seasonal':
                     formFields = `
-                            <input type="text" name="season" placeholder="Season"><br>
-                        `;
+                                <input type="text" name="season" placeholder="Season"><br>
+                            `;
                     break;
                 case 'Vegetable Plants':
                     formFields = `
-                            <input type="text" name="season" placeholder="Season"><br>
-                            <select name="plant_type" required>
-                                <option value="Vine">Vine</option>
-                                <option value="Stalk">Stalk</option>
-                                <option value="Squash">Squash</option>
-                                <option value="Lettuce">Lettuce</option>
-                            </select><br>
-                        `;
+                                <input type="text" name="season" placeholder="Season"><br>
+                                <select name="plant_type" required>
+                                    <option value="Vine">Vine</option>
+                                    <option value="Stalk">Stalk</option>
+                                    <option value="Squash">Squash</option>
+                                    <option value="Lettuce">Lettuce</option>
+                                </select><br>
+                            `;
                     break;
             }
 
@@ -264,100 +264,102 @@
             switch (productType) {
                 case 'Flowers':
                     formFields = `
-                            <input type="text" name="annual" placeholder="Annual"><br>
-                            <input type="text" name="sun_or_shade" placeholder="Sun or Shade"><br>
-                        `;
+                                <input type="text" name="annual" placeholder="Annual"><br>
+                                <input type="text" name="sun_or_shade" placeholder="Sun or Shade"><br>
+                            `;
                     break;
                 case 'Produce':
                     formFields = `
-                            <input type="text" name="storage_instructions" placeholder="Storage Instructions"><br>
-                            <select name="Fruit/Vegetable" required>
-                                <option value="Fruit">Fruit</option>
-                                <option value="Vegetable">Vegetable</option>
-                            </select><br>
-                            <input type="text" name="location" placeholder="Location"><br>
-                        `;
+                                <input type="text" name="storage_instructions" placeholder="Storage Instructions"><br>
+                                <select name="Fruit/Vegetable" required>
+                                    <option value="Fruit">Fruit</option>
+                                    <option value="Vegetable">Vegetable</option>
+                                </select><br>
+                                <input type="text" name="location" placeholder="Location"><br>
+                            `;
                     break;
                 case 'Honey':
                     formFields = `
-                            <input type="text" name="source" placeholder="Source"><br>
-                            <label><input type="checkbox" name="raw"> Raw</label><br>
-                        `;
+                                <input type="text" name="source" placeholder="Source"><br>
+                                <label><input type="checkbox" name="raw"> Raw</label><br>
+                            `;
                     break;
                 case 'Seasonal':
                     formFields = `
-                            <input type="text" name="season" placeholder="Season"><br>
-                        `;
+                                <input type="text" name="season" placeholder="Season"><br>
+                            `;
                     break;
                 case 'Vegetable Plants':
                     formFields = `
-                            <input type="text" name="season" placeholder="Season"><br>
-                            <select name="plant_type" required>
-                                <option value="Vine">Vine</option>
-                                <option value="Stalk">Stalk</option>
-                                <option value="Squash">Squash</option>
-                                <option value="Lettuce">Lettuce</option>
-                            </select><br>
-                        `;
+                                <input type="text" name="season" placeholder="Season"><br>
+                                <select name="plant_type" required>
+                                    <option value="Vine">Vine</option>
+                                    <option value="Stalk">Stalk</option>
+                                    <option value="Squash">Squash</option>
+                                    <option value="Lettuce">Lettuce</option>
+                                </select><br>
+                            `;
                     break;
             }
 
             formContainer.innerHTML = formFields;  // Update the form with the correct fields
         }
     </script>
+
 
 
     <script>
-        function loadForm3() {
-            const product_type1 = document.getElementById("product_type").value;
-            const formContainer = document.getElementById("dynamicForm");
+        function populateEditForm(product, type) {
+            const form = document.querySelector("#editProductForm form");
+            document.getElementById("editProductForm").style.display = "block";
 
-            let formFields = '';
+            form.ProductID.value = product.ProductID;
+            form.name.value = product.Name;
+            form.price.value = product.Price;
+            form.currently_available.checked = product.CurrentlyAvailable;
+            document.getElementById("product_type_selector2").value = typeToSelectorValue(type);
+            loadForm2();
 
-            switch (productType) {
-                case 'Flowers':
-                    formFields = `
-                        <input type="text" name="annual" placeholder= product_type1{{'annual'}} ><br>
-                        <input type="text" name="sun_or_shade" placeholder=product_type1{{'sunorshade'}}><br>
-                    `;
-                    break;
-                case 'Produce':
-                    formFields = `
-                        <input type="text" name="storage_instructions" placeholder=product_type1{{StorageInstructions}}><br>
-                        <select name="Fruit/Vegetable" required>
-                            <option value="Fruit">Fruit</option>
-                            <option value="Vegetable">Vegetable</option>
-                        </select><br>
-                        <input type="text" name="location" placeholder=product_type1{{Location}}><br>
-                    `;
-                    break;
-                case 'Honey':
-                    formFields = `
-                        <input type="text" name="source" placeholder=product_type1{{Source}}><br>
-                        <label><input type="checkbox" name="raw"> Raw</label><br>
-                    `;
-                    break;
-                case 'Seasonal':
-                    formFields = `
-                        <input type="text" name="season" placeholder=product_type1{{Season}}><br>
-                    `;
-                    break;
-                case 'Vegetable Plants':
-                    formFields = `
-                        <input type="text" name="season" placeholder=product_type1{{Season}}><br>
-                        <select name="plant_type" required>
-                            <option value="Vine">Vine</option>
-                            <option value="Stalk">Stalk</option>
-                            <option value="Squash">Squash</option>
-                            <option value="Lettuce">Lettuce</option>
-                        </select><br>
-                    `;
-                    break;
+            setTimeout(() => {
+                switch (type) {
+                    case 'FLOWERS':
+                        form.annual.value = product.Annual || '';
+                        form.sun_or_shade.value = product.SunOrShade || '';
+                        break;
+                    case 'PRODUCE':
+                        form.storage_instructions.value = product.StorageInstructions || '';
+                        form['Fruit/Vegetable'].value = product.Type || '';
+                        form.location.value = product.Location || '';
+                        break;
+                    case 'HONEY':
+                        form.source.value = product.Source || '';
+                        form.raw.checked = product.Raw === 1;
+                        break;
+                    case 'Seasonal':
+                        form.season.value = product.Season || '';
+                        break;
+                    case 'VegetablePlant':
+                        form.season.value = product.Season || '';
+                        form.plant_type.value = product.PlantType || '';
+                        break;
+                }
+            }, 100);
+        }
+
+        function typeToSelectorValue(type) {
+            switch (type) {
+                case 'FLOWERS': return 'Flowers';
+                case 'PRODUCE': return 'Produce';
+                case 'HONEY': return 'Honey';
+                case 'Seasonal': return 'Seasonal';
+                case 'VegetablePlant': return 'Vegetable Plants';
+                default: return '';
             }
-
-            formContainer.innerHTML = formFields;  // Update the form with the correct fields
         }
     </script>
+
+
+
 
 
 </body>
