@@ -58,7 +58,7 @@
     <main style="padding-top: 400px">
 
 
- <div class="content-container">
+    <div class="content-container">
             <img src= {{url_for ('static', filename='images/frontofmarket.jpg' )}} alt="Farmers Market" class="content-image fade-in-image">
             <img src= {{url_for('static', filename='images/Christmastreegrouppicture.jpg')}} alt="Farmers Market" class="content-image fade-in-image">
 
@@ -105,7 +105,7 @@
         {% if session['loggedin'] and not reviewMade and not session['isOwner'] and not session['isEmp']%}  
             <!-- Review Form (Only visible if logged in) -->
             <h3>Submit Your Review</h3>
-            <form action="{{ url_for('index') }}" method="POST">
+            <form action="{{ url_for('index') }}" method="POST" style="margin-bottom: 25px;">
                 <!-- Rating Input (1-5) -->
                 <label for="rating">Rating (1 to 5):</label>
                 <select id="rating" name="rating" required>
