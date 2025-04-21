@@ -36,19 +36,17 @@ body.about-us-page {
 
 /* Logo Styling */
 .logo-container {
-    position: fixed;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    transition: top 0.5s ease-in-out;
-    z-index: 1001;
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    z-index: 1000;
+    position: relative;
 }
 
-.logo-container img {
-    width: 150px;  /* Adjust size as needed */
-    height: auto;  /* Maintain aspect ratio */
-    display: block;
-}
+    .logo-container img {
+        width: 120px;
+        height: auto;
+    }
 
 /* Responsive Logo */
 @media screen and (max-width: 768px) {
@@ -487,7 +485,7 @@ nav a:hover {
   font-weight: bold;
   text-align: center;
   margin: 40px 40px;
-}
+  }
 
 .large-dropdown {
   font-size: 18px;
@@ -623,4 +621,46 @@ nav a:hover {
     }
 }
 
+
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #3e5f3e;
+    padding: 10px 30px;
+    flex-wrap: wrap;
+    font-family: sans-serif;
+}
+
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+    .nav-links a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s ease;
+    }
+
+        .nav-links a:hover {
+            color: #ffcc00;
+        }
+
+.nav-user {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: bold;
+    color: white;
+}
+
+.logout {
+    color: red;
+    text-decoration: none;
+}
 

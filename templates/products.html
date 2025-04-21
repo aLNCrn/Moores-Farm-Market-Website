@@ -8,52 +8,46 @@
 </head>
 <body>
 
-    <div class="logo-container" id="logoContainer">
-        <img src="{{ url_for('static', filename='images/mfmlogo.png') }}" alt="Site Logo" style="display:block; width:100px; height: 100px;">
-    </div>
+
 
     <header>
-        <nav>
-            <div class="nav-left">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/mfmLogo.png') }}" alt="Site Logo">
+        </div>
+
+        <nav class="navbar">
+            <div class="nav-links">
                 <a href="/index">Home</a>
+                <a href="/seasonal">Seasonal</a>
                 <a href="/aboutus">About Us</a>
-                {% if session['isOwner'] or session['isEmp'] %}
+                {% if session['isOwner']%}
+                <a href="/add_schedule">Add Schedule</a>
+                <a href="/eschedule">Employee Schedule</a>
+                <a href="/email">Email</a>
+                {% endif %}
+                {% if session ['isEmp']%}
                 <a href="/eschedule">Employee Schedule</a>
                 {% endif %}
-
             </div>
-            <div class="nav-right">
-                <a href="/seasonal">Seasonal</a>
-                {% if not session['FirstName'] %}
+
+            <div class="nav-user">
+                {% if session['FirstName'] %}
+                <span>Welcome, {{ session['FirstName'] }}</span>
+                <a href="{{ url_for('logout') }}" class="logout">Logout</a>
+                {% else %}
                 <a href="/login">Log In</a>
                 {% endif %}
-                {% if session['isOwner'] or session['isEmp'] %}
-                <a href="/add_schedule">Add Schedule</a>
-                {% endif %}
-
-
             </div>
-
-
-            {% if session['FirstName'] %}
-            <span style="color: white; font-weight: bold; margin-left: 15px;">
-                Welcome, {{ session['FirstName'] }}
-            </span>
-            <a href="{{ url_for('logout') }}" style="color: red; font-weight: bold; margin-left: 10px;">Logout</a>
-            {% endif %}
-
-            {% if session[isOwner] or session [isEmp] %}
-            <a href="/employee_schedule">Employee Schedule</a>
-            {% endif %}
-
         </nav>
     </header>
 
     <main style="padding-top: 90px">
 
-        <div class="brown-box">
-            Check out our wide variety of flowers, produce, honey, and more!
-        </div>
+        <main style="padding-top: 150px;">
+            <div class="brown-box">
+                Check out our wide variety of flowers, produce, honey, and more!
+            </div>
+        </main>
 
         <form method="POST" action="{{ url_for('get_products') }}">
             <label for="product_type" class="label-box-green">
