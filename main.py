@@ -562,13 +562,31 @@ def delete_employee():
 
 
 
-@app.route('/eschedule', methods=['GET'])
+@app.route('/eschedule', methods=['GET','POST'])
 def eschedule():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute("SELECT * FROM employeeschedule")
+    cursor.execute("SELECT EmployeeID, FirstName, LastName FROM employees")
+    employees = cursor.fetchall()
+    selected_employee_id = request.form.get('employee_id')
+    if selected_employee_id:
+        cursor.execute("SELECT * FROM employeeschedule WHERE EmployeeID = %s", (selected_employee_id,))
+    else:
+        query = """
+                SELECT * FROM employeeschedule
+                ORDER BY 
+                   Year ASC,           -- First by Year (earliest first)
+                    Month ASC,          -- Then by Month (earliest first)
+                     Day ASC,            -- Then by Day (earliest first)
+                    EmployeeID ASC  
+            """
+        cursor.execute(query)
+
+
     schedule = cursor.fetchall()
     cursor.close()
-    return render_template('eschedule.html', schedule=schedule)
+
+    return render_template('eschedule.html', schedule=schedule, employees=employees,
+                           selected_employee_id=selected_employee_id)
 
 
 @app.route('/edit_product1', methods=['POST'])

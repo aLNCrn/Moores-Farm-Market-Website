@@ -41,7 +41,17 @@
 
     <main style="padding-top: 200px;">
         <h1 class="about-heading fade-in-heading">EMPLOYEE SCHEDULE</h1>
-
+        <form method="POST" style="text-align: center; margin-bottom: 20px;">
+    <label for="employee_id" class="label-box-green"><strong>Select Employee:</strong></label>
+    <select name="employee_id" id="employee_id" onchange="this.form.submit()" style="padding: 5px;">
+        <option value="">-- All Employees --</option>
+        {% for emp in employees %}
+            <option value="{{ emp['EmployeeID'] }}" {% if emp['EmployeeID'] == selected_employee_id %}selected{% endif %}>
+                {{ emp['EmployeeID'] }} - {{ emp['FirstName'] }} {{ emp['LastName'] }}
+            </option>
+        {% endfor %}
+    </select>
+</form>
         <table style="margin: auto; border-collapse: collapse; width: 80%; background-color: rgb(230, 206, 255); color: black;font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;" border="1">
             <thead>
                 <tr>
