@@ -10,6 +10,42 @@ body.about-us-page {
     padding-top: 150px; 
 }
 
+.seasonal-text-box {
+    color: #2e2e2e;
+    padding: 20px;
+    border-radius: 12px;
+    position: relative;
+  }
+
+  .seasonal-text-box .sub-text {
+    color: #000000;
+}
+
+.image-crop-container {
+    width: 30%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 12px;
+    background-color: #78d454;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-crop-container:nth-child(2) {
+    background-color: #78d454;
+}
+
+.image-crop-container:nth-child(3) {
+    background-color: #78d454;
+}
+
+.image-crop-container img {
+    height: 100%;
+    width: auto;
+}
+
 
 .editable-textarea {
     width: 100%;

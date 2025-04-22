@@ -1,26 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="seasonal-page">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moore's Farmers Market</title>
+    <title>Seasonal Specials - Moore's Farmers Market</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 </head>
 <body>
-
-   
-
     <header>
-
         <div class="logo-container">
             <img src="{{ url_for('static', filename='images/mfmLogo.png') }}" alt="Site Logo">
         </div>
-
         <nav class="navbar">
             <div class="nav-links">
                 <a href="/index">Home</a>
+                <a href="/seasonal">Seasonal</a>
                 <a href="/products">Products</a>
-                <a href="/aboutus">About Us</a>
                 {% if session['isOwner']%}
                 <a href="/add_schedule">Add Schedule</a>
                 <a href="/eschedule">Employee Schedule</a>
@@ -30,7 +26,6 @@
                 <a href="/eschedule">Employee Schedule</a>
                 {% endif %}
             </div>
-
             <div class="nav-user">
                 {% if session['FirstName'] %}
                 <span>Welcome, {{ session['FirstName'] }}</span>
@@ -42,35 +37,86 @@
         </nav>
     </header>
 
-    <main style="padding-top: 200px">
-        <h1 class="about-heading fade-in-heading">Seasonal Specials!</h1>
-    
-        <div class="season-container">
-            <div class="season-box spring">
-                <h2>Spring</h2>
-                <textarea placeholder="What's blooming this spring?"></textarea>
+    <main style="padding-top: 160px; text-align: center;">
+        <h1 class="about-heading fade-in-heading" style="font-size: 3rem; color: #0e2e10;">🌿 Seasonal Specials 🌿</h1>
+
+        <!-- Image Row -->
+        <div style="display: flex; justify-content: center; gap: 20px; padding: 40px;">
+            <div class="image-crop-container">
+                <img src="{{ url_for('static', filename='images/seasonal1.jpg') }}" alt="Seasonal Produce">
             </div>
-            <div class="season-box summer">
-                <h2>Summer</h2>
-                <textarea placeholder="What's hot this summer?"></textarea>
+            <div class="image-crop-container">
+                <img src="{{ url_for('static', filename='images/seasonal2.jpg') }}" alt="Local Harvest">
             </div>
-            <div class="season-box fall">
-                <h2>Fall</h2>
-                <textarea placeholder="What's falling into place this fall?"></textarea>
+            <div class="image-crop-container">
+                <img src="{{ url_for('static', filename='images/seasonal3.jpg') }}" alt="Special Picks">
             </div>
-            <div class="season-box winter">
-                <h2>Winter</h2>
-                <textarea placeholder="What's cool this winter?"></textarea>
+        </div>
+
+        <!-- Text Row -->
+        <div style="display: flex; justify-content: center; gap: 20px; padding: 20px 40px;">
+            <!-- Text Box 1 -->
+            <div class="seasonal-text-box" style="flex: 1; background-color: #78d454;">
+                {% if session.get('isOwner') and request.args.get('edit') == 'seasonalTopRight' %}
+                    <form method="POST" action="{{ url_for('edit_text') }}">
+                        <textarea name="textBody" class="sub-text seasonal-textarea" style="width: 100%; min-height: 120px;">{{ textBubbles['seasonalTopRight'] }}</textarea>
+                        <input type="hidden" name="text_id" value="seasonalTopRight">
+                        <input type="hidden" name="redirect_to" value="{{ url_for('seasonal') }}">
+                        <button type="submit" class="submit-btn">Save</button>
+                    </form>
+                {% else %}
+                    <p class="sub-text fade-in-paragraph">{{ textBubbles['seasonalTopRight'] }}</p>
+                    {% if session.get('isOwner') %}
+                        <form method="GET" action="{{ url_for('seasonal') }}" style="position: absolute; top: 5px; right: 5px;">
+                            <input type="hidden" name="edit" value="seasonalTopRight">
+                            <button type="submit" class="edit-btn">✎</button>
+                        </form>
+                    {% endif %}
+                {% endif %}
+            </div>
+
+            <!-- Text Box 2 -->
+            <div class="seasonal-text-box" style="flex: 1; background-color: #78d454;">
+                {% if session.get('isOwner') and request.args.get('edit') == 'seasonalMiddleLeft' %}
+                    <form method="POST" action="{{ url_for('edit_text') }}">
+                        <textarea name="textBody" class="sub-text seasonal-textarea" style="width: 100%; min-height: 120px;">{{ textBubbles['seasonalMiddleLeft'] }}</textarea>
+                        <input type="hidden" name="text_id" value="seasonalMiddleLeft">
+                        <input type="hidden" name="redirect_to" value="{{ url_for('seasonal') }}">
+                        <button type="submit" class="submit-btn">Save</button>
+                    </form>
+                {% else %}
+                    <p class="sub-text fade-in-paragraph">{{ textBubbles['seasonalMiddleLeft'] }}</p>
+                    {% if session.get('isOwner') %}
+                        <form method="GET" action="{{ url_for('seasonal') }}" style="position: absolute; top: 5px; right: 5px;">
+                            <input type="hidden" name="edit" value="seasonalMiddleLeft">
+                            <button type="submit" class="edit-btn">✎</button>
+                        </form>
+                    {% endif %}
+                {% endif %}
+            </div>
+
+            <!-- Text Box 3 -->
+            <div class="seasonal-text-box" style="flex: 1; background-color: #78d454;">
+                {% if session.get('isOwner') and request.args.get('edit') == 'seasonalBottomRight' %}
+                    <form method="POST" action="{{ url_for('edit_text') }}">
+                        <textarea name="textBody" class="sub-text seasonal-textarea" style="width: 100%; min-height: 120px;">{{ textBubbles['seasonalBottomRight'] }}</textarea>
+                        <input type="hidden" name="text_id" value="seasonalBottomRight">
+                        <input type="hidden" name="redirect_to" value="{{ url_for('seasonal') }}">
+                        <button type="submit" class="submit-btn">Save</button>
+                    </form>
+                {% else %}
+                    <p class="sub-text fade-in-paragraph">{{ textBubbles['seasonalBottomRight'] }}</p>
+                    {% if session.get('isOwner') %}
+                        <form method="GET" action="{{ url_for('seasonal') }}" style="position: absolute; top: 5px; right: 5px;">
+                            <input type="hidden" name="edit" value="seasonalBottomRight">
+                            <button type="submit" class="edit-btn">✎</button>
+                        </form>
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
     </main>
-    
 
-
-        <footer>
-            <p>&copy; 2025 Moore's Farm Market. All Rights Reserved.</p>
-        </footer>
-
-    </main>
+    <script src="script.js"></script>
 </body>
-</html> 
+</html>

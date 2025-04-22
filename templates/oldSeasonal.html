@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moore's Farmers Market</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+   
+
+    <header>
+
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/mfmLogo.png') }}" alt="Site Logo">
+        </div>
+
+        <nav class="navbar">
+            <div class="nav-links">
+                <a href="/index">Home</a>
+                <a href="/products">Products</a>
+                <a href="/aboutus">About Us</a>
+                {% if session['isOwner']%}
+                <a href="/add_schedule">Add Schedule</a>
+                <a href="/eschedule">Employee Schedule</a>
+                <a href="/email">Email</a>
+                {% endif %}
+                {% if session ['isEmp']%}
+                <a href="/eschedule">Employee Schedule</a>
+                {% endif %}
+            </div>
+
+            <div class="nav-user">
+                {% if session['FirstName'] %}
+                <span>Welcome, {{ session['FirstName'] }}</span>
+                <a href="{{ url_for('logout') }}" class="logout">Logout</a>
+                {% else %}
+                <a href="/login">Log In</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main style="padding-top: 200px">
+        <h1 class="about-heading fade-in-heading">Seasonal Specials!</h1>
+    
+        <div class="season-container">
+            <div class="season-box spring">
+                <h2>Spring</h2>
+                <textarea placeholder="What's blooming this spring?"></textarea>
+            </div>
+            <div class="season-box summer">
+                <h2>Summer</h2>
+                <textarea placeholder="What's hot this summer?"></textarea>
+            </div>
+            <div class="season-box fall">
+                <h2>Fall</h2>
+                <textarea placeholder="What's falling into place this fall?"></textarea>
+            </div>
+            <div class="season-box winter">
+                <h2>Winter</h2>
+                <textarea placeholder="What's cool this winter?"></textarea>
+            </div>
+        </div>
+    </main>
+    
+
+
+        <footer>
+            <p>&copy; 2025 Moore's Farm Market. All Rights Reserved.</p>
+        </footer>
+
+    </main>
+</body>
+</html> 

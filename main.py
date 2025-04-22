@@ -152,8 +152,7 @@ def register1():
 
 @app.route('/seasonal')
 def seasonal():
-
-    return render_template('seasonal.html')
+    return render_template('seasonal.html', textBubbles=getTextBubbles())
 
 # Test Database Connection
 @app.route('/test_db')

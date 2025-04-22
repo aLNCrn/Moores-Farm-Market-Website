@@ -72,9 +72,24 @@
     
         <!-- Second Section: Local -->
         <div class="content-container reverse">
-            <div class="text-content">
+            <div class="text-content" style="position: relative;">
                 <h2 class="main-heading fade-in-heading">Local</h2>
-                <p class="sub-text fade-in-paragraph"> {{textBubbles['aboutUsMiddleLeft']}} </p>
+                {% if session.get('isOwner') and request.args.get('edit') == 'aboutUsMiddleLeft' %}
+                    <form method="POST" action="{{ url_for('edit_text') }}">
+                        <textarea name="textBody" class="sub-text fade-in-paragraph editable-textarea">{{ textBubbles['aboutUsMiddleLeft'] }}</textarea>
+                        <input type="hidden" name="text_id" value="aboutUsMiddleLeft">
+                        <input type="hidden" name="redirect_to" value="{{ url_for('aboutus') }}">
+                        <button type="submit" class="submit-btn">Save</button>
+                    </form>
+                {% else %}
+                    <p class="sub-text fade-in-paragraph">{{ textBubbles['aboutUsMiddleLeft'] }}</p>
+                    {% if session.get('isOwner') %}
+                        <form method="GET" action="{{ url_for('aboutus') }}" style="position: absolute; bottom: 5px; right: 5px;">
+                            <input type="hidden" name="edit" value="aboutUsMiddleLeft">
+                            <button type="submit" class="edit-btn">✎</button>
+                        </form>
+                    {% endif %}
+                {% endif %}
             </div>
             <img src= {{url_for('static', filename='images/truckAboutUs.jpg')}} alt="Farmers Market" class="content-image fade-in-image">
         </div>
@@ -82,9 +97,24 @@
         <!-- Third Section: Fresh -->
         <div class="content-container">
             <img src= {{url_for('static', filename= 'images/honeyAboutUs.jpg')}} alt="Farmers Market" class="content-image fade-in-image">
-            <div class="text-content">
+            <div class="text-content" style="position: relative;">
                 <h2 class="main-heading fade-in-heading">Fresh</h2>
-                <p class="sub-text fade-in-paragraph"> Moore's Farm Market won 2024 Asbury Park Press best of the best produce!!! </p>
+                {% if session.get('isOwner') and request.args.get('edit') == 'aboutUsBottomRight' %}
+                    <form method="POST" action="{{ url_for('edit_text') }}">
+                        <textarea name="textBody" class="sub-text fade-in-paragraph editable-textarea">{{ textBubbles['aboutUsBottomRight'] }}</textarea>
+                        <input type="hidden" name="text_id" value="aboutUsBottomRight">
+                        <input type="hidden" name="redirect_to" value="{{ url_for('aboutus') }}">
+                        <button type="submit" class="submit-btn">Save</button>
+                    </form>
+                {% else %}
+                    <p class="sub-text fade-in-paragraph">{{ textBubbles['aboutUsBottomRight'] }}</p>
+                    {% if session.get('isOwner') %}
+                        <form method="GET" action="{{ url_for('aboutus') }}" style="position: absolute; bottom: 5px; right: 5px;">
+                            <input type="hidden" name="edit" value="aboutUsBottomRight">
+                            <button type="submit" class="edit-btn">✎</button>
+                        </form>
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
     </main>
