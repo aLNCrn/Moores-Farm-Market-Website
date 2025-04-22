@@ -184,6 +184,7 @@ def login():
             if account:
                 session['loggedin'] = True
                 session['FirstName'] = account.get('FirstName') 
+                session['EmployeeID'] = account.get('EmployeeID')
                 if account.get('position') == 'admin':
                     session['isOwner'] = True
                 else:
@@ -761,12 +762,13 @@ def request_time_off():
         start_date = request.form['start_date']
         end_date = request.form['end_date']
         reason = request.form['reason']
-        emp_id = session.get('EmployeeID')
+        emp_id = session['EmployeeID']
+        print(emp_id)
         
         cursor = mysql.connection.cursor()
         try:
             cursor.execute('''
-                INSERT INTO TIME_OFF_REQUESTS (emp_id, start_date, end_date, reason)
+                INSERT INTO TIME_OFF_REQUESTS (EmployeeID, start_date, end_date, reason)
                 VALUES (%s, %s, %s, %s)
             ''', (emp_id, start_date, end_date, reason))
             mysql.connection.commit()
@@ -778,7 +780,7 @@ def request_time_off():
             cursor.close()
             return "An error occurred while submitting your request."
     
-    return render_template('time_off.html')
+    return render_template('/request_time_off.html')
 
 @app.route('/view_requests')
 def view_requests():

@@ -8,7 +8,7 @@
     <title>View Time Off Requests</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body style="margin: 0; padding: 0;">
+<body style="margin: 0; padding: 50px;">
 
     <header>
         <div class="logo-container">
@@ -62,7 +62,7 @@
                 {% if requests %}
                     {% for request in requests %}
                         <tr>
-                            <td>{{ request['emp_id'] }}</td>
+                            <td>{{ request['EmployeeID'] }}</td>
                             <td>{{ request['start_date'] }}</td>
                             <td>{{ request['end_date'] }}</td>
                             <td>{{ request['reason'] }}</td>
