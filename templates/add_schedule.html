@@ -7,7 +7,7 @@
     <title>Add Employee Schedule</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body style="margin: 0; padding: 0;">
+<body style="margin: 0; padding: 150px;">
 
     <header>
         <div class="logo-container">
@@ -44,43 +44,46 @@
         <h1>Add Schedule for Employee</h1>
 
         <form action="/add_schedule" method="POST">
-            <label for="employee_id">Select Employee:</label>
-            <select name="employee_id" required>
+            <label for="employee_id" class="label-box-green">
+                <strong>Select Employee:</strong></label>
+            <select name="employee_id" required class="large-dropdown">
                 {% for employee in employees %}
-                    <option value="{{ employee[0] }}">{{ employee[1] }} {{ employee[2] }}</option>
+                <option value="{{ employee[0] }}">{{ employee[1] }} {{ employee[2] }}</option>
                 {% endfor %}
             </select>
             <br><br>
 
-            <label for="year">Select Year:</label>
-            <select name="year" required>
+            <label for="year" class="label-box-green">
+                <strong>Select Year:</strong></label>
+            <select name="year" required class="large-dropdown">
                 <option value="{{ current_year }}" selected>{{ current_year }}</option>
             </select>
             <br><br>
 
-            <label for="month">Select Month:</label>
-            <select name="month" required>
+            <label for="month" class="label-box-green">
+                <strong>Select Month:</strong></label>
+            <select name="month" required class="large-dropdown">
                 <option value="{{ current_month }}" selected>{{ current_month }}</option>
                 {% for i in range(1, 13) %}
-                    {% if i != current_month %}
-                        <option value="{{ i }}">{{ i }}</option>
-                    {% endif %}
+                {% if i != current_month %}
+                <option value="{{ i }}">{{ i }}</option>
+                {% endif %}
                 {% endfor %}
             </select>
             <br><br>
 
             <div class="days-container">
                 {% for day in days_in_advance %}
-                    <div class="day-checkbox">
-                        <label for="day-{{ day }}">{{ day }}:</label>
-                        <input type="checkbox" name="day-{{ day }}" value="{{ day }}" id="day-{{ day }}" class="day-toggle">
-                        <div class="time-inputs" style="display:none;" id="time-inputs-{{ day }}">
-                            <label for="timein-{{ day }}">Time In:</label>
-                            <input type="time" name="timein-{{ day }}" id="timein-{{ day }}">
-                            <label for="timeout-{{ day }}">Time Out:</label>
-                            <input type="time" name="timeout-{{ day }}" id="timeout-{{ day }}">
-                        </div>
+                <div class="day-checkbox">
+                    <label for="day-{{ day }}">{{ day }}:</label>
+                    <input type="checkbox" name="day-{{ day }}" value="{{ day }}" id="day-{{ day }}" class="day-toggle">
+                    <div class="time-inputs" style="display:none;" id="time-inputs-{{ day }}">
+                        <label for="timein-{{ day }}">Time In:</label>
+                        <input type="time" name="timein-{{ day }}" id="timein-{{ day }}">
+                        <label for="timeout-{{ day }}">Time Out:</label>
+                        <input type="time" name="timeout-{{ day }}" id="timeout-{{ day }}">
                     </div>
+                </div>
                 {% endfor %}
             </div>
 
@@ -103,26 +106,26 @@
             </thead>
             <tbody>
                 {% if schedules %}
-                    {% for entry in schedules %}
-                        <tr>
-                            <td>{{ entry[0] }}</td>
-                            <td>{{ entry[1] }}</td>
-                            <td>{{ entry[2] }}</td>
-                            <td>{{ entry[3] }}</td>
-                            <td>{{ entry[4] }}</td>
-                            <td>{{ entry[5] }}</td>
-                            <td>
-                                <form action="{{ url_for('delete_shift') }}" method="POST" style="display:inline;">
-                                    <input type="hidden" name="shiftId" value="{{ entry[6] }}">
-                                    <button type="submit">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    {% endfor %}
+                {% for entry in schedules %}
+                <tr>
+                    <td>{{ entry[0] }}</td>
+                    <td>{{ entry[1] }}</td>
+                    <td>{{ entry[2] }}</td>
+                    <td>{{ entry[3] }}</td>
+                    <td>{{ entry[4] }}</td>
+                    <td>{{ entry[5] }}</td>
+                    <td>
+                        <form action="{{ url_for('delete_shift') }}" method="POST" style="display:inline;">
+                            <input type="hidden" name="shiftId" value="{{ entry[6] }}">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
                 {% else %}
-                    <tr>
-                        <td colspan="7" style="text-align: center;">No schedule available for any employee.</td>
-                    </tr>
+                <tr>
+                    <td colspan="7" style="text-align: center;">No schedule available for any employee.</td>
+                </tr>
                 {% endif %}
             </tbody>
         </table>
@@ -131,28 +134,45 @@
         <h2>Manage Employees</h2>
 
         <!-- Add New Employee Form -->
-        <form action="{{ url_for('add_employee') }}" method="POST" style="margin-bottom: 30px;" autocomplete="off">
-            <h3>Add New Employee</h3>
-            <input type="text" name="firstname" placeholder="First Name" required autocomplete="off">
-            <input type="text" name="lastname" placeholder="Last Name" required autocomplete="off">
-            <input type="email" name="email" placeholder="Email" required autocomplete="off">
-            <input type="password" name="password" placeholder="Password" required autocomplete="new-password">
-            <input type="text" name="phone" placeholder="Phone (Numbers only)" required pattern="\d+">
-            <input type="number" name="wage" placeholder="Wage (hourly rate)" required min="0">
-            <label for="hiredate">Hire Date:</label>
-            <input type="date" name="hiredate" required>
-            <select name="position" required>
-                <option value="employee">Employee</option>
-                <option value="admin">Admin</option>
-            </select>
-            <button type="submit">Add Employee</button>
-        </form>
+        <button onclick="openAddEmployeeModal()" class="add-employee-btn">
+            Add New Employee
+        </button>
+
+        <div id="addEmployeeModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeAddEmployeeModal()">&times;</span>
+                <h2>Add New Employee</h2>
+                <form action="{{ url_for('add_employee') }}" method="POST">
+                    <input type="text" name="firstname" placeholder="First Name" required>
+                    <input type="text" name="lastname" placeholder="Last Name" required>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="password" name="password" placeholder="Password" required>
+                    <input type="text" name="phone" placeholder="Phone (Numbers only)" required pattern="\d+">
+                    <input type="number" name="wage" placeholder="Wage (hourly rate)" required min="0">
+                    <label for="hiredate">Hire Date:</label>
+                    <input type="date" name="hiredate" required>
+                    <select name="position" required>
+                        <option value="employee">Employee</option>
+                        <option value="admin">Admin</option>
+                    </select><br><br>
+                    <button type="submit" class="submit-btn">Submit</button>
+                    <button type="button" class="cancel-btn" onclick="closeAddEmployeeModal()">Cancel</button>
+                </form>
+            </div>
+        </div>
 
         <!-- Existing Employees Table -->
         <h3>Existing Employees</h3>
         <table style="margin: auto; border-collapse: collapse; width: 90%; background-color: rgb(200, 144, 255); color: black; font-family: Impact, Haettenschweiler, sans-serif;" border="2">
             <tr>
-                <th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Wage</th><th>Hire Date</th><th>Position</th><th>Action</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Wage</th>
+                <th>Hire Date</th>
+                <th>Position</th>
+                <th>Action</th>
             </tr>
             {% for emp in employees %}
             <tr>
@@ -161,9 +181,9 @@
                 <td>{{ emp[3] }}</td>
                 <td>
                     {% if emp[5] and emp[5]|length == 10 %}
-                        ({{ emp[5][:3] }}) {{ emp[5][3:6] }}-{{ emp[5][6:] }}
+                    ({{ emp[5][:3] }}) {{ emp[5][3:6] }}-{{ emp[5][6:] }}
                     {% else %}
-                        {{ emp[5] }}
+                    {{ emp[5] }}
                     {% endif %}
                 </td>
                 <td>${{ emp[6] }}</td>
@@ -205,6 +225,17 @@
         });
     </script>
 
+    <script>
+        function openAddEmployeeModal() {
+            document.getElementById("addEmployeeModal").style.display = "block";
+        }
+
+        function closeAddEmployeeModal() {
+            document.getElementById("addEmployeeModal").style.display = "none";
+        }
+    </script>
+
+
 </body>
 </html>
 {% else %}
@@ -212,3 +243,5 @@
     window.location.href = "/index";
 </script>
 {% endif %}
+
+

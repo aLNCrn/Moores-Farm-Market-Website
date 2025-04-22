@@ -1,0 +1,98 @@
+@ -0,0 +1,97 @@
+{% if session['isOwner'] %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Time Off Requests</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body style="margin: 0; padding: 0;">
+
+    <header>
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/mfmLogo.png') }}" alt="Site Logo">
+        </div>
+
+        <nav class="navbar">
+            <div class="nav-links">
+                <a href="/index">Home</a>
+                <a href="/seasonal">Seasonal</a>
+                <a href="/aboutus">About Us</a>
+                <a href="/products">Products</a>
+                {% if session['isOwner']%}
+                <a href="/add_schedule">Add Schedule</a>
+                <a href="/email">Email</a>
+                <a href="/view_requests">View Requests</a>
+                {% endif %}
+                {% if session['isEmp']%}
+                <a href="/eschedule">Employee Schedule</a>
+                <a href="/request_time_off">Request Time Off</a>
+                {% endif %}
+            </div>
+
+            <div class="nav-user">
+                {% if session['FirstName'] %}
+                <span>Welcome, {{ session['FirstName'] }}</span>
+                <a href="{{ url_for('logout') }}" class="logout">Logout</a>
+                {% else %}
+                <a href="/login">Log In</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main style="padding-top: 170px; padding-bottom: 150px; text-align: center;">
+        <h2>Time Off Requests</h2>
+        
+        <table style="margin: auto; border-collapse: collapse; width: 80%; background-color: rgb(230, 206, 255); color: black; font-family: Impact, Haettenschweiler, sans-serif;" border="1">
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                    <th>Request Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if requests %}
+                    {% for request in requests %}
+                        <tr>
+                            <td>{{ request['emp_id'] }}</td>
+                            <td>{{ request['start_date'] }}</td>
+                            <td>{{ request['end_date'] }}</td>
+                            <td>{{ request['reason'] }}</td>
+                            <td>{{ request['status'] }}</td>
+                            <td>{{ request['request_date'] }}</td>
+                            <td>
+                                {% if request['status'] == 'Pending' %}
+                                <form action="{{ url_for('handle_request_action', req_id=request['id']) }}" method="POST" style="display:inline;">
+                                    <button type="submit" name="action" value="approve">Approve</button>
+                                    <button type="submit" name="action" value="deny">Deny</button>
+                                </form>
+                                {% else %}
+                                {{ request['status'] }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="7" style="text-align: center;">No time off requests available.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </main>
+
+</body>
+</html>
+{% else %}
+<script>
+    window.location.href = "/index";
+</script>
+{% endif %}

@@ -124,3 +124,30 @@ CREATE TABLE EmployeeSchedule (
 ALTER TABLE EmployeeSchedule
 MODIFY COLUMN TimeIn TIME(0) NOT NULL,
 MODIFY COLUMN TimeOut TIME(0) NOT NULL;
+
+CREATE TABLE TIME_OFF_REQUESTS (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    employee_id INT NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    reason TEXT,
+    status VARCHAR(20) DEFAULT 'Pending',
+    request_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (employee_id) REFERENCES EMPLOYEES(employee_id)
+);
+
+-- Drop the existing foreign key (if it exists)
+ALTER TABLE TIME_OFF_REQUESTS
+DROP FOREIGN KEY time_off_requests_ibfk_1;
+
+-- Drop the old emp_id column (if it exists)
+ALTER TABLE TIME_OFF_REQUESTS
+DROP COLUMN employee_id;
+
+-- Add the correct emp_id column
+ALTER TABLE TIME_OFF_REQUESTS
+ADD COLUMN employee_id INT NOT NULL;
+
+-- Add the foreign key constraint referencing EmployeeID in the EMPLOYEES table
+ALTER TABLE TIME_OFF_REQUESTS
+ADD CONSTRAINT fk_emplyee_id FOREIGN KEY (employee_id) REFERENCES EMPLOYEES(EmployeeID);
