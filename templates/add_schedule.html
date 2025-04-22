@@ -23,6 +23,7 @@
                 {% if session['isOwner'] %}
                 <a href="/eschedule">Employee Schedule</a>
                 <a href="/email">Email</a>
+                <a href="/view_requests">Time Off Requests</a>
                 {% endif %}
                 {% if session['isEmp'] %}
                 <a href="/eschedule">Employee Schedule</a>
@@ -40,7 +41,7 @@
         </nav>
     </header>
 
-    <main style="padding-top: 300px; padding-bottom: 150px; text-align: center;">
+    <main style="padding-top: 20px; padding-bottom: 150px; text-align: center;">
         <h1 class="about-heading">Add Schedule</h1>
 
         <form action="/add_schedule" method="POST" class="login-container">
@@ -112,7 +113,7 @@
                     <input type="email" name="email" placeholder="Email" required>
                     <input type="password" name="password" placeholder="Password" required>
                     <input type="text" name="phone" placeholder="Phone (Numbers only)" required pattern="\d+">
-                    <input type="number" name="wage" placeholder="Wage (hourly rate)" required min="0">
+                    <input type="number" name="wage" placeholder="Wage (hourly rate)">
                     <label for="hiredate">Hire Date:</label>
                     <input type="date" name="hiredate" required>
                     <select name="position" required>

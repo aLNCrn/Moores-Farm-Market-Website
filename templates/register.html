@@ -27,7 +27,7 @@
                 {% if not session['FirstName'] %}
                 <a href="/login">Log In</a>
                 {% endif %}
-                {% if session['isOwner'] or session['isEmp'] %}
+                {% if session['isOwner'] %}
                 <a href="/add_schedule">Add Schedule</a>
                 {% endif %}
     
