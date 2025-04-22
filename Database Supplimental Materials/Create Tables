@@ -127,7 +127,7 @@ MODIFY COLUMN TimeOut TIME(0) NOT NULL;
 
 CREATE TABLE TIME_OFF_REQUESTS (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    employee_id INT NOT NULL,
+    employeeid INT NOT NULL,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     reason TEXT,
