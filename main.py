@@ -706,8 +706,9 @@ def email():
         selected_recipients = request.form.getlist('recipients')
 
         if not selected_recipients:
+
             flash("⚠️ No recipients selected.")
-            return redirect(url_for('email'))
+            return render_template('email.html', customers=customers, employees=employees)
 
         for email in selected_recipients:
             msg = Message(subject, recipients=[email])
