@@ -13,9 +13,9 @@
             <img src="{{ url_for('static', filename='images/mfmLogo.png') }}" alt="Site Logo">
         </div>
         <nav class="navbar">
-            <div class="nav-links">
+            <div class="nav-links"> 
                 <a href="/index">Home</a>
-                <a href="/seasonal">Seasonal</a>
+                <a href="/aboutus">About Us</a>
                 <a href="/products">Products</a>
                 {% if session['isOwner']%}
                 <a href="/add_schedule">Add Schedule</a>
@@ -43,13 +43,13 @@
         <!-- Image Row -->
         <div style="display: flex; justify-content: center; gap: 20px; padding: 40px;">
             <div class="image-crop-container">
-                <img src="{{ url_for('static', filename='images/seasonal1.jpg') }}" alt="Seasonal Produce">
+                <img src="{{ url_for('static', filename='images/tulips.jpg') }}" alt="Seasonal Produce">
             </div>
             <div class="image-crop-container">
-                <img src="{{ url_for('static', filename='images/seasonal2.jpg') }}" alt="Local Harvest">
+                <img src="{{ url_for('static', filename='images/metals.jpg') }}" alt="Local Harvest">
             </div>
             <div class="image-crop-container">
-                <img src="{{ url_for('static', filename='images/seasonal3.jpg') }}" alt="Special Picks">
+                <img src="{{ url_for('static', filename='images/mothersdaybaskets.jpg') }}" alt="Special Picks">
             </div>
         </div>
 
