@@ -3,15 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moore's Farmers Market</title>
+    <title>Email Dashboard | Moore's Farmers Market</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-
-    <div class="logo-container" id="logoContainer">
-        <img src="{{ url_for('static', filename='images/mfmLogo.png') }}" alt="Site Logo" style="display:block; width:100px; height: 100px;">
-    </div>
-
     <header>
         <div class="logo-container">
             <img src="{{ url_for('static', filename='images/mfmLogo.png') }}" alt="Site Logo">
@@ -23,12 +18,10 @@
                 <a href="/seasonal">Seasonal</a>
                 <a href="/aboutus">About Us</a>
                 <a href="/products">Products</a>
-                {% if session['isOwner']%}
+                {% if session['isOwner'] %}
                 <a href="/add_schedule">Add Schedule</a>
                 <a href="/eschedule">Employee Schedule</a>
-                
-                {% endif %}
-                {% if session ['isEmp']%}
+                {% elif session['isEmp'] %}
                 <a href="/eschedule">Employee Schedule</a>
                 {% endif %}
             </div>
@@ -44,58 +37,81 @@
         </nav>
     </header>
 
-    <main style="padding-top: 200px">
-        <h1>Customer and Employee Emails</h1>
-
-        <form method="POST">
-            <h2>Customer Emails</h2>
-            <ul>
-                {% for customer in customers %}
-                <li>
-                    <label>
-                        <input type="checkbox" name="recipients" value="{{ customer.Email }}" class="customer-email">
-                        {{ customer.Email }}
-                    </label>
-                </li>
-                {% endfor %}
-            </ul>
-
-            <h2>Employee Emails</h2>
-            <ul>
-                {% for employee in employees %}
-                <li>
-                    <label>
-                        <input type="checkbox" name="recipients" value="{{ employee.Email }}" class="employee-email">
-                        {{ employee.Email }}
-                    </label>
-                </li>
-                {% endfor %}
-            </ul>
-
-            <div>
-                <button type="button" onclick="selectAll('customer-email')">Select All Customers</button>
-                <button type="button" onclick="selectAll('employee-email')">Select All Employees</button>
-                <button type="button" onclick="selectAll('customer-email'); selectAll('employee-email')">Select Everyone</button>
-                <button type="button" onclick="deselectAll()">Deselect All</button>
-            </div>
-
-            <hr>
-            <h2>Send Custom Email</h2>
-
-            <label for="subject">Subject:</label>
-            <input type="text" name="subject" id="subject" required><br><br>
-
-            <label for="body">Body:</label><br>
-            <textarea name="body" id="body" rows="5" cols="40" required></textarea><br><br>
-
-            <button type="submit">Send Email</button>
-        </form>
-
-        <footer>
-            <p>&copy; 2025 Moore's Farm Market. All Rights Reserved.</p>
-        </footer>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div id="flash-messages">
+        {% for message in messages %}
+        <div class="flash">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
 
 
+    <main style="padding-top: 200px;">
+        <div class="email-form-container">
+            <h1>Email Dashboard</h1>
+            <form method="POST">
+                <h2>Customer Emails</h2>
+                <div class="scroll-section">
+                    <ul>
+                        {% for customer in customers %}
+                        <li>
+                            <label>
+                                <input type="checkbox" name="recipients" value="{{ customer.Email }}" class="customer-email">
+                                {{ customer.Email }}
+                            </label>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <h2>Employee Emails</h2>
+                <div class="scroll-section">
+                    <ul>
+                        {% for employee in employees %}
+                        <li>
+                            <label>
+                                <input type="checkbox" name="recipients" value="{{ employee.Email }}" class="employee-email">
+                                {{ employee.Email }}
+                            </label>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <h2>Employee Emails</h2>
+                <div class="scroll-section">
+                    <ul>
+                        {% for employee in employees %}
+                        <li>
+                            <label>
+                                <input type="checkbox" name="recipients" value="{{ employee.Email }}" class="employee-email"
+                                       {% if employee.Email in request.form.getlist('recipients') %}checked{% endif %}>
+                                {{ employee.Email }}
+                            </label>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="multi-select-btns">
+                    <button type="button" onclick="selectAll('customer-email')">Select All Customers</button>
+                    <button type="button" onclick="selectAll('employee-email')">Select All Employees</button>
+                    <button type="button" onclick="selectAll('customer-email'); selectAll('employee-email')">Select Everyone</button>
+                    <button type="button" onclick="deselectAll()">Deselect All</button>
+                </div>
+
+                <h2>Send Custom Email</h2>
+                <label for="subject">Subject:</label>
+                <input type="text" name="subject" id="subject" required value="{{ request.form.get('subject', '') }}">
+
+                <label for="body">Body:</label>
+                <textarea name="body" id="body" rows="5" required>{{ request.form.get('body', '') }}</textarea>
+
+                <button type="submit">Send Email</button>
+            </form>
+        </div>
     </main>
 
     {% with messages = get_flashed_messages() %}
@@ -107,9 +123,6 @@
     </div>
     {% endif %}
     {% endwith %}
-
-    
-
 
     <script>
         function selectAll(className) {
@@ -124,16 +137,16 @@
     </script>
 
     <script>
-        
+
         const flashDiv = document.getElementById("flash-messages");
 
         if (flashDiv) {
-           
+
             setTimeout(() => {
                 flashDiv.style.display = "none";
             }, 4000);
 
-           
+
             document.addEventListener("click", () => {
                 flashDiv.style.display = "none";
             }, { once: true });
@@ -141,4 +154,4 @@
     </script>
 
 </body>
-</html> 
+</html>

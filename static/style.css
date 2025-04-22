@@ -664,3 +664,95 @@ nav a:hover {
     text-decoration: none;
 }
 
+.scroll-section {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 2px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background-color: white;
+}
+
+    .scroll-section ul {
+        list-style-type: none;
+        padding-left: 0;
+        margin: 0;
+    }
+
+    .scroll-section li {
+        margin-bottom: 5px;
+    }
+
+.email-form-container {
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: rgba(255,255,255,0.95);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+    .email-form-container h2 {
+        margin-top: 30px;
+        font-size: 1.5rem;
+        color: #333;
+    }
+
+    .email-form-container label {
+        font-weight: bold;
+    }
+
+    .email-form-container input[type="text"],
+    .email-form-container textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+    }
+
+    .email-form-container button[type="submit"] {
+        background-color: #406233;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .email-form-container button:hover {
+        background-color: #2e4b24;
+    }
+
+.multi-select-btns {
+    margin-bottom: 20px;
+}
+
+    .multi-select-btns button {
+        margin: 5px;
+    }
+
+#flash-messages {
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #f0f9ff;
+    border: 1px solid #b6e0fe;
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    color: #333;
+    font-weight: bold;
+    max-width: 90%;
+    text-align: center;
+}
+
+.flash {
+    margin: 5px 0;
+}
+
