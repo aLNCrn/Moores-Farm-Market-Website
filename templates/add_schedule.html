@@ -20,11 +20,11 @@
                 <a href="/seasonal">Seasonal</a>
                 <a href="/aboutus">About Us</a>
                 <a href="/products">Products</a>
-                {% if session['isOwner']%}
+                {% if session['isOwner'] %}
                 <a href="/eschedule">Employee Schedule</a>
                 <a href="/email">Email</a>
                 {% endif %}
-                {% if session ['isEmp']%}
+                {% if session['isEmp'] %}
                 <a href="/eschedule">Employee Schedule</a>
                 {% endif %}
             </div>
@@ -41,58 +41,47 @@
     </header>
 
     <main style="padding-top: 300px; padding-bottom: 150px; text-align: center;">
-        <h1>Add Schedule for Employee</h1>
+        <h1 class="about-heading">Add Schedule</h1>
 
-        <form action="/add_schedule" method="POST">
-            <label for="employee_id" class="label-box-green">
-                <strong>Select Employee:</strong></label>
-            <select name="employee_id" required class="large-dropdown">
-                {% for employee in employees %}
-                <option value="{{ employee[0] }}">{{ employee[1] }} {{ employee[2] }}</option>
-                {% endfor %}
-            </select>
-            <br><br>
+        <form action="/add_schedule" method="POST" class="login-container">
 
-            <label for="year" class="label-box-green">
-                <strong>Select Year:</strong></label>
-            <select name="year" required class="large-dropdown">
-                <option value="{{ current_year }}" selected>{{ current_year }}</option>
-            </select>
-            <br><br>
+            <div class="form-group">
+                <label for="employee_id"><strong>Employee:</strong></label>
+                <select name="employee_id" id="employee_id" class="large-dropdown" required>
+                    {% for employee in employees %}
+                    <option value="{{ employee[0] }}">{{ employee[1] }} {{ employee[2] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
 
-            <label for="month" class="label-box-green">
-                <strong>Select Month:</strong></label>
-            <select name="month" required class="large-dropdown">
-                <option value="{{ current_month }}" selected>{{ current_month }}</option>
-                {% for i in range(1, 13) %}
-                {% if i != current_month %}
-                <option value="{{ i }}">{{ i }}</option>
-                {% endif %}
-                {% endfor %}
-            </select>
-            <br><br>
+            <div class="form-group">
+                <label for="year"><strong>Year:</strong></label>
+                <select name="year" id="year" class="large-dropdown" required>
+                    <option value="{{ current_year }}" selected>{{ current_year }}</option>
+                </select>
+            </div>
 
-            <div class="days-container">
-                {% for day in days_in_advance %}
-                <div class="day-checkbox">
-                    <label for="day-{{ day }}">{{ day }}:</label>
-                    <input type="checkbox" name="day-{{ day }}" value="{{ day }}" id="day-{{ day }}" class="day-toggle">
-                    <div class="time-inputs" style="display:none;" id="time-inputs-{{ day }}">
-                        <label for="timein-{{ day }}">Time In:</label>
-                        <input type="time" name="timein-{{ day }}" id="timein-{{ day }}">
-                        <label for="timeout-{{ day }}">Time Out:</label>
-                        <input type="time" name="timeout-{{ day }}" id="timeout-{{ day }}">
+            <div class="form-group">
+                <label for="month"><strong>Month:</strong></label>
+                <select name="month" id="month" class="large-dropdown" required></select>
+            </div>
+
+            <div class="form-group">
+                <h3 style="text-align: center;">Select Days & Times</h3>
+                <div style="overflow-x: auto;">
+                    <div class="calendar-header">
+                        <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
                     </div>
+                    <div id="calendarContainer" class="calendar-grid"></div>
                 </div>
-                {% endfor %}
             </div>
 
             <br>
-            <button type="submit">Submit Schedule</button>
+            <button type="submit" class="large-submit-btn">Submit Schedule</button>
         </form>
 
         <h2 style="margin-top: 50px;">Current Schedule</h2>
-        <table style="margin: auto; border-collapse: collapse; width: 80%; background-color: rgb(200, 144, 255); color: black; font-family: Impact, Haettenschweiler, sans-serif;" border="2">
+        <table class="review-table">
             <thead>
                 <tr>
                     <th>Employee ID</th>
@@ -117,7 +106,7 @@
                     <td>
                         <form action="{{ url_for('delete_shift') }}" method="POST" style="display:inline;">
                             <input type="hidden" name="shiftId" value="{{ entry[6] }}">
-                            <button type="submit">Delete</button>
+                            <button type="submit" class="submit-btn">Delete</button>
                         </form>
                     </td>
                 </tr>
@@ -133,7 +122,6 @@
         <div style="height: 40px;"></div>
         <h2>Manage Employees</h2>
 
-        <!-- Add New Employee Form -->
         <button onclick="openAddEmployeeModal()" class="add-employee-btn">
             Add New Employee
         </button>
@@ -161,69 +149,52 @@
             </div>
         </div>
 
-        <!-- Existing Employees Table -->
         <h3>Existing Employees</h3>
-        <table style="margin: auto; border-collapse: collapse; width: 90%; background-color: rgb(200, 144, 255); color: black; font-family: Impact, Haettenschweiler, sans-serif;" border="2">
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Wage</th>
-                <th>Hire Date</th>
-                <th>Position</th>
-                <th>Action</th>
-            </tr>
-            {% for emp in employees %}
-            <tr>
-                <td>{{ emp[0] }}</td>
-                <td>{{ emp[1] }} {{ emp[2] }}</td>
-                <td>{{ emp[3] }}</td>
-                <td>
-                    {% if emp[5] and emp[5]|length == 10 %}
-                    ({{ emp[5][:3] }}) {{ emp[5][3:6] }}-{{ emp[5][6:] }}
-                    {% else %}
-                    {{ emp[5] }}
-                    {% endif %}
-                </td>
-                <td>${{ emp[6] }}</td>
-                <td>{{ emp[7] }}</td>
-                <td>{{ emp[4] }}</td>
-                <td>
-                    {% if emp[0] != 1 %}
-                    <form action="{{ url_for('delete_employee') }}" method="POST">
-                        <input type="hidden" name="employee_id" value="{{ emp[0] }}">
-                        <button type="submit">Delete</button>
-                    </form>
-                    {% else %}
-                    <em>Owner</em>
-                    {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
+        <table class="review-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Wage</th>
+                    <th>Hire Date</th>
+                    <th>Position</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for emp in employees %}
+                <tr>
+                    <td>{{ emp[0] }}</td>
+                    <td>{{ emp[1] }} {{ emp[2] }}</td>
+                    <td>{{ emp[3] }}</td>
+                    <td>
+                        {% if emp[5] and emp[5]|length == 10 %}
+                        ({{ emp[5][:3] }}) {{ emp[5][3:6] }}-{{ emp[5][6:] }}
+                        {% else %}
+                        {{ emp[5] }}
+                        {% endif %}
+                    </td>
+                    <td>${{ emp[6] }}</td>
+                    <td>{{ emp[7] }}</td>
+                    <td>{{ emp[4] }}</td>
+                    <td>
+                        {% if emp[0] != 1 %}
+                        <form action="{{ url_for('delete_employee') }}" method="POST">
+                            <input type="hidden" name="employee_id" value="{{ emp[0] }}">
+                            <button type="submit" class="submit-btn">Delete</button>
+                        </form>
+                        {% else %}
+                        <em>Owner</em>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
         </table>
 
-
     </main>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const checkboxes = document.querySelectorAll('.day-toggle');
-
-            checkboxes.forEach(function (checkbox) {
-                checkbox.addEventListener('change', function () {
-                    const day = checkbox.value;
-                    const timeInputs = document.getElementById('time-inputs-' + day);
-
-                    if (checkbox.checked) {
-                        timeInputs.style.display = 'block';
-                    } else {
-                        timeInputs.style.display = 'none';
-                    }
-                });
-            });
-        });
-    </script>
 
     <script>
         function openAddEmployeeModal() {
@@ -233,7 +204,100 @@
         function closeAddEmployeeModal() {
             document.getElementById("addEmployeeModal").style.display = "none";
         }
+
+        const calendarContainer = document.getElementById('calendarContainer');
+        const monthSelect = document.getElementById('month');
+
+        const getDayName = (date) => date.toLocaleDateString('en-US', { weekday: 'short' });
+        const getMonthName = (date) => date.toLocaleDateString('en-US', { month: 'short' });
+
+        function generateValidMonths() {
+            const today = new Date();
+            const end = new Date(today);
+            end.setDate(today.getDate() + 13);
+
+            const monthSet = new Set();
+            for (let d = new Date(today); d <= end; d.setDate(d.getDate() + 1)) {
+                monthSet.add(d.getMonth() + 1);
+            }
+
+            monthSelect.innerHTML = '';
+            const currentMonth = today.getMonth() + 1;
+            monthSet.forEach(month => {
+                const option = document.createElement('option');
+                option.value = month;
+                option.textContent = month;
+                if (month === currentMonth) option.selected = true;
+                monthSelect.appendChild(option);
+            });
+        }
+
+        function updateDays() {
+            const selectedMonth = parseInt(monthSelect.value);
+            const today = new Date();
+            const end = new Date(today);
+            end.setDate(today.getDate() + 13);
+
+            calendarContainer.innerHTML = '';
+
+            // Calculate offset for first column alignment
+            const firstDayOfWeek = today.getDay();
+            for (let i = 0; i < firstDayOfWeek; i++) {
+                const spacer = document.createElement('div');
+                spacer.className = 'calendar-day';
+                spacer.style.visibility = 'hidden';
+                calendarContainer.appendChild(spacer);
+            }
+
+            // Fill each of the 14 days
+            for (let d = new Date(today); d <= end; d.setDate(d.getDate() + 1)) {
+                if (d.getMonth() + 1 !== selectedMonth) continue;
+
+                const day = d.getDate();
+                const weekday = d.toLocaleDateString('en-US', { weekday: 'short' });
+                const month = d.getMonth() + 1;
+                const year = d.getFullYear();
+
+                const dayBox = document.createElement('div');
+                dayBox.className = 'calendar-day';
+
+                dayBox.innerHTML = `
+            <strong>${weekday}<br>${month}/${day}</strong><br>
+            <label><input type="checkbox" name="day-${day}" id="day-${year}-${month}-${day}" class="day-toggle" value="${day}"> Available</label>
+            <div class="time-inputs" id="time-inputs-${day}" style="display: none; margin-top: 6px;">
+                <label for="timein-${day}">In:</label>
+                <input type="time" name="timein-${day}" id="timein-${day}">
+                <label for="timeout-${day}">Out:</label>
+                <input type="time" name="timeout-${day}" id="timeout-${day}">
+            </div>
+        `;
+                calendarContainer.appendChild(dayBox);
+            }
+
+            attachToggleEvents();
+        }
+
+        function attachToggleEvents() {
+            const checkboxes = document.querySelectorAll('.day-toggle');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    const day = checkbox.value;
+                    const timeInputs = document.getElementById('time-inputs-' + day);
+                    if (timeInputs) {
+                        timeInputs.style.display = checkbox.checked ? 'block' : 'none';
+                    }
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            generateValidMonths();
+            updateDays();
+        });
+
+        monthSelect.addEventListener('change', updateDays);
     </script>
+
 
 
 </body>
@@ -243,5 +307,3 @@
     window.location.href = "/index";
 </script>
 {% endif %}
-
-
