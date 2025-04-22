@@ -752,6 +752,77 @@ def email():
     return render_template('email.html', customers=customers, employees=employees)
 
 
+@app.route('/request_time_off', methods=['GET', 'POST'])
+def request_time_off():
+    if not session.get('isEmp'):
+        return redirect(url_for('login'))
+    
+    if request.method == 'POST':
+        start_date = request.form['start_date']
+        end_date = request.form['end_date']
+        reason = request.form['reason']
+        emp_id = session.get('EmployeeID')
+        
+        cursor = mysql.connection.cursor()
+        try:
+            cursor.execute('''
+                INSERT INTO TIME_OFF_REQUESTS (emp_id, start_date, end_date, reason)
+                VALUES (%s, %s, %s, %s)
+            ''', (emp_id, start_date, end_date, reason))
+            mysql.connection.commit()
+            cursor.close()
+            print(f"Successfully added time off request for employee {emp_id}")
+            return redirect(url_for('index'))
+        except Exception as e:
+            print(f"Error adding time off request: {e}")
+            cursor.close()
+            return "An error occurred while submitting your request."
+    
+    return render_template('time_off.html')
+
+@app.route('/view_requests')
+def view_requests():
+    if not session.get('isOwner'):
+        return redirect(url_for('index'))
+    
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    try:
+        cursor.execute("SELECT * FROM TIME_OFF_REQUESTS ORDER BY request_date DESC")
+        requests = cursor.fetchall()
+        cursor.close()
+        return render_template('/view_requests.html', requests=requests)
+    except Exception as e:
+        print(f"Error fetching time off requests: {e}")
+        cursor.close()
+        return "An error occurred while fetching time off requests."
+    
+
+
+
+
+
+
+@app.route('/handle_request_action/<int:req_id>', methods=['POST'])
+def handle_request_action(req_id):
+    if not session.get('isOwner'):
+        return redirect(url_for('index'))
+    
+    action = request.form['action']
+    if action not in ['approve', 'deny']:
+        return redirect(url_for('view_requests'))
+    
+    new_status = 'Approved' if action == 'approve' else 'Denied'
+    cursor = mysql.connection.cursor()
+    try:
+        cursor.execute("UPDATE TIME_OFF_REQUESTS SET status = %s WHERE id = %s", (new_status, req_id))
+        mysql.connection.commit()
+        cursor.close()
+        return redirect(url_for('view_requests'))
+    except Exception as e:
+        print(f"Error updating request status: {e}")
+        cursor.close()
+        return "An error occurred while updating the request status."
+
 
 
 
