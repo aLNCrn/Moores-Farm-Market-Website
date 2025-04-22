@@ -133,7 +133,7 @@ CREATE TABLE TIME_OFF_REQUESTS (
     reason TEXT,
     status VARCHAR(20) DEFAULT 'Pending',
     request_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (employeeid) REFERENCES EMPLOYEES(employeeid)
+    FOREIGN KEY (employeeid) REFERENCES EMPLOYEES(EmployeeID)
 );
 
 -- Drop the existing foreign key (if it exists)
