@@ -127,13 +127,13 @@ MODIFY COLUMN TimeOut TIME(0) NOT NULL;
 
 CREATE TABLE TIME_OFF_REQUESTS (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    employee_id INT NOT NULL,
+    EmployeeID INT NOT NULL,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     reason TEXT,
     status VARCHAR(20) DEFAULT 'Pending',
     request_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (employeeid) REFERENCES EMPLOYEES(employeeid)
+    FOREIGN KEY (EmployeeID) REFERENCES EMPLOYEES(EmployeeID)
 );
 
 -- Drop the existing foreign key (if it exists)
@@ -142,12 +142,12 @@ DROP FOREIGN KEY time_off_requests_ibfk_1;
 
 -- Drop the old emp_id column (if it exists)
 ALTER TABLE TIME_OFF_REQUESTS
-DROP COLUMN employee_id;
+DROP COLUMN EmployeeID;
 
 -- Add the correct emp_id column
 ALTER TABLE TIME_OFF_REQUESTS
-ADD COLUMN employee_id INT NOT NULL;
+ADD COLUMN EmployeeID INT NOT NULL;
 
 -- Add the foreign key constraint referencing EmployeeID in the EMPLOYEES table
 ALTER TABLE TIME_OFF_REQUESTS
-ADD CONSTRAINT fk_emplyee_id FOREIGN KEY (employee_id) REFERENCES EMPLOYEES(EmployeeID);
+ADD CONSTRAINT fk_emplyee_id FOREIGN KEY (EmployeeID) REFERENCES EMPLOYEES(EmployeeID);
