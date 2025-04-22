@@ -14,25 +14,19 @@
 
     <header>
         <nav>
-            <div class="nav-left">
-                <a href="/index">Home</a>
+            <div class="nav">
                 <a href="/aboutus">About Us</a>
-                {% if session['isOwner'] or session['isEmp'] %}
-                <a href="/eschedule">Employee Schedule</a>
-                {% endif %}
-
-            </div>
-            <div class="nav-right">
+                <a href="/products">Products</a>
                 <a href="/seasonal">Seasonal</a>
                 {% if not session['FirstName'] %}
                 <a href="/login">Log In</a>
                 {% endif %}
                 {% if session['isOwner'] or session['isEmp'] %}
+                <div class="nav-right">
                 <a href="/add_schedule">Add Schedule</a>
-                {% endif %}
-
-
-            </div>
+                    <a href="/eschedule"> Employee Schedule</a>
+                    {% endif %}
+                </div>
 
 
             {% if session['FirstName'] %}

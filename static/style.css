@@ -20,11 +20,7 @@ body.about-us-page {
     z-index: 1001;
 }
 
-.logo-container img {
-    width: 150px;  /* Adjust size as needed */
-    height: auto;  /* Maintain aspect ratio */
-    display: block;
-}
+
 
 /* Responsive Logo */
 @media screen and (max-width: 768px) {
@@ -90,7 +86,7 @@ body.about-us-page .content-image {
 
 /* Navigation Bar */
 header {
-    background-color: #406233;
+    background-color: #000000;
     padding: 20px 0;
     position: fixed;
     width: 100%;
@@ -99,38 +95,71 @@ header {
     z-index: 1000;
 }
 
-/* Navigation Links */
 nav {
+    background-color: black;
+    padding: 20px 40px;
+}
+
+.nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 43px;
+    flex-wrap: wrap;
 }
 
-.nav-left {
-    display: flex;
-    gap: 15px;
-}
-
+.nav-left,
+.nav-center,
 .nav-right {
     display: flex;
+    align-items: center;
     gap: 15px;
 }
 
-/* Navigation Links */
+.nav-center {
+    flex: 1;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 50%;
+    transform: translate(-50%, -50%);
+    
+}
+
 nav a {
     color: white;
     text-decoration: none;
     font-weight: bold;
     font-family: 'Lucida Sans', Geneva, Verdana, sans-serif;
-    padding: 10px 15px;
 }
 
 nav a:hover {
-    color: #0026ff; /* Color of the hover effect */
+    color: #0026ff;
 }
 
-/* Fade-in Animation */
+nav img {
+    width: 200px;
+    height: auto;
+    border-style: groove;
+    margin-top: 60px;
+
+}
+
+.welcome {
+    color: white;
+    font-weight: bold;
+    font-family: 'Lucida Sans', Geneva, Verdana, sans-serif;
+
+}
+
+.logout {
+    color: red;
+    font-weight: bold;
+    font-family: 'Lucida Sans', Geneva, Verdana, sans-serif;
+
+}
+
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -493,3 +522,48 @@ nav a:hover {
   border-radius: 4px;
 }
 
+.season-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+    padding: 20px;
+}
+
+.season-box {
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    font-size: 30px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.spring {
+    background-color: #77dd77;
+}
+
+.summer {
+    background-color: #ffb347;
+}
+
+.fall {
+    background-color: #ff6961;
+}
+
+.winter {
+    background-color: #779ecb;
+}
+
+.season-box h2 {
+    margin-top: 0;
+}
+
+.season-box textarea {
+    width: 100%;
+    height: 150px;
+    margin-top: 10px;
+    font-size: 16px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    resize: vertical;
+}

@@ -14,21 +14,21 @@
 
     <header>
         <nav>
-            <div class="nav-left">
+            <div class="nav">
                 <a href="/index">Home</a>
-                <a href="/products">Products</a>
                 <a href="/aboutus">About Us</a>
-                {% if session['isOwner'] or session['isEmp'] %}
-                <a href="/eschedule">Employee Schedule</a>
-                {% endif %}
-            </div>
-            <div class="nav-right">
+                <a href="/products">Products</a>
                 <a href="/seasonal">Seasonal</a>
-                {% if session['isOwner'] or session['isEmp'] %}
-                <a href="/add_schedule">Add Schedule</a>
+                {% if not session['FirstName'] %}
+                <a href="/login">Log In</a>
                 {% endif %}
-            </div>
+                {% if session['isOwner'] or session['isEmp'] %}
+                <div class="nav-right">
 
+                <a href="/add_schedule">Add Schedule</a>
+                    <a href="/eschedule"> Employee Schedule</a>
+                    {% endif %}
+                </div>
             {% if session['FirstName'] %}
             <span style="color: white; font-weight: bold; margin-left: 15px;">
                 Welcome, {{ session['FirstName'] }}

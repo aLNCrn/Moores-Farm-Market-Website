@@ -8,37 +8,36 @@
 </head>
 <body>
 
-    <div class="logo-container" id="logoContainer">
-        <img src="{{ url_for('static', filename='images/mfmLogo.png') }}" alt="Site Logo" style="display:block; width:100px; height: 100px;">
-    </div>
-
     <header>
         <nav>
-            <div class="nav-left">
-                <a href="/aboutus">About Us</a>
-                <a href="/products">Products</a>
-                
+            <div class="nav">
+                <div class="nav-left">
+                    <a href="/index">Home</a>
+                    <a href="/aboutus">About Us</a>
+                    <a href="/products">Products</a>
+                    <a href="/seasonal">Seasonal</a>
+                </div>
+        
+                <div class="nav-center">
+                    <img src="{{ url_for('static', filename='images/mfmLogo.png') }}" alt="Site Logo">
+                </div>
+        
+                <div class="nav-right">
+                    {% if not session['FirstName'] %}
+                        <a href="/login">Log In</a>
+                    {% endif %}
+                    {% if session['isOwner'] or session['isEmp'] %}
+                        <a href="/add_schedule">Add Schedule</a>
+                        <a href="/eschedule">Employee Schedule</a>
+                    {% endif %}
+                    {% if session['FirstName'] %}
+                        <span class="welcome">Welcome, {{ session['FirstName'] }}</span>
+                        <a href="{{ url_for('logout') }}" class="logout">Logout</a>
+                    {% endif %}
+                </div>
             </div>
-            <div class="nav-right">
-                <a href="/seasonal">Seasonal</a>
-                {% if not session['FirstName'] %}
-                <a href="/login">Log In</a>
-                {% endif %}
-                {% if session['isOwner'] or session['isEmp'] %}
-                <a href="/add_schedule">Add Schedule</a>
-                <a href="/eschedule"> Employee Schedule</a>
-                {% endif %}
-               
-            </div>
-
-
-            {% if session['FirstName'] %}
-            <span style="color: white; font-weight: bold; margin-left: 15px;">
-                Welcome, {{ session['FirstName'] }}
-            </span>
-            <a href="{{ url_for('logout') }}" style="color: red; font-weight: bold; margin-left: 10px;">Logout</a>
-            {% endif %}
         </nav>
+        
         <div class="page-subheading">
             <!-- Left Part: Contact Information -->
             <div class="left-info">

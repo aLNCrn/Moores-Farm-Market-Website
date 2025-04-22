@@ -8,44 +8,61 @@
 </head>
 <body>
 
-    <div class="logo-container" id="logoContainer">
-        <img src="{{ url_for('static', filename='images/mfmLogo.png') }}" alt="Site Logo" style="display:block; width:100px; height: 100px;">
-    </div>
 
     <header>
         <nav>
-            <div class="nav-left">
-                <a href="/index">Home</a>
-                <a href="/aboutus">About Us</a>
-                
-                <a href="/products">Products</a>
-                {% if session['isOwner'] or session['isEmp'] %}
-                <a href="/eschedule">Employee Schedule</a>
-                {% endif %}
+            <div class="nav">
+                <div class="nav-left">
+                    <a href="/index">Home</a>
+                    <a href="/aboutus">About Us</a>
+                    <a href="/products">Products</a>
+                    <a href="/seasonal">Seasonal</a>
+                </div>
+        
+                <div class="nav-center">
+                    <img src="{{ url_for('static', filename='images/mfmLogo.png') }}" alt="Site Logo">
+                </div>
+        
+                <div class="nav-right">
+                    {% if not session['FirstName'] %}
+                        <a href="/login">Log In</a>
+                    {% endif %}
+                    {% if session['isOwner'] or session['isEmp'] %}
+                        <a href="/add_schedule">Add Schedule</a>
+                        <a href="/eschedule">Employee Schedule</a>
+                    {% endif %}
+                    {% if session['FirstName'] %}
+                        <span class="welcome">   |   Welcome, {{ session['FirstName'] }}</span>
+                        <a href="{{ url_for('logout') }}" class="logout">Logout</a>
+                    {% endif %}
+                </div>
             </div>
-            <div class="nav-right">
-                {% if not session['FirstName'] %}
-                <a href="/login">Log In</a>
-                {% endif %}
-                {% if session['isOwner'] or session['isEmp'] %}
-                <a href="/add_schedule">Add Schedule</a>
-                {% endif %}
-
-
-            </div>
-
-            {% if session['FirstName'] %}
-            <span style="color: white; font-weight: bold; margin-left: 15px;">
-                Welcome, {{ session['FirstName'] }}
-            </span>
-            <a href="{{ url_for('logout') }}" style="color: red; font-weight: bold; margin-left: 10px;">Logout</a>
-            {% endif %}
-
         </nav>
     </header>
 
     <main style="padding-top: 200px">
         <h1 class="about-heading fade-in-heading">Seasonal Specials!</h1>
+    
+        <div class="season-container">
+            <div class="season-box spring">
+                <h2>Spring</h2>
+                <textarea placeholder="What's blooming this spring?"></textarea>
+            </div>
+            <div class="season-box summer">
+                <h2>Summer</h2>
+                <textarea placeholder="What's hot this summer?"></textarea>
+            </div>
+            <div class="season-box fall">
+                <h2>Fall</h2>
+                <textarea placeholder="What's falling into place this fall?"></textarea>
+            </div>
+            <div class="season-box winter">
+                <h2>Winter</h2>
+                <textarea placeholder="What's cool this winter?"></textarea>
+            </div>
+        </div>
+    </main>
+    
 
 
         <footer>
