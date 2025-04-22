@@ -22,10 +22,10 @@
                 <a href="/products">Products</a>
                 {% if session['isOwner']%}
                 <a href="/add_schedule">Add Schedule</a>
-                
+
                 <a href="/email">Email</a>
                 {% endif %}
-                
+
             </div>
 
             <div class="nav-user">
@@ -41,44 +41,113 @@
 
     <main style="padding-top: 200px;">
         <h1 class="about-heading fade-in-heading">EMPLOYEE SCHEDULE</h1>
+
         <form method="POST" style="text-align: center; margin-bottom: 20px;">
-    <label for="employee_id" class="label-box-green"><strong>Select Employee:</strong></label>
-    <select name="employee_id" id="employee_id" onchange="this.form.submit()" style="padding: 5px;">
-        <option value="">-- All Employees --</option>
-        {% for emp in employees %}
-            <option value="{{ emp['EmployeeID'] }}" {% if emp['EmployeeID'] == selected_employee_id %}selected{% endif %}>
-                {{ emp['EmployeeID'] }} - {{ emp['FirstName'] }} {{ emp['LastName'] }}
-            </option>
-        {% endfor %}
-    </select>
-</form>
-        <table style="margin: auto; border-collapse: collapse; width: 80%; background-color: rgb(230, 206, 255); color: black;font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;" border="1">
-            <thead>
-                <tr>
-                    <th>Employee ID</th>
-                    <th>Day</th>
-                    <th>Time In</th>
-                    <th>Time Out</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% if schedule %}
-                    {% for entry in schedule %}
-                        <tr>
-                            <td>{{ entry['EmployeeID'] }}</td>
-                            <td>{{ entry['Day'] }}</td>
-                            <td>{{ entry['TimeIn'] }}</td>
-                            <td>{{ entry['TimeOut'] }}</td>
-                        </tr>
-                    {% endfor %}
-                {% else %}
-                    <tr>
-                        <td colspan="4" style="text-align: center;">No schedule available for any employee.</td>
-                    </tr>
-                {% endif %}
-            </tbody>
-        </table>
+            <label for="employee_id" class="label-box-green"><strong>Select Employee:</strong></label>
+            <select name="employee_id" id="employee_id" onchange="this.form.submit()" style="padding: 5px;">
+                <option value="">-- All Employees --</option>
+                {% for emp in employees %}
+                <option value="{{ emp['EmployeeID'] }}" {% if emp['EmployeeID']==selected_employee_id %}selected{% endif %}>
+                    {{ emp['EmployeeID'] }} - {{ emp['FirstName'] }} {{ emp['LastName'] }}
+                </option>
+                {% endfor %}
+            </select>
+        </form>
+
+        <div style="text-align: center;">
+            <label for="monthSelect"><strong>Select Month:</strong></label>
+            <select id="monthSelect" class="large-dropdown">
+                <option value="current">This Month</option>
+                <option value="next">Next Month</option>
+            </select>
+        </div>
+
+        <div class="calendar-header">
+            <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+        </div>
+        <div id="calendarGrid" class="calendar-grid"></div>
     </main>
+
+    <script>
+function formatTime12(time) {
+    if (!time) return "";
+    const [hourStr, minute] = time.split(":");
+    let hour = parseInt(hourStr);
+    const ampm = hour >= 12 ? "PM" : "AM";
+    hour = hour % 12 || 12;
+    return `${hour}:${minute} ${ampm}`;
+}
+
+function renderScheduleForMonth(shifts, monthType = "current") {
+    const container = document.getElementById("calendarGrid");
+    container.innerHTML = "";
+
+    const today = new Date();
+    const displayDate = new Date(today);
+    if (monthType === "next") {
+        displayDate.setMonth(displayDate.getMonth() + 1);
+    }
+
+    const year = displayDate.getFullYear();
+    const month = displayDate.getMonth() + 1;
+    const firstDay = new Date(year, month - 1, 1);
+    const totalDays = new Date(year, month, 0).getDate();
+
+    const startWeekday = firstDay.getDay();
+    for (let i = 0; i < startWeekday; i++) {
+        const spacer = document.createElement("div");
+        spacer.className = "calendar-day";
+        spacer.style.visibility = "hidden";
+        container.appendChild(spacer);
+    }
+
+    for (let day = 1; day <= totalDays; day++) {
+        const box = document.createElement("div");
+        const weekday = new Date(year, month - 1, day).toLocaleDateString("en-US", { weekday: "short" });
+
+        box.className = "calendar-day";
+        box.innerHTML = `<strong>${weekday}<br>${month}/${day}</strong>`;
+
+        const shiftsForDay = shifts.filter(s => parseInt(s.month) === month && parseInt(s.day) === day);
+
+        shiftsForDay.forEach(s => {
+            const timeIn = formatTime12(s.timein);
+            const timeOut = formatTime12(s.timeout);
+            const shift = document.createElement("div");
+            shift.className = "shift-entry";
+            shift.innerHTML = `
+                <strong>${s.name}</strong><br>
+                ${timeIn} – ${timeOut}
+            `;
+            box.appendChild(shift);
+        });
+
+        container.appendChild(box);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const shifts = [
+        {% for s in schedule %}
+    {
+        employee_id: {{ s['EmployeeID'] }},
+    year: {{ s['Year'] }},
+    month: {{ s['Month'] }},
+    day: {{ s['Day'] }},
+    timein: "{{ s['TimeIn'] }}",
+    timeout: "{{ s['TimeOut'] }}",
+    name: "{{ s['FirstName'] }} {{ s['LastName'] }}"
+    },
+    {% endfor %}
+];
+
+    renderScheduleForMonth(shifts, "current");
+
+    document.getElementById("monthSelect").addEventListener("change", function () {
+        renderScheduleForMonth(shifts, this.value);
+    });
+});
+    </script>
 
 </body>
 </html>

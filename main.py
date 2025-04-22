@@ -562,30 +562,38 @@ def delete_employee():
 
 
 
-@app.route('/eschedule', methods=['GET','POST'])
+@app.route('/eschedule', methods=['GET', 'POST'])
 def eschedule():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+    # Fetch employee list for dropdown
     cursor.execute("SELECT EmployeeID, FirstName, LastName FROM employees")
     employees = cursor.fetchall()
-    selected_employee_id = request.form.get('employee_id')
-    if selected_employee_id:
-        cursor.execute("SELECT * FROM employeeschedule WHERE EmployeeID = %s", (selected_employee_id,))
-    else:
-        query = """
-                SELECT * FROM employeeschedule
-                ORDER BY 
-                   Year ASC,           -- First by Year (earliest first)
-                    Month ASC,          -- Then by Month (earliest first)
-                     Day ASC,            -- Then by Day (earliest first)
-                    EmployeeID ASC  
-            """
-        cursor.execute(query)
 
+    selected_employee_id = request.form.get('employee_id')
+
+    if selected_employee_id:
+        cursor.execute("""
+            SELECT s.*, e.FirstName, e.LastName 
+            FROM employeeschedule s
+            JOIN employees e ON s.EmployeeID = e.EmployeeID
+            WHERE s.EmployeeID = %s
+            ORDER BY s.Year, s.Month, s.Day
+        """, (selected_employee_id,))
+    else:
+        cursor.execute("""
+            SELECT s.*, e.FirstName, e.LastName 
+            FROM employeeschedule s
+            JOIN employees e ON s.EmployeeID = e.EmployeeID
+            ORDER BY s.Year, s.Month, s.Day, s.EmployeeID
+        """)
 
     schedule = cursor.fetchall()
     cursor.close()
 
-    return render_template('eschedule.html', schedule=schedule, employees=employees,
+    return render_template('eschedule.html',
+                           schedule=schedule,
+                           employees=employees,
                            selected_employee_id=selected_employee_id)
 
 

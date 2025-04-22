@@ -882,3 +882,12 @@ nav a:hover {
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     text-align: left;
 }
+
+.shift-entry {
+    background: white;
+    padding: 6px;
+    border-radius: 6px;
+    margin-top: 6px;
+    font-size: 0.8rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
