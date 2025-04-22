@@ -1,8 +1,8 @@
 homePageAddress|*| 66 Atlantic City Boulevard, Bayville, NJ
 homePagePhoneNumber|*| 732-349-2876
 aboutUsTopRight|*|Moore's Farm Market was started in 1952 by George and Mildred Moore. We have been a family run business ever since providing fresh produce and flowers to the community. We have a wide variety of produce, flowers, honey, seasonal decorations, as well as fall and winter seasonal products. 
-aboutUsMiddleLeft|*|We grow the vast majority of our flowers in our greenhouses ensuring they are as healthy as they can be. When local produce is in season we source the very best and always keep local honey in stock.
 aboutUsBottomRight|*|This is some test text that the owner can edit
 seasonalMiddleLeft|*|Seasonal Special 2 To the Right Over Here!
 seasonalBottomRight|*|Seasonal special 3 just above me
 seasonalTopRight|*|This is the seasonal special Number 1, Imaged right above me it looks so tasty!
+aboutUsMiddleLeft|*|We grow the vast majority of our flowers in our greenhouses ensuring they are as healthy as they can be. When local produce is in season we source the very best and always keep local honey in stock.
