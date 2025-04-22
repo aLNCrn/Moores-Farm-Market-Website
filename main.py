@@ -572,14 +572,14 @@ def eschedule():
 
     selected_employee_id = request.form.get('employee_id')
 
-    if selected_employee_id:
+    if selected_employee_id is not None and selected_employee_id.strip() != "":
         cursor.execute("""
-            SELECT s.*, e.FirstName, e.LastName 
-            FROM employeeschedule s
-            JOIN employees e ON s.EmployeeID = e.EmployeeID
-            WHERE s.EmployeeID = %s
-            ORDER BY s.Year, s.Month, s.Day
-        """, (selected_employee_id,))
+        SELECT s.*, e.FirstName, e.LastName 
+        FROM employeeschedule s
+        JOIN employees e ON s.EmployeeID = e.EmployeeID
+        WHERE s.EmployeeID = %s
+        ORDER BY s.Year, s.Month, s.Day
+    """, (selected_employee_id,))
     else:
         cursor.execute("""
             SELECT s.*, e.FirstName, e.LastName 

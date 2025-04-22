@@ -24,8 +24,11 @@
                 <a href="/add_schedule">Add Schedule</a>
 
                 <a href="/email">Email</a>
+                <a href="/view_requests">Time Off Requests</a>
                 {% endif %}
-
+                {% if session ['isEmp']%}
+                <a href="/request_time_off">Request Time Off</a>
+                {% endif %}
             </div>
 
             <div class="nav-user">
@@ -42,20 +45,23 @@
     <main style="padding-top: 200px;">
         <h1 class="about-heading fade-in-heading">EMPLOYEE SCHEDULE</h1>
 
-        <form method="POST" style="text-align: center; margin-bottom: 20px;">
+        <form method="POST" style="text-align: center; margin-bottom: 20px; display: flex; justify-content: center; align-items: center; gap: 10px;">
             <label for="employee_id" class="label-box-green"><strong>Select Employee:</strong></label>
             <select name="employee_id" id="employee_id" onchange="this.form.submit()" style="padding: 5px;">
-                <option value="">-- All Employees --</option>
+                <option value="" {% if not selected_employee_id %}selected{% endif %}>-- Select Employee --</option>
                 {% for emp in employees %}
-                <option value="{{ emp['EmployeeID'] }}" {% if emp['EmployeeID']==selected_employee_id %}selected{% endif %}>
+                <option value="{{ emp['EmployeeID'] }}" {% if selected_employee_id and emp['EmployeeID']==selected_employee_id|int %}selected{% endif %}>
                     {{ emp['EmployeeID'] }} - {{ emp['FirstName'] }} {{ emp['LastName'] }}
                 </option>
                 {% endfor %}
             </select>
+
+           
+            <a href="/eschedule" class="button" style="padding: 5px 10px; background-color: darkgreen; color: white; border-radius: 5px; text-decoration: none;">Show All</a>
         </form>
 
         <div style="text-align: center;">
-            <label for="monthSelect"><strong>Select Month:</strong></label>
+            <label for="monthSelect" class ="label-box-green"><strong>Select Month:</strong></label>
             <select id="monthSelect" class="large-dropdown">
                 <option value="current">This Month</option>
                 <option value="next">Next Month</option>
@@ -141,11 +147,23 @@ document.addEventListener("DOMContentLoaded", () => {
     {% endfor %}
 ];
 
-    renderScheduleForMonth(shifts, "current");
+        updateCalendar();
 
-    document.getElementById("monthSelect").addEventListener("change", function () {
-        renderScheduleForMonth(shifts, this.value);
-    });
+        function getSelectedEmployee() {
+            return document.getElementById("employee_id").value;
+        }
+
+        function updateCalendar() {
+            const selectedMonth = document.getElementById("monthSelect").value;
+            const selectedEmployee = getSelectedEmployee();
+            const filteredShifts = selectedEmployee
+                ? shifts.filter(s => s.employee_id == selectedEmployee)
+                : shifts;
+            renderScheduleForMonth(filteredShifts, selectedMonth);
+        }
+
+        document.getElementById("monthSelect").addEventListener("change", updateCalendar);
+        document.getElementById("employee_id").addEventListener("change", updateCalendar);
 });
     </script>
 
