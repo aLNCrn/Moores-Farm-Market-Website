@@ -664,6 +664,51 @@ nav a:hover {
     text-decoration: none;
 }
 
+.season-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+    padding: 20px;
+}
+
+.season-box {
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    font-size: 18px;
+}
+
+.spring {
+    background-color: #77dd77;
+}
+
+.summer {
+    background-color: #ffb347;
+}
+
+.fall {
+    background-color: #ff6961;
+}
+
+.winter {
+    background-color: #779ecb;
+}
+
+.season-box h2 {
+    margin-top: 0;
+}
+
+.season-box textarea {
+    width: 100%;
+    height: 150px;
+    margin-top: 10px;
+    font-size: 16px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    resize: vertical;
+}
+
 .scroll-section {
     max-height: 200px;
     overflow-y: auto;
