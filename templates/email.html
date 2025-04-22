@@ -80,21 +80,6 @@
                     </ul>
                 </div>
 
-                <h2>Employee Emails</h2>
-                <div class="scroll-section">
-                    <ul>
-                        {% for employee in employees %}
-                        <li>
-                            <label>
-                                <input type="checkbox" name="recipients" value="{{ employee.Email }}" class="employee-email"
-                                       {% if employee.Email in request.form.getlist('recipients') %}checked{% endif %}>
-                                {{ employee.Email }}
-                            </label>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-
                 <div class="multi-select-btns">
                     <button type="button" onclick="selectAll('customer-email')">Select All Customers</button>
                     <button type="button" onclick="selectAll('employee-email')">Select All Employees</button>
