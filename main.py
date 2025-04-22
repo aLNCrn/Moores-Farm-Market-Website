@@ -609,6 +609,7 @@ def edit_product1():
 
     mysql.connection.commit()
 
+
     if product_type_id == 'Flowers':
         annual = request.form.get('annual')
         sun_or_shade = request.form.get('sun_or_shade')
@@ -650,6 +651,29 @@ def edit_product1():
         )
 
     mysql.connection.commit()
+
+
+    
+    if currently_available == 1:
+    # Get all customer emails who favorited this product
+        cursor.execute("""
+            SELECT c.Email 
+            FROM FAVORITES f
+            JOIN CUSTOMERS c ON f.CustomerID = c.CustomerID
+            WHERE f.ProductID = %s
+        """, (product_id,))
+        favorited_customers = cursor.fetchall()
+
+        for customer in favorited_customers:
+            email = customer[0]
+            msg = Message('Your Favorite Product is In Stock!',
+                          recipients=[email])
+            msg.body = f"Hello! '{name}' is now back in stock at Moore's Farmers Market. Come check it out!"
+            try:
+               mail.send(msg)
+            except Exception as e:
+                print(f"❌ Failed to send email to {email}: {e}")
+
     cursor.close()
 
 
@@ -726,7 +750,9 @@ def email():
 
     cursor.close()
     return render_template('email.html', customers=customers, employees=employees)
-    
+
+
+
 
 
 
