@@ -911,3 +911,23 @@ nav a:hover {
     font-size: 0.8rem;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
+.shift-entry {
+    position: relative;
+    background-color: white;
+    border: 1px solid lightgreen;
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 5px;
+    text-align: left;
+}
+
+.delete-shift-btn {
+    position: absolute;
+    top: 4px;
+    right: 6px;
+    background: transparent;
+    border: none;
+    color: red;
+    font-size: 16px;
+    cursor: pointer;
+}

@@ -40,10 +40,12 @@
 
     <main style="padding-top: 200px;">
         <h1 class="about-heading fade-in-heading">EMPLOYEE SCHEDULE</h1>
-        
+
+        {% if session['isEmp'] %}
         <button onclick="openRequestTimeOffModal()" class="request-time-off-btn">
             Request Time Off
         </button>
+        {% endif %}
 
         <div id="requestTimeOffModal" class="modal">
             <div class="modal-content">
@@ -54,17 +56,17 @@
                         <label for="start_date">Start Date:</label>
                         <input type="date" name="start_date" id="start_date" required>
                     </div>
-                    
+
                     <div style="margin-bottom: 15px;">
                         <label for="end_date">End Date:</label>
                         <input type="date" name="end_date" id="end_date" required>
                     </div>
-                    
+
                     <div style="margin-bottom: 15px;">
                         <label for="reason">Reason:</label><br>
                         <textarea name="reason" id="reason" rows="4" cols="70" style="resize: vertical;"></textarea>
                     </div>
-                
+
                     <button type="submit" class="submit-btn">Submit</button>
                     <button type="button" class="cancel-btn" onclick="closeRequestTimeOffModal()">Cancel</button>
                 </form>
@@ -72,31 +74,31 @@
         </div>
 
         {% if session['isOwner'] %}
-            <button onclick="openManageRequestsModal()" class="request-time-off-btn">
-                Manage Time Off Requests
-            </button>
+        <button onclick="openManageRequestsModal()" class="request-time-off-btn">
+            Manage Time Off Requests
+        </button>
         {% endif %}
         <div id="manageRequestsModal" class="modal">
             <div class="modal-content">
                 <span class="close" onclick="closeManageRequestsModal()">&times;</span>
                 <h2>Pending Time Off Requests</h2>
-        
+
                 {% if pending_requests %}
-                    {% for r in pending_requests %}
-                        <div style="border: 1px solid gray; padding: 10px; margin-bottom: 10px; border-radius: 5px;">
-                            <strong>{{ r['FirstName'] }} {{ r['LastName'] }}</strong><br>
-                            <strong>Start:</strong> {{ r['start_date'] }}<br>
-                            <strong>End:</strong> {{ r['end_date'] }}<br>
-                            <strong>Reason:</strong> {{ r['reason'] | default('N/A') }}<br>
-                            
-                            <form method="POST" action="{{ url_for('handle_request_action', req_id=r['id']) }}" style="margin-top: 10px;">
-                                <button name="action" value="approve" class="submit-btn">Approve</button>
-                                <button name="action" value="deny" class="cancel-btn">Deny</button>
-                            </form>
-                        </div>
-                    {% endfor %}
+                {% for r in pending_requests %}
+                <div style="border: 1px solid gray; padding: 10px; margin-bottom: 10px; border-radius: 5px;">
+                    <strong>{{ r['FirstName'] }} {{ r['LastName'] }}</strong><br>
+                    <strong>Start:</strong> {{ r['start_date'] }}<br>
+                    <strong>End:</strong> {{ r['end_date'] }}<br>
+                    <strong>Reason:</strong> {{ r['reason'] | default('N/A') }}<br>
+
+                    <form method="POST" action="{{ url_for('handle_request_action', req_id=r['id']) }}" style="margin-top: 10px;">
+                        <button name="action" value="approve" class="submit-btn">Approve</button>
+                        <button name="action" value="deny" class="cancel-btn">Deny</button>
+                    </form>
+                </div>
+                {% endfor %}
                 {% else %}
-                    <p>No pending requests.</p>
+                <p>No pending requests.</p>
                 {% endif %}
             </div>
         </div>
@@ -112,12 +114,12 @@
                 {% endfor %}
             </select>
 
-           
+
             <a href="/eschedule" class="button" style="padding: 5px 10px; background-color: darkgreen; color: white; border-radius: 5px; text-decoration: none;">Show All</a>
         </form>
 
         <div style="text-align: center;">
-            <label for="monthSelect" class ="label-box-green"><strong>Select Month:</strong></label>
+            <label for="monthSelect" class="label-box-green"><strong>Select Month:</strong></label>
             <select id="monthSelect" class="large-dropdown">
                 <option value="current">This Month</option>
                 <option value="next">Next Month</option>

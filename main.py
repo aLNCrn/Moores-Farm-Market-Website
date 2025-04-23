@@ -731,18 +731,17 @@ def edit_product1():
 
 
     
-@app.route('/delete_shift', methods=['POST'])
-def delete_shift():
-    shiftId = request.form['shiftId']  # Getting the product ID from the form data
-    print("Review ID received:", shiftId)
-    if shiftId:
-        cursor = mysql.connection.cursor()
-        cursor.execute("DELETE FROM employeeschedule WHERE shiftId = %s", (shiftId,))
+@app.route('/delete_shift/<int:shift_id>', methods=['POST'])
+def delete_shift_by_id(shift_id):
+    if not session.get('isOwner'):
+        return "Unauthorized", 403
 
-        mysql.connection.commit()
-        cursor.close()
+    cursor = mysql.connection.cursor()
+    cursor.execute("DELETE FROM employeeschedule WHERE ShiftID = %s", (shift_id,))
+    mysql.connection.commit()
+    cursor.close()
 
-    return redirect(url_for('add_schedule'))
+    return ''
 
 @app.route('/send_email', methods=['GET', 'POST'])
 def send_email():

@@ -275,90 +275,104 @@
     </script>
 
     <script>
-    function formatTime12(time) {
-        if (!time) return "";
-        const [hourStr, minute] = time.split(":");
-        let hour = parseInt(hourStr);
-        const ampm = hour >= 12 ? "PM" : "AM";
-        hour = hour % 12 || 12;
-        return `${hour}:${minute} ${ampm}`;
-    }
+function formatTime12(time) {
+    if (!time) return "";
+    const [hourStr, minute] = time.split(":");
+    let hour = parseInt(hourStr);
+    const ampm = hour >= 12 ? "PM" : "AM";
+    hour = hour % 12 || 12;
+    return `${hour}:${minute} ${ampm}`;
+}
 
-    function renderScheduleForMonth(shifts, monthType = "current") {
-        const container = document.getElementById("currentScheduleGrid");
-        container.innerHTML = "";
+function deleteShift(shiftId) {
+    if (!confirm("Are you sure you want to delete this shift?")) return;
 
-        const today = new Date();
-        const displayDate = new Date(today);
-        if (monthType === "next") {
-            displayDate.setMonth(displayDate.getMonth() + 1);
+    fetch(`/delete_shift/${shiftId}`, {
+        method: 'POST'
+    }).then(response => {
+        if (response.ok) {
+            location.reload(); // Refresh to update the calendar
+        } else {
+            alert("Failed to delete shift.");
         }
-
-        const year = displayDate.getFullYear();
-        const month = displayDate.getMonth() + 1;
-        const firstDay = new Date(year, month - 1, 1);
-        const totalDays = new Date(year, month, 0).getDate();
-
-        // Spacer cells
-        const startWeekday = firstDay.getDay();
-        for (let i = 0; i < startWeekday; i++) {
-            const spacer = document.createElement("div");
-            spacer.className = "calendar-day";
-            spacer.style.visibility = "hidden";
-            container.appendChild(spacer);
-        }
-
-        for (let day = 1; day <= totalDays; day++) {
-            const box = document.createElement("div");
-            const weekday = new Date(year, month - 1, day).toLocaleDateString("en-US", { weekday: "short" });
-
-            box.className = "calendar-day";
-            box.innerHTML = `<strong>${weekday}<br>${month}/${day}</strong>`;
-
-            const shiftsForDay = shifts.filter(s => parseInt(s.month) === month && parseInt(s.day) === day);
-
-            shiftsForDay.sort((a, b) => {
-                return new Date(`1970-01-01T${a.timein}`) - new Date(`1970-01-01T${b.timein}`);
-            });
-
-            shiftsForDay.forEach(s => {
-                const timeIn = formatTime12(s.timein);
-                const timeOut = formatTime12(s.timeout);
-                const shift = document.createElement("div");
-                shift.className = "shift-entry";
-                shift.innerHTML = `
-                    <strong>${s.name}</strong><br>
-                    ${timeIn} – ${timeOut}
-                `;
-                box.appendChild(shift);
-            });
-
-            container.appendChild(box);
-        }
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-        const shifts = [
-            {% for s in schedules %}
-            {
-                employee_id: {{ s[0] }},
-                year: {{ s[1] }},
-                month: {{ s[2] }},
-                day: {{ s[3] }},
-                timein: "{{ s[4] }}",
-                timeout: "{{ s[5] }}",
-                shiftId: "{{ s[6] }}",
-                name: "{% for e in employees %}{% if e[0] == s[0] %}{{ e[1] }} {{ e[2] }}{% endif %}{% endfor %}"
-            },
-            {% endfor %}
-        ];
-
-        renderScheduleForMonth(shifts, "current");
-
-        document.getElementById("monthSelect").addEventListener("change", function () {
-            renderScheduleForMonth(shifts, this.value);
-        });
     });
+}
+
+function renderScheduleForMonth(shifts, monthType = "current") {
+    const container = document.getElementById("currentScheduleGrid");
+    container.innerHTML = "";
+
+    const today = new Date();
+    const displayDate = new Date(today);
+    if (monthType === "next") {
+        displayDate.setMonth(displayDate.getMonth() + 1);
+    }
+
+    const year = displayDate.getFullYear();
+    const month = displayDate.getMonth() + 1;
+    const firstDay = new Date(year, month - 1, 1);
+    const totalDays = new Date(year, month, 0).getDate();
+
+    const startWeekday = firstDay.getDay();
+    for (let i = 0; i < startWeekday; i++) {
+        const spacer = document.createElement("div");
+        spacer.className = "calendar-day";
+        spacer.style.visibility = "hidden";
+        container.appendChild(spacer);
+    }
+
+    for (let day = 1; day <= totalDays; day++) {
+        const box = document.createElement("div");
+        const weekday = new Date(year, month - 1, day).toLocaleDateString("en-US", { weekday: "short" });
+
+        box.className = "calendar-day";
+        box.innerHTML = `<strong>${weekday}<br>${month}/${day}</strong>`;
+
+        const shiftsForDay = shifts.filter(s => parseInt(s.month) === month && parseInt(s.day) === day);
+
+        shiftsForDay.sort((a, b) => {
+            return new Date(`1970-01-01T${a.timein}`) - new Date(`1970-01-01T${b.timein}`);
+        });
+
+        shiftsForDay.forEach(s => {
+            const timeIn = formatTime12(s.timein);
+            const timeOut = formatTime12(s.timeout);
+            const shift = document.createElement("div");
+            shift.className = "shift-entry";
+            shift.innerHTML = `
+                <strong>${s.name}</strong><br>
+                ${timeIn} – ${timeOut}
+                <button onclick="deleteShift(${s.shiftId})" class="delete-shift-btn">✖</button>
+            `;
+            box.appendChild(shift);
+        });
+
+        container.appendChild(box);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const shifts = [
+        {% for s in schedules %}
+        {
+            employee_id: {{ s[0] }},
+            year: {{ s[1] }},
+            month: {{ s[2] }},
+            day: {{ s[3] }},
+            timein: "{{ s[4] }}",
+            timeout: "{{ s[5] }}",
+            shiftId: {{ s[6] }},
+            name: "{% for e in employees %}{% if e[0] == s[0] %}{{ e[1] }} {{ e[2] }}{% endif %}{% endfor %}"
+        },
+        {% endfor %}
+    ];
+
+    renderScheduleForMonth(shifts, "current");
+
+    document.getElementById("monthSelect").addEventListener("change", function () {
+        renderScheduleForMonth(shifts, this.value);
+    });
+});
     </script>
 
 </body>
