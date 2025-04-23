@@ -208,50 +208,61 @@
             });
         }
 
-        function updateDays() {
-            const selectedMonth = parseInt(monthSelect.value);
-            const today = new Date();
-            const end = new Date(today);
-            end.setDate(today.getDate() + 13);
+       function updateDays() {
+    const selectedMonth = parseInt(monthSelect.value);
+    const today = new Date();
+    const end = new Date(today);
+    end.setDate(today.getDate() + 13);  // 14-day range
 
-            calendarContainer.innerHTML = '';
+    calendarContainer.innerHTML = '';
 
-            // Calculate offset for first column alignment
-            const firstDayOfWeek = today.getDay();
-            for (let i = 0; i < firstDayOfWeek; i++) {
-                const spacer = document.createElement('div');
-                spacer.className = 'calendar-day';
-                spacer.style.visibility = 'hidden';
-                calendarContainer.appendChild(spacer);
-            }
+    const visibleDates = [];
 
-            // Fill each of the 14 days
-            for (let d = new Date(today); d <= end; d.setDate(d.getDate() + 1)) {
-                if (d.getMonth() + 1 !== selectedMonth) continue;
-
-                const day = d.getDate();
-                const weekday = d.toLocaleDateString('en-US', { weekday: 'short' });
-                const month = d.getMonth() + 1;
-                const year = d.getFullYear();
-
-                const dayBox = document.createElement('div');
-                dayBox.className = 'calendar-day';
-
-                dayBox.innerHTML = `
-                <strong>${weekday}<br>${month}/${day}</strong><br>
-                <label><input type="checkbox" name="day-${day}" id="day-${year}-${month}-${day}" class="day-toggle" value="${day}"> Available</label>
-                <div class="time-inputs" id="time-inputs-${day}" style="display: none; margin-top: 6px;">
-                    <label for="timein-${day}">In:</label>
-                    <input type="time" name="timein-${day}" id="timein-${day}">
-                    <label for="timeout-${day}">Out:</label>
-                    <input type="time" name="timeout-${day}" id="timeout-${day}">
-                </div>
-            `;
-                calendarContainer.appendChild(dayBox);
-            }
-
-            attachToggleEvents();
+    for (let d = new Date(today); d <= end; d.setDate(d.getDate() + 1)) {
+        if ((d.getMonth() + 1) === selectedMonth) {
+            visibleDates.push(new Date(d));
         }
+    }
+
+    // Align first day correctly
+    if (visibleDates.length > 0) {
+        const firstVisibleDay = visibleDates[0];
+        const firstDayOfWeek = firstVisibleDay.getDay(); // Sunday = 0
+
+        for (let i = 0; i < firstDayOfWeek; i++) {
+            const spacer = document.createElement('div');
+            spacer.className = 'calendar-day';
+            spacer.style.visibility = 'hidden';
+            calendarContainer.appendChild(spacer);
+        }
+    }
+
+    // Render visible days for the selected month
+    visibleDates.forEach((d) => {
+        const day = d.getDate();
+        const weekday = d.toLocaleDateString('en-US', { weekday: 'short' });
+        const month = d.getMonth() + 1;
+        const year = d.getFullYear();
+
+        const dayBox = document.createElement('div');
+        dayBox.className = 'calendar-day';
+
+        dayBox.innerHTML = `
+            <strong>${weekday}<br>${month}/${day}</strong><br>
+            <label><input type="checkbox" name="day-${day}" id="day-${year}-${month}-${day}" class="day-toggle" value="${day}"> Available</label>
+            <div class="time-inputs" id="time-inputs-${day}" style="display: none; margin-top: 6px;">
+                <label for="timein-${day}">In:</label>
+                <input type="time" name="timein-${day}" id="timein-${day}">
+                <label for="timeout-${day}">Out:</label>
+                <input type="time" name="timeout-${day}" id="timeout-${day}">
+            </div>
+        `;
+        calendarContainer.appendChild(dayBox);
+    });
+
+    attachToggleEvents();
+}
+
 
         function attachToggleEvents() {
             const checkboxes = document.querySelectorAll('.day-toggle');
