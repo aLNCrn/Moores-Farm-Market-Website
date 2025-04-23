@@ -589,12 +589,45 @@ def eschedule():
         """)
 
     schedule = cursor.fetchall()
-    cursor.close()
+    
+   # Fetch time off requests with access control
+    if session.get('isOwner'):
+        cursor.execute("""
+            SELECT t.*, e.FirstName, e.LastName 
+            FROM TIME_OFF_REQUESTS t
+            JOIN employees e ON t.EmployeeID = e.EmployeeID
+            WHERE t.status IN ('Approved', 'Pending')
+        """)
+    else:
+        current_emp_id = session.get('EmployeeID')
+        cursor.execute("""
+            SELECT t.*, e.FirstName, e.LastName 
+            FROM TIME_OFF_REQUESTS t
+            JOIN employees e ON t.EmployeeID = e.EmployeeID
+            WHERE t.status IN ('Approved', 'Pending') AND t.EmployeeID = %s
+        """, (current_emp_id,))
+    
+    time_offs = cursor.fetchall()
+
+    pending_requests = []
+    if session.get('isOwner'):
+        cursor.execute("""
+            SELECT t.*, e.FirstName, e.LastName 
+            FROM TIME_OFF_REQUESTS t
+            JOIN employees e ON t.EmployeeID = e.EmployeeID
+            WHERE t.status = 'Pending'
+            ORDER BY t.request_date DESC
+        """)
+        pending_requests = cursor.fetchall()
+
+        cursor.close()
 
     return render_template('eschedule.html',
                            schedule=schedule,
                            employees=employees,
-                           selected_employee_id=selected_employee_id)
+                           selected_employee_id=selected_employee_id,
+                           time_offs=time_offs,
+                           pending_requests=pending_requests)
 
 
 @app.route('/edit_product1', methods=['POST'])
@@ -782,7 +815,7 @@ def request_time_off():
             mysql.connection.commit()
             cursor.close()
             print(f"Successfully added time off request for employee {emp_id}")
-            return redirect(url_for('index'))
+            return redirect(url_for('eschedule'))
         except Exception as e:
             print(f"Error adding time off request: {e}")
             cursor.close()
@@ -827,7 +860,7 @@ def handle_request_action(req_id):
         cursor.execute("UPDATE TIME_OFF_REQUESTS SET status = %s WHERE id = %s", (new_status, req_id))
         mysql.connection.commit()
         cursor.close()
-        return redirect(url_for('view_requests'))
+        return redirect(url_for('eschedule'))
     except Exception as e:
         print(f"Error updating request status: {e}")
         cursor.close()

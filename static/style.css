@@ -44,6 +44,26 @@ body.about-us-page {
     width: auto;
 }
 
+.request-time-off-btn {
+    background-color: #b6fcb6; /* light green */
+    display: block;
+    margin: 10px auto;     /* top & bottom: 10px, left & right: auto */
+    margin-bottom: 15px;
+    color: black; /* black text */
+    padding: 12px 24px;
+    font-size: 16px;
+    border: 2px solid #72d672; /* slightly darker green border */
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    white-space: nowrap;
+    transition: background-color 0.3s ease;
+}
+
+    .add-employee-btn:hover {
+        background-color: #a2eaa2; /* hover: a bit darker green */
+    }
+    
 
 .editable-textarea {
     width: 100%;
