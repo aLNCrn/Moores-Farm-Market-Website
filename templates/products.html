@@ -54,7 +54,9 @@
                 <strong>Filter Products:</strong>
             </label>
             <select name="table_name" id="product_type" class="large-dropdown">
+                {% if session.get('CustomerID') %}
                 <option value="FAVORITES">Favorites</option>
+                {% endif %}
                 <option value="FLOWERS">Flowers</option>
                 <option value="PRODUCE">Produce</option>
                 <option value="HONEY">Honey</option>
