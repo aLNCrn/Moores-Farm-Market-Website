@@ -41,9 +41,11 @@
     <main style="padding-top: 200px;">
         <h1 class="about-heading fade-in-heading">EMPLOYEE SCHEDULE</h1>
         
-        <button onclick="openRequestTimeOffModal()" class="request-time-off-btn">
-            Request Time Off
-        </button>
+        {% if not session['isOwner'] %}
+            <button onclick="openRequestTimeOffModal()" class="request-time-off-btn">
+                Request Time Off
+            </button>
+        {%endif%}
 
         <div id="requestTimeOffModal" class="modal">
             <div class="modal-content">
