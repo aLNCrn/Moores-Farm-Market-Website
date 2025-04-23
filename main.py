@@ -592,12 +592,20 @@ def eschedule():
     
    # Fetch time off requests with access control
     if session.get('isOwner'):
-        cursor.execute("""
-            SELECT t.*, e.FirstName, e.LastName 
-            FROM TIME_OFF_REQUESTS t
-            JOIN employees e ON t.EmployeeID = e.EmployeeID
-            WHERE t.status IN ('Approved', 'Pending')
-        """)
+        if selected_employee_id is not None and selected_employee_id.strip() != "":
+            cursor.execute("""
+                SELECT t.*, e.FirstName, e.LastName 
+                FROM TIME_OFF_REQUESTS t
+                JOIN employees e ON t.EmployeeID = e.EmployeeID 
+                WHERE t.EmployeeID = %s and t.status IN ('Approved', 'Pending')
+            """, (selected_employee_id))
+        else:
+            cursor.execute("""
+                SELECT t.*, e.FirstName, e.LastName 
+                FROM TIME_OFF_REQUESTS t
+                JOIN employees e ON t.EmployeeID = e.EmployeeID
+                WHERE t.status IN ('Approved', 'Pending')
+            """)
     else:
         current_emp_id = session.get('EmployeeID')
         cursor.execute("""
